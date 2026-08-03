@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="900" height="220">
+  <!-- Placeholder wordmark — replace with the supplied GAME X logo. -->
+  <text x="450" y="150"
+        text-anchor="middle"
+        font-family="Verdana, Geneva, 'DejaVu Sans', sans-serif"
+        font-size="112"
+        font-weight="700"
+        letter-spacing="10"
+        fill="#17161f">GAME X</text>
+</svg>

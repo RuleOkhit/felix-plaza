@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — edit these to rebrand the template.
+   Proportions (spacing, type scale) mirror the reference layout; the colours
+   and fonts are original placeholders.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-ink: #17161f;
+  --color-primary: #5b5fc7; /* indigo accent */
+  --color-accent: #e2725b; /* coral accent */
+  --color-surface: #f7f7f7; /* light grey section background */
+  --color-whatsapp: #25d366; /* WhatsApp brand green (contact CTA only) */
+
+  --font-display: var(--font-display), serif;
+  --font-body: var(--font-body), sans-serif;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* Lenis smooth-scroll (see components/layout/SmoothScroll.tsx). Native CSS
+   smooth scrolling stays off — Lenis drives the easing instead. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Slow editorial marquee (events hero). Two copies of the same content
+   scroll by -50% for a seamless loop. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 45s linear infinite;
+}
+
+/* Swiper pagination bars for the hero (30x3px white bars, as measured on
+   the reference slider) */
+.hero-dot {
+  display: inline-block;
+  width: 30px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.hero-dot-active {
+  background: #ffffff;
+}
+
+/* Hide scrollbars on carousels while keeping them scrollable */
+.swiper {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #fff;
+}
