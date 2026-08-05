@@ -20,14 +20,14 @@ export function whatsappLink(message?: string) {
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 
-// Quick-start topics shown as chips beside the WhatsApp call to action.
-export const CONTACT_TOPICS = [
-  { label: "Store timings", message: "Hi! Could you share today’s store timings?" },
-  { label: "Today’s offers", message: "Hi! What offers are running at Felix Plaza today?" },
-  { label: "Lost & found", message: "Hi! I’d like to report a lost item at Felix Plaza." },
-  { label: "Event & space booking", message: "Hi! I’d like to enquire about booking a space at Felix Plaza." },
-  { label: "Leasing enquiry", message: "Hi! I’d like to enquire about leasing retail space at Felix Plaza." },
-];
+// The Felix Plaza lockup, extracted from the supplied vector artwork.
+// Two colourways: brand purple for light surfaces, white for dark ones.
+export const BRAND = {
+  logo: "/images/logo-felix-plaza.png",
+  logoWhite: "/images/logo-felix-plaza-white.png",
+  logoWidth: 700,
+  logoHeight: 528,
+};
 
 export type NavLink = { label: string; href: string };
 
@@ -80,6 +80,14 @@ export const IMG = {
 } as const;
 
 export type ImgKey = keyof typeof IMG;
+
+// Hero slider photography (shot at Felix Plaza).
+export const HERO_IMG = {
+  shop: "/images/hero/hero-shop.jpg",
+  dine: "/images/hero/hero-dine.jpg",
+  entertain: "/images/hero/hero-entertain.jpg",
+  unwind: "/images/hero/hero-unwind.jpg",
+} as const;
 
 // Tenant logos (transparent PNG / SVG, displayed contained on a light tile).
 // To add a brand: drop the file in public/images/logos and add it here.

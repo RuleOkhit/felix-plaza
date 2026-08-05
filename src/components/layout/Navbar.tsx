@@ -1,10 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { NAV_LINKS, SITE } from "@/data/site";
+import { BRAND, NAV_LINKS, SITE } from "@/data/site";
 import { EASE } from "@/lib/motion";
 import SearchOverlay from "./SearchOverlay";
 
@@ -42,14 +43,36 @@ export default function Navbar() {
         }`}
       >
         <div className="mx-auto flex items-center justify-between px-4 md:px-[60px]">
-          {/* Logo — simple typographic mark, replace with your own */}
-          <Link
-            href="/"
-            className={`font-display text-2xl uppercase tracking-[0.3em] transition-colors duration-500 md:text-3xl ${
-              overHero ? "text-white" : "text-ink"
-            }`}
-          >
-            {SITE.name}
+          {/* Logo — both colourways are rendered and cross-faded, so the
+              swap on scroll never flashes an unloaded image */}
+          <Link href="/" aria-label={SITE.name} className="shrink-0">
+            <span
+              className={`relative block transition-[height] duration-500 ease-in-out ${
+                overHero ? "h-12 md:h-16" : "h-10 md:h-12"
+              }`}
+            >
+              <Image
+                src={BRAND.logo}
+                alt={SITE.name}
+                width={BRAND.logoWidth}
+                height={BRAND.logoHeight}
+                priority
+                className={`h-full w-auto transition-opacity duration-500 ${
+                  overHero ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <Image
+                src={BRAND.logoWhite}
+                alt=""
+                aria-hidden
+                width={BRAND.logoWidth}
+                height={BRAND.logoHeight}
+                priority
+                className={`absolute inset-0 h-full w-auto transition-opacity duration-500 ${
+                  overHero ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            </span>
           </Link>
 
           {/* Desktop links */}
@@ -127,9 +150,13 @@ export default function Navbar() {
               className="fixed right-0 top-0 z-[70] flex h-full w-[85%] max-w-sm flex-col bg-white p-8"
             >
               <div className="mb-10 flex items-center justify-between">
-                <span className="font-display text-xl uppercase tracking-[0.3em] text-ink">
-                  {SITE.name}
-                </span>
+                <Image
+                  src={BRAND.logo}
+                  alt={SITE.name}
+                  width={BRAND.logoWidth}
+                  height={BRAND.logoHeight}
+                  className="h-11 w-auto"
+                />
                 <button
                   aria-label="Close menu"
                   onClick={() => setMenuOpen(false)}

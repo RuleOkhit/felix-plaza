@@ -28,6 +28,10 @@
 # The web-ready copies live in public/images/logos/ and are committed.
 /Logos/
 
+# raw hero photography + the logo artwork PDF (~24MB of originals).
+# The web-ready copies live in public/images/ and are committed.
+/Hero Images/
+
 # Claude Code machine-specific settings
 .claude/settings.local.json
 

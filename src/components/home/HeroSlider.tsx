@@ -41,8 +41,15 @@ export default function HeroSlider() {
               className="object-cover"
               sizes="100vw"
             />
-            {/* Gradient scrim, as on the reference (dark corner + radial) */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-black/70 via-black/25 to-transparent" />
+            {/* Layered scrim. The photography is bright (pale ceilings and
+                walls), so a single flat gradient leaves white display type
+                illegible. Base tint + vertical gradient covering the two
+                text zones (navbar at top, caption and dots at bottom) + a
+                soft centre vignette behind the title, which keeps the
+                edges of the frame bright. */}
+            <div className="absolute inset-0 bg-black/30" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/60" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_45%,rgba(0,0,0,0.55),transparent_75%)]" />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -56,7 +63,7 @@ export default function HeroSlider() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.7, ease: EASE }}
-            className="font-display text-[64px] uppercase leading-none tracking-[0.08em] text-white md:text-[110px]"
+            className="font-display text-[64px] uppercase leading-none tracking-[0.08em] text-white [text-shadow:0_2px_40px_rgba(0,0,0,0.55),0_1px_4px_rgba(0,0,0,0.35)] md:text-[110px]"
           >
             {HERO_SLIDES[active].title}
           </motion.h2>

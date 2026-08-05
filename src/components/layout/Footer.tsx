@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
+  BRAND,
   FOOTER_INFO_LINKS,
   FOOTER_LEGAL_LINKS,
   FOOTER_QUICK_LINKS,
@@ -48,9 +50,13 @@ export default function Footer() {
           <div className="grid gap-12 lg:grid-cols-12">
             {/* Brand + social */}
             <div className="lg:col-span-4">
-              <p className="font-display text-3xl uppercase tracking-[0.3em] text-ink">
-                {SITE.name}
-              </p>
+              <Image
+                src={BRAND.logo}
+                alt={SITE.name}
+                width={BRAND.logoWidth}
+                height={BRAND.logoHeight}
+                className="h-20 w-auto"
+              />
               <p className="mt-5 max-w-sm leading-relaxed text-ink/70">
                 {SITE.description}
               </p>

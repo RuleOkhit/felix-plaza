@@ -25,23 +25,37 @@ Cinépolis to 0.7:1 Taco Bell and all sit correctly).
 
 ---
 
+## ✅ Supplied — hero photography (4)
+
+Live on the hero slider as Shop / Dine / Entertain / Unwind.
+
+`Shop.jpeg` arrived at 7008 × 4672 (22.7 MB) and was downscaled to
+2560 × 1707 (493 KB) — the site is a static export with no image
+optimizer, so the original would have been downloaded in full by every
+visitor. The other three were already 1280 × 720 and are used as-is (no
+re-encode, to avoid a second generation of JPEG loss).
+
+⚠️ **Worth re-shooting eventually:** three of the four are only 1280 px
+wide, so they will look soft on large desktop displays. 2560 px masters
+would sharpen them noticeably.
+
+## ✅ Supplied — Felix Plaza logo
+
+Extracted from the supplied vector PDF into three web assets:
+
+| File | Use |
+| --- | --- |
+| `logo-felix-plaza.png` | Brand purple — solid navbar, footer |
+| `logo-felix-plaza-white.png` | White knockout — navbar over the hero, contact band |
+| `src/app/icon.png` | Favicon, white logo on a brand-purple tile |
+
+For reference, the brand purple sampled from the artwork is **#352761**.
+
+---
+
 ## ⏳ Still needed
 
-### A. Hero slider backgrounds — 4 photos
-
-| | |
-| --- | --- |
-| Where | Full-screen hero: Shop / Dine / Play / Unwind |
-| Aspect ratio | 16:9 master (cropped by `object-cover` to any screen) |
-| **Export** | **2560 × 1440** (minimum 1920 × 1080) |
-| Format | JPG or WebP, under ~400 KB each |
-
-A dark gradient sits over the image (heaviest top-left) with the huge slide
-title **dead centre**, hours + address **bottom-left**, progress bars
-**bottom-centre** and the navbar **on top** — so keep the middle of the
-frame calm. Phones crop the sides hard; keep the subject centred.
-
-### B. Promo banner — 1 photo
+### A. Promo banner — 1 photo
 
 | | |
 | --- | --- |
@@ -54,7 +68,7 @@ Headline and copy sit on the **left** over a dark gradient with a button on
 the right — keep the left third simple, and bake no text into the image.
 Goes nearly square on mobile, so keep the subject centred.
 
-### C. Missing logos — 7 brands
+### B. Missing logos — 7 brands
 
 Currently held back from the homepage until artwork arrives. Two exceptions
 sit on the page with **temporary text wordmarks**:
@@ -73,14 +87,11 @@ tile. To add one: drop the file in `public/images/logos/`, add it to the
 `LOGO` map in `src/data/site.ts`, and add the brand back to `TOP_SHOPS` or
 `DINE_SPOTS` in `src/data/home.ts`.
 
-### D. Brand assets
+### C. Social share image
 
-| Asset | Spec | Notes |
-| --- | --- | --- |
-| **Navbar logo** | SVG, or PNG at **height 120 px** (displays ~36–40 px) | Needs **two versions** — white for the transparent navbar over the hero, dark for the white navbar after scrolling. Max width ~260 px. Currently a text wordmark. |
-| **Footer logo** | Same file, dark version | Displays ~200 px wide |
-| **Favicon** | **512 × 512** PNG or SVG | Plus 180 × 180 (Apple touch icon) and 32 × 32 `.ico` |
-| **Social share image** | **1200 × 630** JPG or PNG | The preview card when the link is shared — matters here given the WhatsApp focus |
+**1200 × 630** JPG or PNG — the preview card shown when the link is shared.
+Matters here given the WhatsApp focus. Include the logo and keep text well
+inside the edges.
 
 ---
 
@@ -88,8 +99,10 @@ tile. To add one: drop the file in `public/images/logos/`, add it to the
 
 | | Count |
 | --- | --- |
-| ✅ Logos supplied and live | 12 |
-| ⏳ Hero photos needed | 4 |
+| ✅ Tenant logos live | 12 |
+| ✅ Hero photos live | 4 |
+| ✅ Brand logo + favicon | done |
 | ⏳ Promo banner needed | 1 |
-| ⏳ Logos still missing | 7 |
-| ⏳ Brand assets | logo (2 versions) + favicon set + share image |
+| ⏳ Tenant logos still missing | 7 |
+| ⏳ Social share image | 1 |
+| ⚠️ Hero re-shoot (optional) | 3 low-res |

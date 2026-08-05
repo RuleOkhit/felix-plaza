@@ -1,4 +1,4 @@
-import { IMG, LOGO } from "./site";
+import { HERO_IMG, IMG, LOGO } from "./site";
 
 // ---------------------------------------------------------------------------
 // Homepage content. Cards and slides live in arrays so they can be
@@ -14,10 +14,10 @@ export type HeroSlide = {
 };
 
 export const HERO_SLIDES: HeroSlide[] = [
-  { title: "Shop", image: IMG.hero, href: "/shop" },
-  { title: "Dine", image: IMG.wide, href: "/dine" },
-  { title: "Play", image: IMG.banner, href: "/entertain" },
-  { title: "Unwind", image: IMG.hero, href: "/plan-your-visit" },
+  { title: "Shop", image: HERO_IMG.shop, href: "/shop" },
+  { title: "Dine", image: HERO_IMG.dine, href: "/dine" },
+  { title: "Entertain", image: HERO_IMG.entertain, href: "/entertain" },
+  { title: "Unwind", image: HERO_IMG.unwind, href: "/plan-your-visit" },
 ];
 
 export type BrandCard = {
