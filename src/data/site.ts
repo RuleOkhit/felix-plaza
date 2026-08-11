@@ -9,7 +9,7 @@ export const SITE = {
   phone: "+91 93557 78800",
   phoneLink: "+919355778800", // tel: href (digits only, with country code)
   whatsapp: "919355778800", // wa.me path (no +, no spaces)
-  email: "info@felixrealty.com",
+  email: "info.desk@felixrealty.com",
   address: "NH-48, Sector 82A, Gurugram",
   hours: "11:00 AM – 10:00 PM",
 };
@@ -27,6 +27,10 @@ export const BRAND = {
   logoWhite: "/images/logo-felix-plaza-white.png",
   logoWidth: 700,
   logoHeight: 528,
+  // The standalone geometric mark, used as an avatar/badge.
+  insignia: "/images/insignia-felix.webp",
+  insigniaWidth: 256,
+  insigniaHeight: 244,
 };
 
 export type NavLink = { label: string; href: string };
@@ -38,22 +42,6 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Offers", href: "/offers" },
   { label: "Events", href: "/events" },
   { label: "Plan Your Visit", href: "/plan-your-visit" },
-];
-
-export const FOOTER_QUICK_LINKS: NavLink[] = [
-  { label: "Shop", href: "/shop" },
-  { label: "Dine", href: "/dine" },
-  { label: "Entertain", href: "/entertain" },
-  { label: "Offers", href: "/offers" },
-  { label: "Events", href: "/events" },
-];
-
-export const FOOTER_INFO_LINKS: NavLink[] = [
-  { label: "About Us", href: "/plan-your-visit" },
-  { label: "Plan Your Visit", href: "/plan-your-visit" },
-  { label: "Careers", href: "/plan-your-visit" },
-  { label: "Media Centre", href: "/plan-your-visit" },
-  { label: "Contact Us", href: "/plan-your-visit" },
 ];
 
 export const FOOTER_LEGAL_LINKS: NavLink[] = [
@@ -92,19 +80,20 @@ export const HERO_IMG = {
 // Tenant logos (transparent PNG / SVG, displayed contained on a light tile).
 // To add a brand: drop the file in public/images/logos and add it here.
 export const LOGO = {
-  hm: "/images/logos/hm.png",
-  westside: "/images/logos/westside.png",
-  calvinKlein: "/images/logos/calvin-klein.png",
-  marksSpencer: "/images/logos/marks-spencer.png",
-  lifestyle: "/images/logos/lifestyle.png",
-  adidas: "/images/logos/adidas.png",
-  tommyHilfiger: "/images/logos/tommy-hilfiger.png",
-  haldirams: "/images/logos/haldirams.png",
-  burgerKing: "/images/logos/burger-king.png",
-  kfc: "/images/logos/kfc.png",
-  tacoBell: "/images/logos/taco-bell.png",
-  cinepolis: "/images/logos/cinepolis.png",
+  hm: "/images/logos/h-and-m.webp",
+  westside: "/images/logos/westside.svg",
+  calvinKlein: "/images/logos/calvin-klein.webp",
+  marksSpencer: "/images/logos/marks-and-spencer.webp",
+  lifestyle: "/images/logos/lifestyle.webp",
+  adidas: "/images/logos/adidas.webp",
+  tommyHilfiger: "/images/logos/tommy-hilfiger.webp",
+  haldirams: "/images/logos/haldirams.webp",
+  burgerKing: "/images/logos/burger-king.svg",
+  kfc: "/images/logos/kfc.webp",
+  tacoBell: "/images/logos/taco-bell.webp",
+  cinepolis: "/images/logos/cinepolis.webp",
+  funcity: "/images/logos/funcity.webp",
   // Placeholder wordmarks — swap for the real logos when supplied.
-  funcity: "/images/logos/funcity.svg",
   gameX: "/images/logos/game-x.svg",
+  atlasSupply: "/images/logos/atlas-supply.svg",
 } as const;

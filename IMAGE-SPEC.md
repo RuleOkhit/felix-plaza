@@ -17,11 +17,18 @@ Live on the homepage now, displayed **contained** on a white tile, so any
 proportion works without cropping (the supplied files run from 4.5:1
 Cinépolis to 0.7:1 Taco Bell and all sit correctly).
 
-| Section | Brands |
+| Where | Brands |
 | --- | --- |
-| Store Spotlight (7) | H&M · WESTSIDE · CALVIN KLEIN · MARKS & SPENCER · LIFESTYLE · ADIDAS · TOMMY HILFIGER |
-| Time to Dine (4) | HALDIRAM'S · BURGER KING · KFC · TACO BELL |
-| Entertainment (1) | CINÉPOLIS |
+| `/shop` — full directory | 69 stores (66 with real logos) |
+| `/dine` — full directory | 15 outlets (all with real logos) |
+| Homepage Store Spotlight | curated 7 |
+| Homepage Time to Dine | curated 4 |
+| Homepage Entertainment | FUNCITY · CINÉPOLIS (+ GAME X placeholder) |
+
+All were trimmed of baked-in padding, capped at 600 px on the long edge and
+converted to WebP (vector kept as SVG) — 87 files, 1.3 MB total. Three
+knockout logos (BONKERS CORNER, ZUDIO, FUNCITY) are flagged `darkTile` and
+render on the dark brand colour so they stay visible.
 
 ---
 
@@ -68,15 +75,18 @@ Headline and copy sit on the **left** over a dark gradient with a button on
 the right — keep the left third simple, and bake no text into the image.
 Goes nearly square on mobile, so keep the subject centred.
 
-### B. Missing logos — 7 brands
+### B. Missing logos — 4 brands
 
-Currently held back from the homepage until artwork arrives. Two exceptions
-sit on the page with **temporary text wordmarks**:
+Everything else from the store list is in. These four show a **temporary
+text wordmark** and are marked `logoPending` in
+`src/data/store-directory.ts`:
 
-| Brand | Status |
+| Brand | Placeholder file |
 | --- | --- |
-| FUNCITY | placeholder wordmark on the page (`logos/funcity.svg`) |
-| GAME X | placeholder wordmark on the page (`logos/game-x.svg`) |
+| BARARA ETHNIC | `logos/barara-ethnic.svg` |
+| HAPPYNEST | `logos/happynest.svg` |
+| NYKAA LUXE | `logos/nykaa-luxe.svg` |
+| GAME X | `logos/game-x.svg` (homepage only — not in the store list) |
 | TASVA · FRIDO · CARATLANE | removed from Store Spotlight |
 | AMRITSARI EXPRESS · KEVENTERS | removed from Time to Dine |
 
@@ -99,10 +109,10 @@ inside the edges.
 
 | | Count |
 | --- | --- |
-| ✅ Tenant logos live | 12 |
+| ✅ Tenant logos live | 83 |
 | ✅ Hero photos live | 4 |
 | ✅ Brand logo + favicon | done |
 | ⏳ Promo banner needed | 1 |
-| ⏳ Tenant logos still missing | 7 |
+| ⏳ Tenant logos still missing | 4 |
 | ⏳ Social share image | 1 |
 | ⚠️ Hero re-shoot (optional) | 3 low-res |

@@ -117,6 +117,17 @@ export default function HeroSlider() {
         </svg>
       </button>
 
+      {/* Mobile-only hours line — the desktop caption is hidden on phones,
+          so surface the one detail visitors actually check */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8, duration: 0.8 }}
+        className="absolute inset-x-4 bottom-[84px] z-10 text-center text-[13px] text-white/85 md:hidden"
+      >
+        Open daily <strong className="font-bold">{SITE.hours}</strong>
+      </motion.p>
+
       {/* Bar-style dots inside a dark rounded pill */}
       <div className="hero-dots absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-lg bg-black/60 px-5 py-3" />
     </section>

@@ -31,7 +31,9 @@ export const STORE_PROFILE = {
   closesAt: 24,
 };
 
-// Other stores shown in the "You may also like" carousel.
+// Other stores shown in the "You may also like" carousel (name compare is
+// case-insensitive — the homepage card is "ATLAS SUPPLY", the profile
+// "Atlas Supply").
 export const RELATED_STORES = TOP_SHOPS.filter(
-  (s) => s.name !== STORE_PROFILE.name,
+  (s) => s.name.toLowerCase() !== STORE_PROFILE.name.toLowerCase(),
 ).slice(0, 8);

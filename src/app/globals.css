@@ -71,6 +71,14 @@ html.lenis body {
   overflow: hidden;
 }
 
+/* Scrollbar-less horizontal snap rows (mobile carousels) */
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 ::selection {
   background: var(--color-primary);
   color: #fff;

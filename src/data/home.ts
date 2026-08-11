@@ -37,6 +37,8 @@ export const TOP_SHOPS: BrandCard[] = [
   { name: "MARKS & SPENCER", category: "Fashion", image: LOGO.marksSpencer, href: "/shop" },
   { name: "LIFESTYLE", category: "Lifestyle", image: LOGO.lifestyle, href: "/shop" },
   { name: "ADIDAS", category: "Sports", image: LOGO.adidas, href: "/shop" },
+  // Has a dedicated store profile page — the card links straight to it.
+  { name: "ATLAS SUPPLY", category: "Sports", image: LOGO.atlasSupply, href: "/shop/atlas-supply" },
   { name: "TOMMY HILFIGER", category: "Fashion", image: LOGO.tommyHilfiger, href: "/shop" },
 ];
 
@@ -52,6 +54,8 @@ export type EntertainCard = {
   blurb: string;
   image: string;
   href: string;
+  // Logo is a white knockout, so its tile renders on the dark brand colour.
+  darkTile?: boolean;
 };
 
 export const ENTERTAINMENT: EntertainCard[] = [
@@ -61,6 +65,7 @@ export const ENTERTAINMENT: EntertainCard[] = [
       "Rides, soft play and arcade favourites — a full day out for younger visitors and the whole family.",
     image: LOGO.funcity,
     href: "/entertain",
+    darkTile: true,
   },
   {
     name: "GAME X",
