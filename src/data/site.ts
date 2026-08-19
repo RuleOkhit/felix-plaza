@@ -69,12 +69,15 @@ export const IMG = {
 
 export type ImgKey = keyof typeof IMG;
 
-// Hero slider photography (shot at Felix Plaza).
+// Hero slider backgrounds. TEMPORARY: brand-coloured abstract artwork
+// (generated at 2560x1440, one mood per slide, with the Felix insignia as
+// a faint motif). Swap these files for real photography when it is shot —
+// the paths and sizes stay the same. See IMAGE-SPEC.md for the brief.
 export const HERO_IMG = {
-  shop: "/images/hero/hero-shop.jpg",
-  dine: "/images/hero/hero-dine.jpg",
-  entertain: "/images/hero/hero-entertain.jpg",
-  unwind: "/images/hero/hero-unwind.jpg",
+  shop: "/images/hero/hero-shop.webp",
+  dine: "/images/hero/hero-dine.webp",
+  entertain: "/images/hero/hero-entertain.webp",
+  unwind: "/images/hero/hero-unwind.webp",
 } as const;
 
 // Tenant logos (transparent PNG / SVG, displayed contained on a light tile).
