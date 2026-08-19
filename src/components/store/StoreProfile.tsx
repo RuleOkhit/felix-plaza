@@ -4,15 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { STORE_PROFILE } from "@/data/store";
+import { floorLabel, type Store } from "@/data/stores";
+import { SITE, whatsappLink } from "@/data/site";
 import { EASE, fadeUp, stagger, viewportOnce } from "@/lib/motion";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 
-const store = STORE_PROFILE;
+// 24h number → "10:00 PM"
+function formatHour(h: number) {
+  const hh = h % 24;
+  const suffix = hh >= 12 ? "PM" : "AM";
+  const display = hh % 12 === 0 ? 12 : hh % 12;
+  return `${display}:00 ${suffix}`;
+}
 
 // Live open/closed badge, computed on the client from the store's hours.
-function OpenBadge() {
+function OpenBadge({ store }: { store: Store }) {
   const [open, setOpen] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -23,29 +30,89 @@ function OpenBadge() {
     check();
     const id = setInterval(check, 60_000);
     return () => clearInterval(id);
-  }, []);
+  }, [store.opensAt, store.closesAt]);
 
   if (open === null) {
     return <span className="text-sm font-semibold text-ink/40">Checking hours…</span>;
   }
-  return open ? (
-    <span className="inline-flex items-center gap-2 text-sm font-bold text-emerald-600">
-      <span className="relative flex h-2.5 w-2.5">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
-        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+  // A quiet status chip — no flashing. The colour and the solid dot carry
+  // the state; the time sits alongside as plain text.
+  return (
+    <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+      <span
+        className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] ring-1 ring-inset ${
+          open
+            ? "bg-emerald-500/10 text-emerald-700 ring-emerald-600/20"
+            : "bg-accent/10 text-accent ring-accent/25"
+        }`}
+      >
+        <span
+          className={`h-1.5 w-1.5 rounded-full ${
+            open ? "bg-emerald-500" : "bg-accent"
+          }`}
+        />
+        {open ? "Open now" : "Closed"}
       </span>
-      Open now · until 12:00 AM
-    </span>
-  ) : (
-    <span className="inline-flex items-center gap-2 text-sm font-bold text-accent">
-      <span className="h-2.5 w-2.5 rounded-full bg-accent" />
-      Closed · opens 10:00 AM
-    </span>
+      <span className="text-sm text-ink/55">
+        {open
+          ? `until ${formatHour(store.closesAt)}`
+          : `opens ${formatHour(store.opensAt)}`}
+      </span>
+    </div>
+  );
+}
+
+// Escalator glyph — reads as "how you get to this floor" at a glance.
+const EscalatorIcon = (
+  <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden>
+    <path
+      d="M3.5 25.5h4.6L21.4 9.6h7.1"
+      stroke="currentColor"
+      strokeWidth="2.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M11.4 25.5v-3M15.2 21v-3M19 16.4v-3"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      opacity="0.35"
+    />
+    <circle cx="15.4" cy="6.6" r="2.6" fill="currentColor" />
+    <path
+      d="M15.4 10.6v6.2"
+      stroke="currentColor"
+      strokeWidth="2.7"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+// Wayfinding block — the floor is the one thing a visitor really needs, so
+// it gets a graphic and the boldest type in the card.
+function FloorGraphic({ store }: { store: Store }) {
+  const detail = [store.unit, store.landmark].filter(Boolean).join(" · ");
+  return (
+    <div className="flex items-center gap-4 rounded-xl bg-white p-4 shadow-[0_3px_14px_-6px_rgba(23,22,31,0.25)]">
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+        {EscalatorIcon}
+      </span>
+      <div className="min-w-0">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink/45">
+          Location
+        </p>
+        <p className="text-xl font-bold leading-tight text-ink">
+          {floorLabel(store.floor)}
+        </p>
+        {detail && <p className="mt-0.5 text-sm text-ink/60">{detail}</p>}
+      </div>
+    </div>
   );
 }
 
 // Expandable weekly hours (height-animated, chevron rotates).
-function HoursAccordion() {
+function HoursAccordion({ store }: { store: Store }) {
   const [expanded, setExpanded] = useState(false);
   return (
     <div>
@@ -95,12 +162,6 @@ function HoursAccordion() {
 }
 
 const INFO_ICONS = {
-  pin: (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z" />
-      <circle cx="12" cy="10" r="2.5" />
-    </svg>
-  ),
   clock: (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
       <circle cx="12" cy="12" r="9" />
@@ -142,13 +203,14 @@ function InfoRow({
   );
 }
 
-// Full-screen gallery lightbox in the search-overlay idiom (dark backdrop,
-// Esc to close, round prev/next arrows).
+// Full-screen gallery lightbox (dark backdrop, Esc to close, arrow keys).
 function Lightbox({
+  store,
   index,
   onClose,
   onStep,
 }: {
+  store: Store;
   index: number | null;
   onClose: () => void;
   onStep: (dir: 1 | -1) => void;
@@ -187,14 +249,14 @@ function Lightbox({
             exit={{ scale: 0.96, opacity: 0 }}
             transition={{ duration: 0.4, ease: EASE }}
             onClick={(e) => e.stopPropagation()}
-            className="relative aspect-[4/3] w-full max-w-4xl overflow-hidden rounded-2xl"
+            className="relative aspect-square w-full max-w-2xl overflow-hidden rounded-2xl bg-white"
           >
             <Image
               src={store.gallery[index]}
-              alt={`${store.name} gallery image ${index + 1}`}
+              alt={`${store.name} image ${index + 1}`}
               fill
-              sizes="(max-width: 1024px) 100vw, 896px"
-              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 672px"
+              className="object-contain"
             />
           </motion.div>
           <button
@@ -230,9 +292,10 @@ function Lightbox({
   );
 }
 
-// Store profile body: breadcrumb, about copy, tag pills and gallery on the
-// left; sticky store-information card on the right.
-export default function StoreProfile() {
+// Store profile body: breadcrumb, description headed by the store's own
+// name, tag pills and picture grid on the left; sticky info card with the
+// floor badge on the right.
+export default function StoreProfile({ store }: { store: Store }) {
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const step = useCallback(
@@ -240,7 +303,7 @@ export default function StoreProfile() {
       setLightbox((i) =>
         i === null ? i : (i + dir + store.gallery.length) % store.gallery.length,
       ),
-    [],
+    [store.gallery.length],
   );
 
   return (
@@ -258,8 +321,9 @@ export default function StoreProfile() {
                 <span className="text-ink">{store.name}</span>
               </nav>
 
-              <h2 className="mt-6 font-display text-[24px] uppercase leading-tight text-ink md:text-[32px]">
-                About the store
+              {/* Section is headed by the store's own name */}
+              <h2 className="mt-6 font-display text-[26px] uppercase leading-tight text-ink md:text-[34px]">
+                {store.name}
               </h2>
               {store.about.map((p) => (
                 <p key={p.slice(0, 24)} className="mt-4 text-lg leading-relaxed text-ink/70">
@@ -279,9 +343,11 @@ export default function StoreProfile() {
               </div>
             </Reveal>
 
-            {/* Gallery */}
+            {/* Picture grid */}
             <Reveal className="mt-12">
-              <h3 className="mb-5 font-display text-xl uppercase text-ink">Gallery</h3>
+              <h3 className="mb-5 font-display text-xl uppercase text-ink">
+                {store.galleryLabel ?? "In Store"}
+              </h3>
             </Reveal>
             <motion.div
               variants={stagger}
@@ -295,17 +361,17 @@ export default function StoreProfile() {
                   key={`${img}-${i}`}
                   variants={fadeUp}
                   onClick={() => setLightbox(i)}
-                  aria-label={`Open gallery image ${i + 1}`}
-                  className="group relative aspect-square overflow-hidden rounded-xl"
+                  aria-label={`Open image ${i + 1}`}
+                  className="group relative aspect-square overflow-hidden rounded-xl border border-ink/10 bg-white"
                 >
                   <Image
                     src={img}
                     alt=""
                     fill
                     sizes="(max-width: 1024px) 33vw, 22vw"
-                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                   />
-                  <span className="absolute inset-0 flex items-center justify-center bg-ink/0 transition-colors duration-300 group-hover:bg-ink/30">
+                  <span className="absolute inset-0 flex items-center justify-center bg-ink/0 transition-colors duration-300 group-hover:bg-ink/25">
                     <svg
                       className="opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                       width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round"
@@ -329,51 +395,72 @@ export default function StoreProfile() {
                   </h3>
                 </div>
                 <div className="mt-3">
-                  <OpenBadge />
+                  <OpenBadge store={store} />
+                </div>
+
+                {/* Location — the floor graphic does the talking */}
+                <div className="mt-6">
+                  <FloorGraphic store={store} />
                 </div>
 
                 <div className="mt-7 space-y-6">
-                  <InfoRow icon={INFO_ICONS.pin} label="Location">
-                    {store.floor}
-                    <span className="block text-sm font-normal text-ink/60">
-                      {store.landmark}
-                    </span>
-                  </InfoRow>
                   <InfoRow icon={INFO_ICONS.clock} label="Today">
-                    10:00 AM – 12:00 AM
+                    {formatHour(store.opensAt)} – {formatHour(store.closesAt)}
                   </InfoRow>
-                  <InfoRow icon={INFO_ICONS.phone} label="Phone">
-                    <a href={`tel:${store.phone.replace(/\s/g, "")}`} className="transition-colors hover:text-primary">
-                      {store.phone}
-                    </a>
-                  </InfoRow>
-                  <InfoRow icon={INFO_ICONS.mail} label="Email">
-                    <a href={`mailto:${store.email}`} className="break-all transition-colors hover:text-primary">
-                      {store.email}
-                    </a>
-                  </InfoRow>
+                  {store.phone && (
+                    <InfoRow icon={INFO_ICONS.phone} label="Phone">
+                      <a
+                        href={`tel:${store.phone.replace(/\s/g, "")}`}
+                        className="transition-colors hover:text-primary"
+                      >
+                        {store.phone}
+                      </a>
+                    </InfoRow>
+                  )}
+                  {store.email && (
+                    <InfoRow icon={INFO_ICONS.mail} label="Email">
+                      <a
+                        href={`mailto:${store.email}`}
+                        className="break-all transition-colors hover:text-primary"
+                      >
+                        {store.email}
+                      </a>
+                    </InfoRow>
+                  )}
                 </div>
 
                 <div className="my-7 h-px bg-ink/10" />
-                <HoursAccordion />
+                <HoursAccordion store={store} />
                 <div className="my-7 h-px bg-ink/10" />
 
                 <Button href="/plan-your-visit" className="block w-full text-center">
                   Get Directions
                 </Button>
-                <Link
-                  href="/offers"
-                  className="mt-4 block text-center text-sm font-bold uppercase tracking-wider text-primary transition-colors hover:text-ink"
+                <a
+                  href={whatsappLink(
+                    `Hi ${SITE.name}! I have a question about ${store.name}.`,
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider text-whatsapp transition-colors hover:text-ink"
                 >
-                  View current offers →
-                </Link>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                    <path d="M17.5 14.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.53.07-.8.37-.28.3-1.05 1.02-1.05 2.5 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.12 4.52.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35M12 2a10 10 0 0 0-8.55 15.2L2 22.5l5.42-1.42A10 10 0 1 0 12 2m0 18.16c-1.62 0-3.2-.43-4.57-1.25l-.33-.2-3.4.9.9-3.32-.21-.34A8.15 8.15 0 1 1 12 20.16" />
+                  </svg>
+                  Ask guest services
+                </a>
               </div>
             </Reveal>
           </div>
         </div>
       </div>
 
-      <Lightbox index={lightbox} onClose={() => setLightbox(null)} onStep={step} />
+      <Lightbox
+        store={store}
+        index={lightbox}
+        onClose={() => setLightbox(null)}
+        onStep={step}
+      />
     </section>
   );
 }

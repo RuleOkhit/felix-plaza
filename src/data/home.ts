@@ -36,8 +36,8 @@ export const TOP_SHOPS: BrandCard[] = [
   { name: "CALVIN KLEIN", category: "Fashion", image: LOGO.calvinKlein, href: "/shop" },
   { name: "MARKS & SPENCER", category: "Fashion", image: LOGO.marksSpencer, href: "/shop" },
   { name: "LIFESTYLE", category: "Lifestyle", image: LOGO.lifestyle, href: "/shop" },
-  { name: "ADIDAS", category: "Sports", image: LOGO.adidas, href: "/shop" },
-  // Has a dedicated store profile page — the card links straight to it.
+  // Brands with a dedicated profile page link straight to it.
+  { name: "ADIDAS", category: "Sports", image: LOGO.adidas, href: "/shop/adidas" },
   { name: "ATLAS SUPPLY", category: "Sports", image: LOGO.atlasSupply, href: "/shop/atlas-supply" },
   { name: "TOMMY HILFIGER", category: "Fashion", image: LOGO.tommyHilfiger, href: "/shop" },
 ];

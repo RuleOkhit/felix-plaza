@@ -32,6 +32,10 @@
 # The web-ready copies live in public/images/ and are committed.
 /Hero Images/
 
+# raw store-page materials (banners, gallery shots, Info.txt per store).
+# The web-ready copies live in public/images/stores/ and are committed.
+/Stores/
+
 # Claude Code machine-specific settings
 .claude/settings.local.json
 
