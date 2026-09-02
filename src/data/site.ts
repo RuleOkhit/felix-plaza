@@ -88,6 +88,16 @@ export const HERO_IMG = {
   unwind: "/images/hero/hero-unwind.webp",
 } as const;
 
+// Inner-page banner photography. Each entry carries the object-position its
+// own composition needs: these are wide letterbox frames cut from squarer
+// photographs, so a plain centre crop clips the subject.
+export const BANNER = {
+  shop: { src: "/images/banners/shop.webp", focus: "58% 55%" },
+  dine: { src: "/images/banners/dine.webp", focus: "50% 50%" },
+  entertain: { src: "/images/banners/entertain.webp", focus: "50% 38%" },
+  visit: { src: "/images/banners/plan-your-visit.webp", focus: "62% 48%" },
+} as const;
+
 // Tenant logos (transparent PNG / SVG, displayed contained on a light tile).
 // To add a brand: drop the file in public/images/logos and add it here.
 export const LOGO = {

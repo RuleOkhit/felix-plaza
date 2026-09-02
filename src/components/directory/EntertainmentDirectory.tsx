@@ -7,7 +7,7 @@ import { ENTERTAINMENT_STORES } from "@/data/store-directory";
 import { fadeUp, stagger, viewportOnce } from "@/lib/motion";
 import PageHero from "@/components/ui/PageHero";
 import Reveal from "@/components/ui/Reveal";
-import { HERO_IMG } from "@/data/site";
+import { BANNER } from "@/data/site";
 
 // Only four venues, so filtering would be pointless furniture and a dense
 // tile grid would undersell them. Each venue gets a generous panel whose
@@ -18,7 +18,12 @@ import { HERO_IMG } from "@/data/site";
 export default function EntertainmentDirectory() {
   return (
     <>
-      <PageHero title="Entertain" image={HERO_IMG.entertain} eyebrow="What's On" />
+      <PageHero
+        title="Entertain"
+        image={BANNER.entertain.src}
+        focus={BANNER.entertain.focus}
+        eyebrow="What's On"
+      />
 
       <section className="py-[40px] md:py-[80px]">
         <div className="px-4 md:px-[60px]">

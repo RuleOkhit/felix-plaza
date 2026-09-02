@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { HERO_IMG, SITE } from "@/data/site";
+import { BANNER, SITE } from "@/data/site";
 import PageHero from "@/components/ui/PageHero";
 
 export const metadata: Metadata = { title: "Plan Your Visit" };
@@ -175,7 +175,8 @@ export default function PlanYourVisitPage() {
     <>
       <PageHero
         title="Plan Your Visit"
-        image={HERO_IMG.unwind}
+        image={BANNER.visit.src}
+        focus={BANNER.visit.focus}
         eyebrow="Before You Set Off"
       />
 

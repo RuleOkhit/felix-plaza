@@ -58,6 +58,7 @@ export default function StoreDirectory({
   title,
   eyebrow,
   heroImage,
+  heroFocus,
   intro,
   stores,
   filters,
@@ -68,6 +69,7 @@ export default function StoreDirectory({
   title: string;
   eyebrow: string;
   heroImage: string;
+  heroFocus?: string;
   intro: string;
   stores: DirectoryStore[];
   filters: CategoryFilter[];
@@ -95,7 +97,7 @@ export default function StoreDirectory({
 
   return (
     <>
-      <PageHero title={title} image={heroImage} eyebrow={eyebrow} />
+      <PageHero title={title} image={heroImage} eyebrow={eyebrow} focus={heroFocus} />
 
       <section className="pb-[50px] pt-[36px] md:pb-[70px] md:pt-[50px]">
         <div className="px-4 md:px-[60px]">

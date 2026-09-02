@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import StoreDirectory from "@/components/directory/StoreDirectory";
 import { DINE_FILTERS, DINE_STORES } from "@/data/store-directory";
-import { HERO_IMG } from "@/data/site";
+import { BANNER } from "@/data/site";
 
 export const metadata: Metadata = { title: "Dine" };
 
@@ -10,7 +10,8 @@ export default function DinePage() {
     <StoreDirectory
       title="Dine"
       eyebrow="Food & Drink"
-      heroImage={HERO_IMG.dine}
+      heroImage={BANNER.dine.src}
+      heroFocus={BANNER.dine.focus}
       intro="Filter coffee and slow mornings, a food court that settles every argument, and a proper sit down meal when the occasion calls for one."
       stores={DINE_STORES}
       filters={DINE_FILTERS}
