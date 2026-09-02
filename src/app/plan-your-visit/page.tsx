@@ -125,40 +125,29 @@ const SERVICES: Amenity[] = [
   },
 ];
 
-function Fact({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
+function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-w-0">
-      <dt className="text-[9px] font-bold uppercase tracking-[0.2em] text-ink/40">
-        {label}
-      </dt>
-      <dd className="mt-1 truncate text-[13.5px] font-semibold text-ink">
-        {children}
-      </dd>
-    </div>
+    <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-ink/45">
+      {children}
+    </p>
   );
 }
 
 function List({ heading, items }: { heading: string; items: Amenity[] }) {
   return (
     <>
-      <h2 className="font-display text-[19px] uppercase tracking-[0.1em] text-ink md:text-[22px]">
+      <h2 className="font-display text-[22px] uppercase tracking-[0.08em] text-ink md:text-[28px]">
         {heading}
       </h2>
-      <ul className="mt-4 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-5 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-4">
         {items.map((item) => (
           <li
             key={item.label}
-            className="flex items-center gap-3 border-t border-ink/10 py-3"
+            className="flex items-center gap-3 border-t border-ink/10 py-3.5"
           >
             <svg
-              width="18"
-              height="18"
+              width="19"
+              height="19"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -170,9 +159,7 @@ function List({ heading, items }: { heading: string; items: Amenity[] }) {
             >
               {item.icon}
             </svg>
-            <span className="text-[14px] font-medium leading-snug text-ink">
-              {item.label}
-            </span>
+            <span className="leading-snug text-ink">{item.label}</span>
           </li>
         ))}
       </ul>
@@ -180,10 +167,10 @@ function List({ heading, items }: { heading: string; items: Amenity[] }) {
   );
 }
 
-// Everything a visitor needs, in the order they need it. The practical
-// details sit in one slim bar directly under the banner, so they are the
-// first thing on the page on a phone as well as on a desktop, and the two
-// lists that are actually the content of this page follow immediately.
+// Plain type on the page: no bordered bar, no card, no panel. The details a
+// visitor checks before setting off sit in three short columns at the top,
+// with directions as a link under the address where it belongs, and the two
+// lists follow. Body text stays at the site's normal size throughout.
 export default function PlanYourVisitPage() {
   return (
     <>
@@ -193,53 +180,63 @@ export default function PlanYourVisitPage() {
         eyebrow="Before You Set Off"
       />
 
-      <section className="border-b border-ink/10 bg-white">
-        <div className="px-4 py-4 md:px-[60px] md:py-5">
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-10">
-            <dl className="grid flex-1 grid-cols-2 gap-x-6 gap-y-3.5 sm:grid-cols-4 md:gap-x-10">
-              <Fact label="Open Daily">{SITE.hours}</Fact>
-              <Fact label="Address">{SITE.address}</Fact>
-              <Fact label="Phone">
-                <a
-                  href={`tel:${SITE.phoneLink}`}
-                  className="transition-colors duration-300 hover:text-primary"
-                >
-                  {SITE.phone}
-                </a>
-              </Fact>
-              <Fact label="Email">
-                <a
-                  href={`mailto:${SITE.email}`}
-                  className="transition-colors duration-300 hover:text-primary"
-                >
-                  {SITE.email}
-                </a>
-              </Fact>
-            </dl>
+      <div className="px-4 md:px-[60px]">
+        {/* The essentials */}
+        <section className="grid gap-8 py-9 sm:grid-cols-2 md:gap-12 md:py-12 lg:grid-cols-3">
+          <div>
+            <Label>Open Daily</Label>
+            <p className="mt-2 text-ink">{SITE.hours}</p>
+            <p className="mt-1 text-ink/55">Every day of the week</p>
+          </div>
 
+          <div>
+            <Label>Address</Label>
+            <p className="mt-2 text-ink">{SITE.address}</p>
             <a
               href={SITE.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[13px] font-bold text-white transition-opacity duration-300 hover:opacity-90"
+              className="group mt-2.5 inline-flex items-center gap-1.5 font-semibold text-primary underline decoration-primary/30 underline-offset-4 transition-colors duration-300 hover:text-ink hover:decoration-ink/40"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z" />
-                <circle cx="12" cy="10" r="2.5" />
-              </svg>
               Get Directions
+              <span
+                aria-hidden
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              >
+                &rarr;
+              </span>
             </a>
           </div>
-        </div>
-      </section>
 
-      <section className="px-4 py-8 md:px-[60px] md:py-11">
-        <List heading="Parking" items={PARKING} />
-      </section>
+          <div className="sm:col-span-2 lg:col-span-1">
+            <Label>Contact</Label>
+            <p className="mt-2">
+              <a
+                href={`tel:${SITE.phoneLink}`}
+                className="text-ink transition-colors duration-300 hover:text-primary"
+              >
+                {SITE.phone}
+              </a>
+            </p>
+            <p className="mt-1">
+              <a
+                href={`mailto:${SITE.email}`}
+                className="break-all text-ink transition-colors duration-300 hover:text-primary"
+              >
+                {SITE.email}
+              </a>
+            </p>
+          </div>
+        </section>
 
-      <section className="ground-tint px-4 py-8 pb-11 md:px-[60px] md:py-11 md:pb-14">
-        <List heading="Customer Services" items={SERVICES} />
-      </section>
+        <section className="border-t border-ink/10 py-9 md:py-12">
+          <List heading="Parking" items={PARKING} />
+        </section>
+
+        <section className="border-t border-ink/10 py-9 pb-12 md:py-12 md:pb-16">
+          <List heading="Customer Services" items={SERVICES} />
+        </section>
+      </div>
     </>
   );
 }
