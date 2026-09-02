@@ -167,10 +167,9 @@ function List({ heading, items }: { heading: string; items: Amenity[] }) {
   );
 }
 
-// Plain type on the page: no bordered bar, no card, no panel. The details a
-// visitor checks before setting off sit in three short columns at the top,
-// with directions as a link under the address where it belongs, and the two
-// lists follow. Body text stays at the site's normal size throughout.
+// Plain type on the page: no bordered bar, no card, no panel. The two lists
+// are what this page is for, so they lead; the practical details close it
+// out, with directions as the one thing given real weight.
 export default function PlanYourVisitPage() {
   return (
     <>
@@ -181,60 +180,47 @@ export default function PlanYourVisitPage() {
       />
 
       <div className="px-4 md:px-[60px]">
-        {/* The essentials */}
-        <section className="grid gap-8 py-9 sm:grid-cols-2 md:gap-12 md:py-12 lg:grid-cols-3">
-          <div>
-            <Label>Open Daily</Label>
-            <p className="mt-2 text-ink">{SITE.hours}</p>
-            <p className="mt-1 text-ink/55">Every day of the week</p>
-          </div>
-
-          <div>
-            <Label>Address</Label>
-            <p className="mt-2 text-ink">{SITE.address}</p>
-            <a
-              href={SITE.mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group mt-2.5 inline-flex items-center gap-1.5 font-semibold text-primary underline decoration-primary/30 underline-offset-4 transition-colors duration-300 hover:text-ink hover:decoration-ink/40"
-            >
-              Get Directions
-              <span
-                aria-hidden
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              >
-                &rarr;
-              </span>
-            </a>
-          </div>
-
-          <div className="sm:col-span-2 lg:col-span-1">
-            <Label>Contact</Label>
-            <p className="mt-2">
-              <a
-                href={`tel:${SITE.phoneLink}`}
-                className="text-ink transition-colors duration-300 hover:text-primary"
-              >
-                {SITE.phone}
-              </a>
-            </p>
-            <p className="mt-1">
-              <a
-                href={`mailto:${SITE.email}`}
-                className="break-all text-ink transition-colors duration-300 hover:text-primary"
-              >
-                {SITE.email}
-              </a>
-            </p>
-          </div>
-        </section>
-
-        <section className="border-t border-ink/10 py-9 md:py-12">
+        <section className="py-9 md:py-12">
           <List heading="Parking" items={PARKING} />
         </section>
 
-        <section className="border-t border-ink/10 py-9 pb-12 md:py-12 md:pb-16">
+        <section className="border-t border-ink/10 py-9 md:py-12">
           <List heading="Customer Services" items={SERVICES} />
+        </section>
+
+        {/* Hours and address, then the one action worth pressing */}
+        <section className="border-t border-ink/10 py-9 pb-12 md:py-12 md:pb-16">
+          <div className="flex flex-wrap items-start gap-x-16 gap-y-7">
+            <div>
+              <Label>Open Daily</Label>
+              <p className="mt-2 text-ink">{SITE.hours}</p>
+              <p className="mt-1 text-ink/55">Every day of the week</p>
+            </div>
+
+            <div>
+              <Label>Address</Label>
+              <p className="mt-2 text-ink">{SITE.address}</p>
+            </div>
+          </div>
+
+          <a
+            href={SITE.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-8 inline-flex items-center gap-2.5 rounded-full border-2 border-primary bg-primary px-8 py-3 text-base font-bold text-white transition-all duration-500 ease-in-out hover:bg-transparent hover:text-primary md:mt-9 md:text-lg"
+          >
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z" />
+              <circle cx="12" cy="10" r="2.5" />
+            </svg>
+            Get Directions
+            <span
+              aria-hidden
+              className="transition-transform duration-300 group-hover:translate-x-1"
+            >
+              &rarr;
+            </span>
+          </a>
         </section>
       </div>
     </>
