@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import DirectoryPage from "@/components/directory/DirectoryPage";
-import { getSection } from "@/data/directory";
+import EntertainmentDirectory from "@/components/directory/EntertainmentDirectory";
 
 export const metadata: Metadata = { title: "Entertain" };
 
 export default function EntertainPage() {
-  return <DirectoryPage section={getSection("entertain")!} />;
+  return <EntertainmentDirectory />;
 }

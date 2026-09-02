@@ -1,35 +1,24 @@
-import { IMG } from "./site";
-import { TOP_SHOPS } from "./home";
+import {
+  CATEGORY_LABELS,
+  DINE_STORES,
+  ENTERTAINMENT_STORES,
+  FLOOR_LABELS,
+  SHOP_STORES,
+  type DirectoryStore,
+} from "./store-directory";
+import { STORE_COPY } from "./store-copy";
 
 // ---------------------------------------------------------------------------
-// STORE PAGES — BASE FORMAT
+// STORE PAGES
 //
-// Every store page is generated from one entry in STORES below. To add a
-// store: drop its images in public/images/stores/<slug>/, add an entry
-// here, and point the brand's `href` in data/home.ts at /shop/<slug>.
-// No new components or routes are needed — the page builds itself.
+// Every store in the directory gets a page. Nothing here is hand written per
+// store: the name, category and floor come from the directory (which is
+// generated from the mall's data.js), and the tagline and description come
+// from store-copy.ts. To change a store, edit one of those two files.
 //
-// How each field is used on the page:
-//
-//   slug        URL segment → /shop/<slug>
-//   name        Shown in the banner AND as the heading of the description
-//               section (that section is titled with the store's own name,
-//               not a generic "About the store").
-//   category    Small line above the name in the banner. Category ONLY —
-//               no floor or unit here; location lives in the info card.
-//   floor       Number driving the floor graphic in the info card.
-//               0 = Ground Floor, 1 = 1st Floor, 2 = 2nd Floor …
-//   unit        e.g. "Unit 112". Optional — omit if not known.
-//   landmark    e.g. "Near the Central Atrium". Optional.
-//   about       One paragraph per array entry.
-//   tags        Pill list under the description.
-//   banner      Wide hero image (~3.7:1). Darkened automatically.
-//   gallery     Square images for the picture grid + lightbox.
-//   galleryLabel  Heading for that grid. Defaults to "In Store".
-//   hours       Rows in the expandable weekly-hours list.
-//   opensAt / closesAt  24h numbers powering the live open/closed badge.
-//   phone / email       Optional. Rows are hidden when omitted, and the
-//                       card falls back to mall guest services.
+// Trading hours are mall wide and identical for every store.
+// Phone and email are only filled in where a number has actually been
+// confirmed; the rows are hidden when they are missing rather than faked.
 // ---------------------------------------------------------------------------
 
 export type StoreHours = { days: string; time: string };
@@ -37,15 +26,17 @@ export type StoreHours = { days: string; time: string };
 export type Store = {
   slug: string;
   name: string;
+  /** URL section this store lives under: shop | dine | entertain */
+  section: "shop" | "dine" | "entertain";
   category: string;
-  floor: number;
-  unit?: string;
-  landmark?: string;
-  about: string[];
-  tags: string[];
-  banner: string;
-  gallery: string[];
-  galleryLabel?: string;
+  floors: string[];
+  /** e.g. "First Floor" or "Ground & First Floor" */
+  floorName: string;
+  logo: string;
+  bg?: string;
+  knockout?: boolean;
+  tagline: string;
+  description: string;
   hours: StoreHours[];
   opensAt: number;
   closesAt: number;
@@ -53,73 +44,95 @@ export type Store = {
   email?: string;
 };
 
-// Mall-wide trading hours, reused unless a store differs.
-const MALL_HOURS: StoreHours[] = [
-  { days: "Monday – Thursday", time: "11:00 AM – 10:00 PM" },
-  { days: "Friday – Sunday", time: "11:00 AM – 10:00 PM" },
+/** Mall wide trading hours. Every store keeps the same times. */
+export const STORE_HOURS: StoreHours[] = [
+  { days: "Monday to Sunday", time: "11:00 AM to 11:00 PM" },
 ];
+const OPENS_AT = 11;
+const CLOSES_AT = 23;
 
-// 0 → "Ground Floor", 1 → "1st Floor", 2 → "2nd Floor" …
-export function floorLabel(floor: number) {
-  if (floor === 0) return "Ground Floor";
-  const suffix =
-    floor % 100 >= 11 && floor % 100 <= 13
-      ? "th"
-      : ["th", "st", "nd", "rd"][floor % 10] ?? "th";
-  return `${floor}${suffix} Floor`;
+// Only brands whose contact details have actually been confirmed. Everything
+// else is deliberately left blank rather than guessed at.
+const CONTACTS: Record<string, { phone?: string; email?: string }> = {
+  adidas: { phone: "1800-570-3944", email: "service@onlineshop.adidas.co.in" },
+};
+
+function floorName(floors: string[]) {
+  const names = floors.map((f) => FLOOR_LABELS[f]?.name ?? f.toUpperCase());
+  if (names.length === 1) return names[0];
+  // "Ground, First & Second Floor" reads better than three full names.
+  const short = names.map((n) => n.replace(/ Floor$/, ""));
+  const last = short.pop();
+  return `${short.join(", ")} & ${last} Floor`;
+}
+
+function build(entry: DirectoryStore, section: Store["section"]): Store {
+  const copy = STORE_COPY[entry.slug];
+  const contact = CONTACTS[entry.slug] ?? {};
+  return {
+    slug: entry.slug,
+    name: entry.name,
+    section,
+    category: CATEGORY_LABELS[entry.cat] ?? entry.cat,
+    floors: entry.floors,
+    floorName: floorName(entry.floors),
+    logo: entry.logo,
+    bg: entry.bg,
+    knockout: entry.knockout,
+    tagline: copy?.tagline ?? "",
+    description: copy?.description ?? "",
+    hours: STORE_HOURS,
+    opensAt: OPENS_AT,
+    closesAt: CLOSES_AT,
+    ...contact,
+  };
 }
 
 export const STORES: Store[] = [
-  {
-    slug: "adidas",
-    name: "Adidas",
-    category: "Sportswear & Footwear",
-    floor: 1,
-    about: [
-      "Adidas designs, manufactures and markets athletic and sports lifestyle products. The company's product portfolio includes footwear, apparel and accessories such as bags, sunglasses, fitness equipment, and balls.",
-    ],
-    tags: ["Footwear", "Apparel", "Accessories", "Fitness Equipment"],
-    banner: "/images/stores/adidas/banner.webp",
-    gallery: [
-      "/images/stores/adidas/gallery-1.webp",
-      "/images/stores/adidas/gallery-2.webp",
-      "/images/stores/adidas/gallery-3.webp",
-    ],
-    hours: [{ days: "Monday to Sunday", time: "11:00 AM – 11:00 PM" }],
-    opensAt: 11,
-    closesAt: 23,
-    phone: "1800-570-3944",
-    email: "service@onlineshop.adidas.co.in",
-  },
-  {
-    // Original demo profile, kept on the same base format.
-    slug: "atlas-supply",
-    name: "Atlas Supply",
-    category: "Sports & Outdoor",
-    floor: 1,
-    unit: "Unit 112",
-    landmark: "Near the Central Atrium",
-    about: [
-      "Placeholder introduction for this store — two or three sentences describing what it offers and who it is for. Replace with the tenant's own brand story.",
-      "Second placeholder paragraph with room for collection highlights, services such as fitting or repairs, and anything else a visitor should know before dropping in.",
-    ],
-    tags: ["Sportswear", "Footwear", "Outdoor Gear", "Equipment"],
-    banner: IMG.hero,
-    gallery: [IMG.squareB, IMG.wide, IMG.squareA],
-    hours: MALL_HOURS,
-    opensAt: 11,
-    closesAt: 22,
-  },
+  ...SHOP_STORES.map((s) => build(s, "shop")),
+  ...DINE_STORES.map((s) => build(s, "dine")),
+  ...ENTERTAINMENT_STORES.map((s) => build(s, "entertain")),
 ];
 
 export function getStore(slug: string) {
   return STORES.find((s) => s.slug === slug);
 }
 
-// "You may also like" carousel — every other brand from the homepage list.
-// Name compare is case-insensitive (cards are all-caps, profiles are not).
-export function relatedStores(store: Store) {
-  return TOP_SHOPS.filter(
-    (s) => s.name.toLowerCase() !== store.name.toLowerCase(),
-  ).slice(0, 8);
+export function storesIn(section: Store["section"]) {
+  return STORES.filter((s) => s.section === section);
+}
+
+/** Path to a store's page, e.g. /shop/adidas */
+export function storeHref(store: { section: Store["section"]; slug: string }) {
+  return `/${store.section}/${store.slug}`;
+}
+
+/** Every slug that has a page, so directory cards know to link. */
+export const STORE_PAGE_SLUGS = new Set(STORES.map((s) => s.slug));
+
+/** Look up which section a slug belongs to, for building links. */
+export const STORE_SECTION = new Map(STORES.map((s) => [s.slug, s.section]));
+
+/**
+ * Neighbours worth walking to next. A category with enough members stands
+ * on its own; a thin one (Eyewear has a single store) falls back to the
+ * wider section, and the caller is told so it can title the strip honestly.
+ */
+export function relatedStores(store: Store, limit = 8) {
+  const sameCategory = STORES.filter(
+    (s) => s.slug !== store.slug && s.category === store.category,
+  );
+  if (sameCategory.length >= 3) {
+    return { stores: sameCategory.slice(0, limit), sameCategory: true };
+  }
+  const rest = STORES.filter(
+    (s) =>
+      s.slug !== store.slug &&
+      s.section === store.section &&
+      !sameCategory.includes(s),
+  );
+  return {
+    stores: [...sameCategory, ...rest].slice(0, limit),
+    sameCategory: false,
+  };
 }

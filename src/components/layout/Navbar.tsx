@@ -77,17 +77,26 @@ export default function Navbar() {
 
           {/* Desktop links */}
           <nav className="hidden items-center gap-8 lg:flex">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`text-[15px] font-semibold uppercase tracking-wider transition-colors duration-300 ${linkColor} ${
-                  pathname === link.href ? "underline underline-offset-8" : ""
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const cls = `text-[15px] font-semibold uppercase tracking-wider transition-colors duration-300 ${linkColor} ${
+                pathname === link.href ? "underline underline-offset-8" : ""
+              }`;
+              return link.external ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cls}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link key={link.label} href={link.href} className={cls}>
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Right icons */}
@@ -112,11 +121,6 @@ export default function Navbar() {
                 <path d="M9 3v16M15 5v16" />
               </svg>
             </Link>
-            <span
-              className={`hidden cursor-pointer text-[15px] font-semibold uppercase tracking-wider md:block ${linkColor}`}
-            >
-              AR
-            </span>
             {/* Hamburger */}
             <button
               aria-label="Open menu"
@@ -173,12 +177,23 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.15 + i * 0.06, ease: EASE }}
                   >
-                    <Link
-                      href={link.href}
-                      className="font-display text-2xl uppercase tracking-wide text-ink transition-colors hover:text-primary"
-                    >
-                      {link.label}
-                    </Link>
+                    {link.external ? (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-display text-2xl uppercase tracking-wide text-ink transition-colors hover:text-primary"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="font-display text-2xl uppercase tracking-wide text-ink transition-colors hover:text-primary"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </motion.div>
                 ))}
               </nav>

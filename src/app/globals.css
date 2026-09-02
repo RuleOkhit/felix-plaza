@@ -83,3 +83,38 @@ html.lenis body {
   background: var(--color-primary);
   color: #fff;
 }
+
+/* ---------------------------------------------------------------------------
+   Section grounds. Very low-contrast washes so a page is never a flat sheet
+   of white, while type stays the loudest thing on it. The tints are drawn
+   from the brand palette but kept far below the strength of the logo colours
+   themselves, so nothing competes with the store artwork sitting on top.
+--------------------------------------------------------------------------- */
+.ground-soft {
+  background:
+    radial-gradient(120% 78% at 6% 0%, rgba(91, 95, 199, 0.055), transparent 58%),
+    radial-gradient(85% 65% at 96% 4%, rgba(226, 114, 91, 0.038), transparent 62%),
+    #ffffff;
+}
+
+.ground-tint {
+  background:
+    radial-gradient(105% 80% at 88% 0%, rgba(91, 95, 199, 0.075), transparent 60%),
+    radial-gradient(80% 70% at 4% 100%, rgba(226, 114, 91, 0.04), transparent 62%),
+    linear-gradient(180deg, #faf9fc 0%, #f4f3f8 100%);
+}
+
+.ground-band {
+  background:
+    radial-gradient(70% 130% at 16% 50%, rgba(91, 95, 199, 0.1), transparent 62%),
+    radial-gradient(60% 130% at 90% 50%, rgba(226, 114, 91, 0.06), transparent 64%),
+    linear-gradient(180deg, #fbfafd 0%, #f5f4f9 100%);
+}
+
+/* Dark counterpart, for the closing bands on inner pages. */
+.ground-deep {
+  background:
+    radial-gradient(80% 120% at 12% 0%, rgba(255, 255, 255, 0.13), transparent 60%),
+    radial-gradient(70% 110% at 92% 100%, rgba(91, 95, 199, 0.35), transparent 62%),
+    #17161f;
+}

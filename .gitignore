@@ -54,3 +54,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Supplied source artwork. The processed logos the site actually serves live
+# in public/images/logos; these originals are large and stay local.
+/Final Store Infos/
+/older-logos/

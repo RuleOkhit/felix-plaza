@@ -37,7 +37,7 @@ export default function ContactSection() {
                 variants={fadeUp}
                 className="text-xs font-bold uppercase tracking-[0.25em] text-[#128c7e]"
               >
-                Guest Services
+                Customer Services
               </motion.p>
               <motion.h2
                 variants={fadeUp}

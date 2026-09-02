@@ -71,7 +71,7 @@ export default function CardCarousel({ items, variant = "shop", id }: CardCarous
                     {item.name}
                   </p>
                   <span className="text-sm font-semibold uppercase tracking-wider text-primary underline-offset-4 transition-colors duration-300 group-hover:underline">
-                    See Details
+                    Discover
                   </span>
                 </div>
               )}

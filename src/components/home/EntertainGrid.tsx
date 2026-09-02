@@ -32,17 +32,18 @@ export default function EntertainGrid() {
             <motion.div
               key={item.name}
               variants={fadeUp}
-              className="w-[78%] shrink-0 snap-center sm:w-[52%] md:w-auto md:shrink"
+              className={`w-[78%] shrink-0 snap-center sm:w-[52%] md:w-auto md:shrink ${
+                item.mobileOnly ? "md:hidden" : ""
+              }`}
             >
               <Link href={item.href} className="group block">
                 {/* Logo tile — contained so each mark keeps its proportions.
-                    Knockout logos get the dark tile they were drawn for. */}
+                    Where the artwork ships on a solid ground the tile is
+                    painted to match, so it fills edge to edge rather than
+                    floating in white. */}
                 <div
-                  className={`relative aspect-[16/10] overflow-hidden rounded-xl border transition-all duration-500 ease-in-out group-hover:shadow-[0_14px_34px_-14px_rgba(23,22,31,0.3)] ${
-                    item.darkTile
-                      ? "border-ink/80 bg-ink group-hover:border-ink"
-                      : "border-ink/10 bg-white group-hover:border-primary/40"
-                  }`}
+                  className="relative aspect-[16/10] overflow-hidden rounded-xl ring-1 ring-ink/10 transition-all duration-500 ease-in-out group-hover:shadow-[0_14px_34px_-14px_rgba(23,22,31,0.3)]"
+                  style={{ backgroundColor: item.bg ?? "#ffffff" }}
                 >
                   <Image
                     src={item.image}

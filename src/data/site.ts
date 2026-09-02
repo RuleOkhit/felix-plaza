@@ -4,14 +4,15 @@
 
 export const SITE = {
   name: "Felix Plaza",
-  tagline: "Shopping, Dining & Entertainment in Gurugram",
+  tagline: "Shopping, Dining and Entertainment in Gurugram",
   description: "Shop. Dine. Unwind. It’s All About the Vibe.",
   phone: "+91 93557 78800",
   phoneLink: "+919355778800", // tel: href (digits only, with country code)
   whatsapp: "919355778800", // wa.me path (no +, no spaces)
   email: "info.desk@felixrealty.com",
   address: "NH-48, Sector 82A, Gurugram",
-  hours: "11:00 AM – 10:00 PM",
+  hours: "11:00 AM to 10:00 PM",
+  mapsUrl: "https://maps.app.goo.gl/4qgFhVqp1fYWG3KQ7",
 };
 
 // Builds a WhatsApp deep link, optionally pre-filling the first message.
@@ -33,14 +34,21 @@ export const BRAND = {
   insigniaHeight: 244,
 };
 
-export type NavLink = { label: string; href: string };
+export type NavLink = {
+  label: string;
+  href: string;
+  /** Lives on another domain, so it opens in a new tab. */
+  external?: boolean;
+};
 
 export const NAV_LINKS: NavLink[] = [
   { label: "Shop", href: "/shop" },
   { label: "Dine", href: "/dine" },
   { label: "Entertain", href: "/entertain" },
-  { label: "Offers", href: "/offers" },
-  { label: "Events", href: "/events" },
+  // Offers is parked for now: the page still exists under src/app/_offers
+  // (an underscore folder is invisible to the router) and comes back by
+  // renaming the folder and restoring this line.
+  { label: "Events", href: "https://events.felixplaza.com/", external: true },
   { label: "Plan Your Visit", href: "/plan-your-visit" },
 ];
 
@@ -84,19 +92,17 @@ export const HERO_IMG = {
 // To add a brand: drop the file in public/images/logos and add it here.
 export const LOGO = {
   hm: "/images/logos/h-and-m.webp",
-  westside: "/images/logos/westside.svg",
+  westside: "/images/logos/westside.webp",
   calvinKlein: "/images/logos/calvin-klein.webp",
   marksSpencer: "/images/logos/marks-and-spencer.webp",
   lifestyle: "/images/logos/lifestyle.webp",
   adidas: "/images/logos/adidas.webp",
   tommyHilfiger: "/images/logos/tommy-hilfiger.webp",
   haldirams: "/images/logos/haldirams.webp",
-  burgerKing: "/images/logos/burger-king.svg",
+  burgerKing: "/images/logos/burger-king.webp",
   kfc: "/images/logos/kfc.webp",
   tacoBell: "/images/logos/taco-bell.webp",
   cinepolis: "/images/logos/cinepolis.webp",
   funcity: "/images/logos/funcity.webp",
-  // Placeholder wordmarks — swap for the real logos when supplied.
-  gameX: "/images/logos/game-x.svg",
-  atlasSupply: "/images/logos/atlas-supply.svg",
+  gameX: "/images/logos/game-x.webp",
 } as const;

@@ -80,7 +80,7 @@ export const DIRECTORY_SECTIONS: DirectorySection[] = [
   },
 ];
 // Note: /events now uses its own editorial template
-// (src/components/events/*) instead of this directory layout.
+// Events now live on a separate site at events.felixplaza.com.
 
 export function getSection(slug: string) {
   return DIRECTORY_SECTIONS.find((s) => s.slug === slug);

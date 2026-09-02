@@ -1,125 +1,84 @@
-# Homepage Image Spec — Felix Plaza
+# Image Spec — Felix Plaza
 
-Status of every image on the homepage: what's already in, and what's still
-needed. Files live in `public/images/` (logos in `public/images/logos/`) and
-are wired up in `src/data/site.ts` (`IMG` and `LOGO` maps) and
-`src/data/home.ts`.
-
-**Global rules:** sRGB · photos as JPG/WebP (quality 75–85) · logos as
-transparent PNG or SVG · everything is served through `next/image`, so
-supply one large master per slot and Next generates the rest.
+Developer-facing record of what artwork the site uses and what is still
+outstanding. The designer-facing version of this list (with shot
+suggestions and composition notes) is the **Shot List** artifact.
 
 ---
 
-## ✅ Supplied — tenant logos (12)
+## ✅ Done
 
-Live on the homepage now, displayed **contained** on a white tile, so any
-proportion works without cropping (the supplied files run from 4.5:1
-Cinépolis to 0.7:1 Taco Bell and all sit correctly).
-
-| Where | Brands |
+| Asset | Detail |
 | --- | --- |
-| `/shop` — full directory | 69 stores (66 with real logos) |
-| `/dine` — full directory | 15 outlets (all with real logos) |
-| Homepage Store Spotlight | curated 7 |
-| Homepage Time to Dine | curated 4 |
-| Homepage Entertainment | FUNCITY · CINÉPOLIS (+ GAME X placeholder) |
+| Tenant logos | 99 files in `public/images/logos/`, ~2.1 MB total. Imported from `Final Store Infos`, trimmed and normalised to WebP, max 640 px. |
+| Felix Plaza logo | `logo-felix-plaza.png` (brand purple) and `logo-felix-plaza-white.png` (knockout). Brand purple is **#352761**. |
+| Favicon | `src/app/icon.png` |
+| Adidas store page | `public/images/stores/adidas/` — banner + 3 gallery images |
 
-All were trimmed of baked-in padding, capped at 600 px on the long edge and
-converted to WebP (vector kept as SVG) — 87 files, 1.3 MB total. Three
-knockout logos (BONKERS CORNER, ZUDIO, FUNCITY) are flagged `darkTile` and
-render on the dark brand colour so they stay visible.
+Logos are displayed **contained** on a light tile so any proportion sits
+correctly. Three carry their own solid ground and are painted to match
+rather than framed in white:
+
+| Logo | Panel colour |
+| --- | --- |
+| FunCity | `#4d3873` |
+| Game X | `#030306` |
+| Fun Block | `#ffffff` |
+
+`NYKD BY NYKAA` is the only true white-knockout mark and renders on a dark
+tile (`knockout: true` in `store-directory.ts`).
 
 ---
 
-## ⏳ Hero slider — temporary artwork in place (4)
+## ⏳ Outstanding
 
-The four slides (Shop / Dine / Entertain / Unwind) currently use
-**brand-coloured abstract artwork**, generated at 2560 x 1440 — one mood
-per slide, with the Felix insignia as a faint motif bleeding off one edge.
-Together they are 164 KB.
+All still pointing at the placeholder SVGs in `public/images/`.
 
-These are placeholders. To replace with real photography, drop the files at
-the same paths in `public/images/hero/` (`hero-shop`, `hero-dine`,
-`hero-entertain`, `hero-unwind`):
+| # | Slot | Where | Export | Ratio |
+| --- | --- | --- | --- | --- |
+| 4 | Hero slider | Homepage | 2560 × 1440 | 16:9 |
+| 1 | Page header | `/plan-your-visit` | 2400 × 900 | 3.4:1 |
+| 1 | Page header | `/offers` | 2400 × 900 | 3.4:1 |
+| 1 | Promo banner | Homepage | 2300 × 620 | 3.7:1 |
+| 1 | Featured event | `/events` | 2560 × 1440 | 16:9 |
+| 1 | Archive lead | `/events` | 2400 × 1030 | 21:9 → 4:5 |
+| 3 | Archive cards | `/events` | 1200 × 900 | 4:3 |
+| 6 | Offer cards | `/offers` | 1000 × 1000 | 1:1 |
+| 1 | Find Us panel | `/plan-your-visit` | 1400 × 1100 | 1.3:1 |
+| 1 | Social share | site-wide | 1200 × 630 | 1.91:1 |
 
-| | |
-| --- | --- |
-| Aspect ratio | 16:9 master (cropped by `object-cover` to any screen) |
-| **Export** | **2560 x 1440** (minimum 1920 x 1080) |
-| Format | JPG or WebP, under ~400 KB each |
+⚠️ **The four hero photos need re-supplying.** They are saved at
+2560 × 1440 but contain no detail beyond 1280 × 720 — verified by
+round-tripping each through a 1280 downscale, which produced a mean pixel
+delta of 0.00. They were upscaled and will look soft on large displays.
 
-A dark scrim sits over the image with the huge slide title **dead centre**,
-hours + address **bottom-left**, progress bars **bottom-centre** and the
-navbar **on top** — so keep the middle of the frame calm. Phones crop the
-sides hard; keep the subject centred.
+### Per-store template (repeatable)
 
-## ✅ Supplied — Felix Plaza logo
+| Asset | Export | Ratio |
+| --- | --- | --- |
+| Banner | 2000 × 540 | 3.7:1 |
+| Gallery | 1000 × 1000 × 3 | 1:1 |
 
-Extracted from the supplied vector PDF into three web assets:
-
-| File | Use |
-| --- | --- |
-| `logo-felix-plaza.png` | Brand purple — solid navbar, footer |
-| `logo-felix-plaza-white.png` | White knockout — navbar over the hero, contact band |
-| `src/app/icon.png` | Favicon, white logo on a brand-purple tile |
-
-For reference, the brand purple sampled from the artwork is **#352761**.
+Only Adidas has a page so far. Its gallery files are 500 × 500 — fine as
+thumbnails, soft in the lightbox; use 1000 × 1000 going forward.
 
 ---
 
-## ⏳ Still needed
+## Also outstanding (not artwork)
 
-### A. Promo banner — 1 photo
-
-| | |
-| --- | --- |
-| Where | Wide banner between Store Spotlight and Time to Dine |
-| Aspect ratio | ~3.7:1 (1150 : 311) |
-| **Export** | **2300 × 622** (minimum 1600 × 433) |
-| Format | JPG or WebP |
-
-Headline and copy sit on the **left** over a dark gradient with a button on
-the right — keep the left third simple, and bake no text into the image.
-Goes nearly square on mobile, so keep the subject centred.
-
-### B. Missing logos — 4 brands
-
-Everything else from the store list is in. These four show a **temporary
-text wordmark** and are marked `logoPending` in
-`src/data/store-directory.ts`:
-
-| Brand | Placeholder file |
-| --- | --- |
-| BARARA ETHNIC | `logos/barara-ethnic.svg` |
-| HAPPYNEST | `logos/happynest.svg` |
-| NYKAA LUXE | `logos/nykaa-luxe.svg` |
-| GAME X | `logos/game-x.svg` (homepage only — not in the store list) |
-| TASVA · FRIDO · CARATLANE | removed from Store Spotlight |
-| AMRITSARI EXPRESS · KEVENTERS | removed from Time to Dine |
-
-**Spec for these:** SVG, or transparent PNG at **1000 px or more on the
-longest side**. Any aspect ratio is fine. The mark must be **dark or
-full-colour** — a white/knockout version will be invisible on the white
-tile. To add one: drop the file in `public/images/logos/`, add it to the
-`LOGO` map in `src/data/site.ts`, and add the brand back to `TOP_SHOPS` or
-`DINE_SPOTS` in `src/data/home.ts`.
-
-### C. Social share image
-
-**1200 × 630** JPG or PNG — the preview card shown when the link is shared.
-Matters here given the WhatsApp focus. Include the logo and keep text well
-inside the edges.
+- **Copy:** the six offer cards, the featured-event details, the four event
+  recap lines, and the promo-banner headline are still placeholder text.
+- **Open Graph metadata** is not configured — add it once the share card
+  lands.
+- **`/shop/atlas-supply`** is a fictional demo store used to prototype the
+  store-page layout. Delete before launch.
 
 ---
 
-## Summary
+## Conventions
 
-| | Count |
-| --- | --- |
-| ✅ Tenant logos live | 83 |
-| ⏳ Hero slides | 4 temp graphics |
-| ✅ Brand logo + favicon | done |
-| ⏳ Promo banner needed | 1 |
-| ⏳ Tenant logos still missing | 4 |
-| ⏳ Social share image | 1 |
+- JPG or WebP, sRGB, quality ~80. Supply the largest size listed.
+- **No text baked into images** — every headline is live type on top.
+- The site is a static export with **no image optimizer**, so files are
+  served as-is. Keep them compressed.
+- Drop files in `public/images/` and wire them up in `src/data/`.

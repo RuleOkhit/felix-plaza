@@ -39,15 +39,25 @@ export default function Footer() {
           </Link>
 
           <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2.5 md:gap-x-8">
-            {NAV_LINKS.map((l) => (
-              <Link
-                key={l.label}
-                href={l.href}
-                className="text-sm font-semibold uppercase tracking-wider text-ink/70 transition-colors duration-300 hover:text-primary"
-              >
-                {l.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((l) => {
+              const cls =
+                "text-sm font-semibold uppercase tracking-wider text-ink/70 transition-colors duration-300 hover:text-primary";
+              return l.external ? (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cls}
+                >
+                  {l.label}
+                </a>
+              ) : (
+                <Link key={l.label} href={l.href} className={cls}>
+                  {l.label}
+                </Link>
+              );
+            })}
           </nav>
 
           <ul className="flex items-center gap-3">

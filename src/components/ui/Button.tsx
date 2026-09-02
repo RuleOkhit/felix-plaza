@@ -6,6 +6,8 @@ type ButtonProps = {
   children: ReactNode;
   variant?: "primary" | "accent" | "light";
   className?: string;
+  /** Opens in a new tab. Use for links that leave the site. */
+  external?: boolean;
 };
 
 // Pill button matching the reference proportions (rounded-full, generous
@@ -24,12 +26,20 @@ export default function Button({
   children,
   variant = "primary",
   className = "",
+  external = false,
 }: ButtonProps) {
+  const classes = `inline-block rounded-full border-2 px-7 py-2.5 text-base font-bold leading-snug transition-all duration-500 ease-in-out md:text-lg ${VARIANTS[variant]} ${className}`;
+
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <Link
-      href={href}
-      className={`inline-block rounded-full border-2 px-7 py-2.5 text-base font-bold leading-snug transition-all duration-500 ease-in-out md:text-lg ${VARIANTS[variant]} ${className}`}
-    >
+    <Link href={href} className={classes}>
       {children}
     </Link>
   );
