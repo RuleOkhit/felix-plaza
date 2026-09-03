@@ -101,7 +101,7 @@ html.lenis body {
   background:
     radial-gradient(105% 80% at 88% 0%, rgba(91, 95, 199, 0.075), transparent 60%),
     radial-gradient(80% 70% at 4% 100%, rgba(226, 114, 91, 0.04), transparent 62%),
-    linear-gradient(180deg, #faf9fc 0%, #f4f3f8 100%);
+    linear-gradient(180deg, #f6f5fb 0%, #edecf4 100%);
 }
 
 .ground-band {

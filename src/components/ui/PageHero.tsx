@@ -37,15 +37,16 @@ export default function PageHero({
         style={{ objectPosition: focus }}
       />
 
-      {/* Readability. Weighted to the left, where the type sits, and eased
-          off to the right so the photograph is still the photograph. */}
+      {/* Readability, kept as light as the type allows. Weighted to the
+          left where the words sit and cleared entirely on the right, so the
+          photograph keeps its colour instead of going flat behind a wash. */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/10"
+        className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent"
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/20"
+        className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10"
       />
 
       <div className="relative z-10 w-full px-4 pb-8 md:px-[60px] md:pb-12">

@@ -13,7 +13,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 export default function EntertainGrid() {
   const intro = SECTION_INTROS.entertain;
   return (
-    <section className="py-[44px] md:py-[70px]">
+    <section className="ground-tint py-[44px] md:py-[70px]">
       <div className="px-4 md:px-[60px]">
         <SectionHeader
           title={intro.title}

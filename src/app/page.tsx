@@ -33,9 +33,9 @@ export default function Home() {
 
       <OpeningSoonBand />
 
-      {/* Dine — the one tinted band in the run, so the page has a rhythm
-          rather than one long sheet of white */}
-      <section className="ground-tint py-[44px] md:py-[70px]">
+      {/* Grounds alternate down the page (near-white, tint, white, tint)
+          so neighbouring sections never run into one another */}
+      <section className="bg-white py-[44px] md:py-[70px]">
         <div className="px-4 md:px-[60px]">
           <SectionHeader
             title={SECTION_INTROS.dine.title}

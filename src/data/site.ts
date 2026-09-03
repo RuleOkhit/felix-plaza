@@ -92,7 +92,7 @@ export const HERO_IMG = {
 // own composition needs: these are wide letterbox frames cut from squarer
 // photographs, so a plain centre crop clips the subject.
 export const BANNER = {
-  shop: { src: "/images/banners/shop.webp", focus: "58% 55%" },
+  shop: { src: "/images/banners/shop.webp", focus: "58% 44%" },
   dine: { src: "/images/banners/dine.webp", focus: "50% 50%" },
   entertain: { src: "/images/banners/entertain.webp", focus: "50% 38%" },
   visit: { src: "/images/banners/plan-your-visit.webp", focus: "62% 48%" },

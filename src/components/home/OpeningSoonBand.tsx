@@ -11,7 +11,7 @@ import { OPENING_SOON } from "@/data/home";
 // OPENING_SOON.brands once the real line up is confirmed.
 export default function OpeningSoonBand() {
   return (
-    <section className="bg-white pb-7 pt-1 md:pb-9 md:pt-2">
+    <section className="ground-tint py-7 md:py-9">
       <div className="px-4 md:px-[60px]">
         <div className="flex items-center gap-4">
           <p className="shrink-0 text-[11px] font-bold uppercase tracking-[0.2em] text-ink/50">
