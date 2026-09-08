@@ -13,6 +13,7 @@ import {
   SHOP_STORES,
   type DirectoryStore,
 } from "@/data/store-directory";
+import { onSite } from "@/data/parked";
 import { EASE } from "@/lib/motion";
 
 // ---------------------------------------------------------------------------
@@ -126,9 +127,9 @@ const PAGES: Entry[] = [
 ];
 
 const INDEX: Entry[] = [
-  ...fromStores(SHOP_STORES, "shop"),
-  ...fromStores(DINE_STORES, "dine"),
-  ...fromStores(ENTERTAINMENT_STORES, "entertain"),
+  ...fromStores(onSite(SHOP_STORES), "shop"),
+  ...fromStores(onSite(DINE_STORES), "dine"),
+  ...fromStores(onSite(ENTERTAINMENT_STORES), "entertain"),
   ...PAGES,
 ];
 

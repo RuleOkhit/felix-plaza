@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ENTERTAINMENT_STORES } from "@/data/store-directory";
+import { onSite } from "@/data/parked";
 import { fadeUp, stagger, viewportOnce } from "@/lib/motion";
 import PageHero from "@/components/ui/PageHero";
 import Reveal from "@/components/ui/Reveal";
@@ -42,7 +43,7 @@ export default function EntertainmentDirectory() {
             viewport={viewportOnce}
             className="mx-auto mt-12 grid max-w-5xl gap-x-10 gap-y-14 sm:grid-cols-2 md:mt-16 md:gap-x-14 md:gap-y-20"
           >
-            {ENTERTAINMENT_STORES.map((venue) => (
+            {onSite(ENTERTAINMENT_STORES).map((venue) => (
               <motion.article key={venue.slug} variants={fadeUp}>
                 <Link href={`/entertain/${venue.slug}`} className="group block">
                 <div

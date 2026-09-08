@@ -77,10 +77,11 @@ export const IMG = {
 
 export type ImgKey = keyof typeof IMG;
 
-// Hero slider backgrounds. TEMPORARY: brand-coloured abstract artwork
-// (generated at 2560x1440, one mood per slide, with the Felix insignia as
-// a faint motif). Swap these files for real photography when it is shot —
-// the paths and sizes stay the same. See IMAGE-SPEC.md for the brief.
+// Hero slider backgrounds: finished 2560x1440 artwork, one per slide. The
+// word, the rule under it and the chevron motif are part of the image, so
+// HeroSlider deliberately draws no heading of its own over the top. The type
+// sits in the left half of the frame, which is why the slider anchors the
+// crop left rather than centring it.
 export const HERO_IMG = {
   shop: "/images/hero/hero-shop.webp",
   dine: "/images/hero/hero-dine.webp",

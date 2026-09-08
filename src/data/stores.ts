@@ -7,6 +7,7 @@ import {
   type DirectoryStore,
 } from "./store-directory";
 import { STORE_COPY } from "./store-copy";
+import { onSite } from "./parked";
 
 // ---------------------------------------------------------------------------
 // STORE PAGES
@@ -89,9 +90,9 @@ function build(entry: DirectoryStore, section: Store["section"]): Store {
 }
 
 export const STORES: Store[] = [
-  ...SHOP_STORES.map((s) => build(s, "shop")),
-  ...DINE_STORES.map((s) => build(s, "dine")),
-  ...ENTERTAINMENT_STORES.map((s) => build(s, "entertain")),
+  ...onSite(SHOP_STORES).map((s) => build(s, "shop")),
+  ...onSite(DINE_STORES).map((s) => build(s, "dine")),
+  ...onSite(ENTERTAINMENT_STORES).map((s) => build(s, "entertain")),
 ];
 
 export function getStore(slug: string) {

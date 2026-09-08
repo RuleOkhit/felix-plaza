@@ -5,6 +5,7 @@ import {
   SHOP_STORES,
   type DirectoryStore,
 } from "./store-directory";
+import { onSite } from "./parked";
 import { STORE_COPY } from "./store-copy";
 
 // ---------------------------------------------------------------------------
@@ -56,7 +57,7 @@ function feature(
 }
 
 /* Featured on the homepage. Swap a slug to change the line up. */
-export const TOP_SHOPS = feature(SHOP_STORES, "shop", [
+export const TOP_SHOPS = feature(onSite(SHOP_STORES), "shop", [
   "h-and-m",
   "westside",
   "levis",
@@ -69,7 +70,7 @@ export const TOP_SHOPS = feature(SHOP_STORES, "shop", [
   "biba",
 ]);
 
-export const DINE_SPOTS = feature(DINE_STORES, "dine", [
+export const DINE_SPOTS = feature(onSite(DINE_STORES), "dine", [
   "haldirams",
   "burger-king",
   "kfc",
@@ -89,7 +90,7 @@ export type EntertainCard = {
   mobileOnly?: boolean;
 };
 
-export const ENTERTAINMENT: EntertainCard[] = ENTERTAINMENT_STORES.map((v) => ({
+export const ENTERTAINMENT: EntertainCard[] = onSite(ENTERTAINMENT_STORES).map((v) => ({
   name: v.name,
   blurb: STORE_COPY[v.slug]?.tagline ?? "",
   image: v.logo,
@@ -109,14 +110,13 @@ export const OPENING_SOON = {
   eyebrow: "Opening Soon",
   cta: "Discover more",
   href: "/shop",
-  brands: feature(SHOP_STORES, "shop", [
+  brands: feature(onSite(SHOP_STORES), "shop", [
     "aldo",
     "birkenstock",
     "hidesign",
     "samsonite",
     "giva",
     "bluestone",
-    "skechers",
     "asics",
     "mochi",
     "rareism",

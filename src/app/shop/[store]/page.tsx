@@ -5,6 +5,11 @@ import { getStore, storesIn } from "@/data/stores";
 
 type Params = { store: string };
 
+// Only the slugs listed below exist. This site is a static export, which
+// does not support dynamicParams: true (the default), so a parked or
+// unknown slug has to 404 rather than be rendered on demand.
+export const dynamicParams = false;
+
 // One page per store in this section, generated from the directory data.
 export function generateStaticParams(): Params[] {
   return storesIn("shop").map((s) => ({ store: s.slug }));

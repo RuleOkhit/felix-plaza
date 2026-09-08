@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -11,14 +10,23 @@ import { HERO_SLIDES } from "@/data/home";
 import { SITE } from "@/data/site";
 import { EASE } from "@/lib/motion";
 
-// Full-viewport hero: autoplaying fade slider with a huge display heading,
-// gradient scrim, bar-style pagination inside a dark pill, round nav arrows
-// and an info caption pinned to the bottom-left (hours / location rows).
+// Full-bleed hero slider.
+//
+// The slides are finished artwork: the word (SHOP, DINE, ENTERTAIN, UNWIND),
+// the rule beneath it and the chevron motif are all part of the image, and
+// each frame is already colour graded. So this component draws no heading of
+// its own and no heavy scrim; doing either would double up on the design.
+//
+// What the artwork costs us is freedom over the crop. The type sits in the
+// left half, between 65% and 79% of the frame's height, so:
+//   - the image is anchored left, never centred, or the first letter goes;
+//   - the box keeps a near-square shape on phones, because a full-height
+//     portrait crop of a 16:9 frame would show the middle third only and cut
+//     the word out completely;
+//   - the caption and dots sit low and compact, clear of the baked rule.
 export default function HeroSlider() {
-  const [active, setActive] = useState(0);
-
   return (
-    <section className="relative h-svh min-h-[560px] w-full overflow-hidden">
+    <section className="relative h-[400px] w-full overflow-hidden lg:h-svh lg:min-h-[700px]">
       <Swiper
         modules={[Autoplay, EffectFade, Navigation, Pagination]}
         effect="fade"
@@ -28,73 +36,50 @@ export default function HeroSlider() {
         loop
         navigation={{ prevEl: ".hero-prev", nextEl: ".hero-next" }}
         pagination={{ el: ".hero-dots", clickable: true, bulletClass: "hero-dot", bulletActiveClass: "hero-dot-active" }}
-        onSlideChange={(s) => setActive(s.realIndex)}
         className="h-full"
       >
         {HERO_SLIDES.map((slide, i) => (
           <SwiperSlide key={slide.title} className="relative h-full">
             <Image
               src={slide.image}
-              alt=""
+              alt={slide.title}
               fill
               priority={i === 0}
-              className="object-cover"
               sizes="100vw"
+              className="object-cover object-[0%_center] lg:object-[4%_center]"
             />
-            {/* Layered scrim. The photography is bright (pale ceilings and
-                walls), so a single flat gradient leaves white display type
-                illegible. Base tint + vertical gradient covering the two
-                text zones (navbar at top, caption and dots at bottom) + a
-                soft centre vignette behind the title, which keeps the
-                edges of the frame bright. */}
-            <div className="absolute inset-0 bg-black/30" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/60" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_45%,rgba(0,0,0,0.55),transparent_75%)]" />
+            {/* Only enough shading to hold the caption and the dots. The
+                artwork is graded already, so anything more flattens it. */}
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.2)_10%,transparent_24%)]"
+            />
           </SwiperSlide>
         ))}
       </Swiper>
 
-      {/* Big animated heading — re-animates on every slide change */}
-      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
-        <AnimatePresence mode="wait">
-          <motion.h2
-            key={active}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.7, ease: EASE }}
-            className="font-display text-[64px] uppercase leading-none tracking-[0.08em] text-white [text-shadow:0_2px_40px_rgba(0,0,0,0.55),0_1px_4px_rgba(0,0,0,0.35)] md:text-[110px]"
-          >
-            {HERO_SLIDES[active].title}
-          </motion.h2>
-        </AnimatePresence>
-      </div>
-
-      {/* Bottom-left caption: hours + location rows */}
+      {/* Hours and address, on one compact line so it always clears the rule
+          drawn into the artwork above it */}
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 0.8, ease: EASE }}
-        className="absolute bottom-[85px] left-0 z-10 hidden px-[60px] md:block"
+        transition={{ delay: 0.5, duration: 0.7, ease: EASE }}
+        className="absolute inset-x-0 bottom-[52px] z-10 px-4 lg:bottom-[58px] lg:px-[60px]"
       >
-        <ul className="space-y-2 text-white">
-          <li className="flex items-center gap-3">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <ul className="flex flex-wrap items-center gap-x-5 gap-y-1 text-[13px] text-white/90 lg:text-sm">
+          <li className="inline-flex items-center gap-2">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
               <circle cx="12" cy="12" r="9" />
               <path d="M12 7v5l3 3" />
             </svg>
-            <span>
-              Open daily <strong>{SITE.hours}</strong>
-            </span>
+            Open daily <strong className="font-bold">{SITE.hours}</strong>
           </li>
-          <li className="flex items-center gap-3">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <li className="hidden items-center gap-2 sm:inline-flex">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z" />
               <circle cx="12" cy="10" r="2.5" />
             </svg>
-            <span>
-              <strong>{SITE.address}</strong>
-            </span>
+            <strong className="font-bold">{SITE.address}</strong>
           </li>
         </ul>
       </motion.div>
@@ -102,7 +87,7 @@ export default function HeroSlider() {
       {/* Round nav arrows */}
       <button
         aria-label="Previous slide"
-        className="hero-prev absolute left-6 top-1/2 z-10 hidden h-[60px] w-[60px] -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white transition-colors duration-300 hover:bg-primary md:flex"
+        className="hero-prev absolute left-6 top-1/2 z-10 hidden h-[60px] w-[60px] -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-colors duration-300 hover:bg-primary lg:flex"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M15 5l-7 7 7 7" />
@@ -110,26 +95,15 @@ export default function HeroSlider() {
       </button>
       <button
         aria-label="Next slide"
-        className="hero-next absolute right-6 top-1/2 z-10 hidden h-[60px] w-[60px] -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white transition-colors duration-300 hover:bg-primary md:flex"
+        className="hero-next absolute right-6 top-1/2 z-10 hidden h-[60px] w-[60px] -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-colors duration-300 hover:bg-primary lg:flex"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M9 5l7 7-7 7" />
         </svg>
       </button>
 
-      {/* Mobile-only hours line — the desktop caption is hidden on phones,
-          so surface the one detail visitors actually check */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.8 }}
-        className="absolute inset-x-4 bottom-[84px] z-10 text-center text-[13px] text-white/85 md:hidden"
-      >
-        Open daily <strong className="font-bold">{SITE.hours}</strong>
-      </motion.p>
-
-      {/* Bar-style dots inside a dark rounded pill */}
-      <div className="hero-dots absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-lg bg-black/60 px-5 py-3" />
+      {/* Bar-style dots */}
+      <div className="hero-dots absolute bottom-3.5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-lg bg-black/55 px-4 py-2.5 lg:bottom-4" />
     </section>
   );
 }
