@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 type ButtonProps = {
   href: string;
   children: ReactNode;
-  variant?: "primary" | "accent" | "light";
+  variant?: "primary" | "accent" | "light" | "brand";
   className?: string;
   /** Opens in a new tab. Use for links that leave the site. */
   external?: boolean;
@@ -19,6 +19,9 @@ const VARIANTS: Record<NonNullable<ButtonProps["variant"]>, string> = {
     "bg-accent border-accent text-white hover:bg-transparent hover:text-accent",
   light:
     "bg-white border-white text-ink hover:bg-transparent hover:text-white",
+  // Felix Plaza logo purple.
+  brand:
+    "bg-felix border-felix text-white hover:bg-transparent hover:text-felix",
 };
 
 export default function Button({

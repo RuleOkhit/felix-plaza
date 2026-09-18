@@ -11,6 +11,8 @@
   --color-accent: #e2725b; /* coral accent */
   --color-surface: #f7f7f7; /* light grey section background */
   --color-whatsapp: #25d366; /* WhatsApp brand green (contact CTA only) */
+  --color-felix: #352761; /* brand purple, from the Felix Plaza logo */
+  --color-felix-pink: #d9447a; /* the slanted stripes in the hero artwork */
 
   --font-display: var(--font-display), serif;
   --font-body: var(--font-body), sans-serif;

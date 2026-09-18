@@ -1,12 +1,12 @@
 import HeroSlider from "@/components/home/HeroSlider";
 import CardCarousel from "@/components/home/CardCarousel";
-import OpeningSoonBand from "@/components/home/OpeningSoonBand";
+import DirectoryBand from "@/components/home/DirectoryBand";
 import EntertainGrid from "@/components/home/EntertainGrid";
 import ContactSection from "@/components/home/ContactSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { DINE_SPOTS, SECTION_INTROS, TOP_SHOPS } from "@/data/home";
 
-// Homepage — hero → top shops → opening soon strip → dine → entertainment
+// Homepage — hero → top shops → store directory band → dine → entertainment
 // → contact card → footer (in layout). Section grounds alternate between a
 // near-white wash and a light tint (see globals.css) so nothing sits on
 // flat white, while the tints stay far below the strength of the logos.
@@ -31,7 +31,7 @@ export default function Home() {
         </div>
       </section>
 
-      <OpeningSoonBand />
+      <DirectoryBand />
 
       {/* Grounds alternate down the page (near-white, tint, white, tint)
           so neighbouring sections never run into one another */}

@@ -11,8 +11,12 @@ export const SITE = {
   whatsapp: "919355778800", // wa.me path (no +, no spaces)
   email: "info.desk@felixrealty.com",
   address: "NH-48, Sector 82A, Gurugram",
-  hours: "11:00 AM to 10:00 PM",
+  hours: "11:00 AM to 11:00 PM",
+  /** Closing time on its own, for copy like "open till …". Keep in step with `hours`. */
+  closes: "11:00 PM",
   mapsUrl: "https://maps.app.goo.gl/4qgFhVqp1fYWG3KQ7",
+  /** The in-house store directory on the main site. */
+  directoryUrl: "https://felixplaza.com/directory/",
 };
 
 // Builds a WhatsApp deep link, optionally pre-filling the first message.
@@ -59,10 +63,10 @@ export const FOOTER_LEGAL_LINKS: NavLink[] = [
 ];
 
 export const SOCIAL_LINKS = [
-  { label: "Instagram", href: "#", icon: "instagram" },
-  { label: "Facebook", href: "#", icon: "facebook" },
-  { label: "X", href: "#", icon: "x" },
-  { label: "YouTube", href: "#", icon: "youtube" },
+  { label: "Instagram", href: "https://www.instagram.com/felixplazaggm/", icon: "instagram" },
+  { label: "Facebook", href: "https://www.facebook.com/felixplazaggm/", icon: "facebook" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/felixrealty/", icon: "linkedin" },
+  { label: "YouTube", href: "https://youtube.com/@felixplazagurugram", icon: "youtube" },
 ] as const;
 
 // Placeholder imagery. Swap these paths (or the files themselves) for real

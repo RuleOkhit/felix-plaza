@@ -9,15 +9,62 @@ import {
   whatsappLink,
 } from "@/data/site";
 
-const SOCIAL_PATHS: Record<string, string> = {
-  instagram:
-    "M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm5 5.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5Zm5.2-1.2a.9.9 0 1 0 0 .01Z",
-  facebook:
-    "M14 8h2.5l.5-3h-3V3.5c0-.9.3-1.5 1.6-1.5H17V-.3A21 21 0 0 0 14.7 0C12.4 0 10.8 1.4 10.8 4v1H8v3h2.8v8h3.2Z",
-  x: "M3 3l7.1 9.5L3.4 21h2.6l5.3-6.7L16 21h5l-7.5-10L20.2 3h-2.6l-4.8 6.1L8 3Z",
-  youtube:
-    "M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8ZM10 15V9l5.2 3Z",
-};
+// The platforms' own app logos, in their brand colours, so each one is
+// recognisable at a glance.
+function SocialIcon({ icon }: { icon: string }) {
+  switch (icon) {
+    case "instagram":
+      return (
+        <svg viewBox="0 0 24 24" className="h-full w-full" aria-hidden>
+          <defs>
+            <radialGradient id="footer-ig" cx="0.3" cy="1.07" r="1.5">
+              <stop offset="0" stopColor="#fdf497" />
+              <stop offset="0.05" stopColor="#fdf497" />
+              <stop offset="0.45" stopColor="#fd5949" />
+              <stop offset="0.6" stopColor="#d6249f" />
+              <stop offset="0.9" stopColor="#285aeb" />
+            </radialGradient>
+          </defs>
+          <rect width="24" height="24" rx="6" fill="url(#footer-ig)" />
+          <rect x="5" y="5" width="14" height="14" rx="4" fill="none" stroke="#fff" strokeWidth="1.8" />
+          <circle cx="12" cy="12" r="3.3" fill="none" stroke="#fff" strokeWidth="1.8" />
+          <circle cx="16.1" cy="7.9" r="1" fill="#fff" />
+        </svg>
+      );
+    case "facebook":
+      return (
+        <svg viewBox="0 0 24 24" className="h-full w-full" aria-hidden>
+          <circle cx="12" cy="12" r="11.5" fill="#fff" />
+          <path
+            fill="#0866ff"
+            d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"
+          />
+        </svg>
+      );
+    case "linkedin":
+      return (
+        <svg viewBox="0 0 24 24" className="h-full w-full" aria-hidden>
+          <rect width="24" height="24" rx="4" fill="#0a66c2" />
+          <path
+            fill="#fff"
+            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.063 2.063 0 1 1 0-4.126 2.063 2.063 0 0 1 0 4.126zm1.782 13.019H3.555V9h3.564v11.452z"
+          />
+        </svg>
+      );
+    case "youtube":
+      return (
+        <svg viewBox="0 0 24 24" className="h-full w-full" aria-hidden>
+          <path
+            fill="#ff0000"
+            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+          />
+          <path fill="#fff" d="M9.545 15.568V8.432L15.818 12z" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
 
 // Compact footer: one identity row (logo / links / socials), one contact
 // row, one slim legal bar. Everything wraps and centres on mobile so the
@@ -60,17 +107,17 @@ export default function Footer() {
             })}
           </nav>
 
-          <ul className="flex items-center gap-3">
+          <ul className="flex items-center gap-4">
             {SOCIAL_LINKS.map((s) => (
               <li key={s.label}>
                 <a
                   href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-all duration-500 hover:border-primary hover:bg-primary hover:text-white"
+                  className="block h-8 w-8 transition-transform duration-300 ease-in-out hover:-translate-y-0.5"
                 >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                    <path d={SOCIAL_PATHS[s.icon]} />
-                  </svg>
+                  <SocialIcon icon={s.icon} />
                 </a>
               </li>
             ))}

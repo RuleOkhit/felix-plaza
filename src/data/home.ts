@@ -1,4 +1,4 @@
-import { HERO_IMG } from "./site";
+import { HERO_IMG, SITE } from "./site";
 import {
   DINE_STORES,
   ENTERTAINMENT_STORES,
@@ -6,7 +6,6 @@ import {
   type DirectoryStore,
 } from "./store-directory";
 import { onSite } from "./parked";
-import { STORE_COPY } from "./store-copy";
 
 // ---------------------------------------------------------------------------
 // Homepage content.
@@ -90,9 +89,20 @@ export type EntertainCard = {
   mobileOnly?: boolean;
 };
 
+/*
+ * What each venue is, in a line. Written for the homepage cards only, so the
+ * taglines on the venue pages are left alone.
+ */
+const ENTERTAINMENT_BLURBS: Record<string, string> = {
+  cinepolis: "The latest blockbusters on the big screen.",
+  funcity: "Rides and arcade games for toddlers through to teens.",
+  "fun-block": "Soft play and climbing zones for younger children.",
+  "game-x": "Racing rigs, shooters and multiplayer arcade games.",
+};
+
 export const ENTERTAINMENT: EntertainCard[] = onSite(ENTERTAINMENT_STORES).map((v) => ({
   name: v.name,
-  blurb: STORE_COPY[v.slug]?.tagline ?? "",
+  blurb: ENTERTAINMENT_BLURBS[v.slug] ?? "",
   image: v.logo,
   href: `/entertain/${v.slug}`,
   bg: v.bg,
@@ -102,43 +112,32 @@ export const ENTERTAINMENT: EntertainCard[] = onSite(ENTERTAINMENT_STORES).map((
 }));
 
 /*
- * Brands still fitting out. The marks below are STAND INS drawn from the
- * existing directory purely so the strip has something to show; swap
- * `brands` for the real opening soon line up when it is confirmed.
+ * The strip that sends people to the in-house store directory on the main
+ * site. Adapted from the "Find your favourite store" story creative.
  */
-export const OPENING_SOON = {
-  eyebrow: "Opening Soon",
-  cta: "Discover more",
-  href: "/shop",
-  brands: feature(onSite(SHOP_STORES), "shop", [
-    "aldo",
-    "birkenstock",
-    "hidesign",
-    "samsonite",
-    "giva",
-    "bluestone",
-    "asics",
-    "mochi",
-    "rareism",
-  ]).map((b) => ({ name: b.name, slug: b.href.split("/").pop() ?? "", logo: b.image })),
+export const DIRECTORY_BAND = {
+  title: "Find Your Favourite Store",
+  text: "Your quick guide to every store at Felix Plaza.",
+  cta: "Explore Store Directory",
+  href: SITE.directoryUrl,
 };
 
 export const SECTION_INTROS = {
   shops: {
     title: "Store Spotlight",
-    text: "The kind of afternoon where you walk in for one thing and leave carrying three. Racks worth working through slowly, fitting rooms worth the wait, and staff who actually know what is in the back.",
+    text: "Global labels and homegrown favourites under one roof, from fashion and footwear to beauty, jewellery and home.",
     cta: "Explore Shops",
     href: "/shop",
   },
   dine: {
     title: "Time to Dine",
-    text: "Coffee that pulls you in on the way past, a food court that settles every argument about what to eat, and a proper table when the occasion deserves one.",
+    text: "From a quick coffee to a family meal, choose from cafés, a lively food court and sit-down restaurants.",
     cta: "Explore Dining",
     href: "/dine",
   },
   entertain: {
     title: "Entertainment",
-    text: "Big screens, loud arcades and somewhere for the children to burn off the afternoon. Usually the part of the day nobody wants to cut short.",
+    text: "Catch a movie, take on the arcade or let the little ones loose in a play zone. Fun for every age.",
     cta: "Explore Entertainment",
     href: "/entertain",
   },
