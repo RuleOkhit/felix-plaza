@@ -1,5 +1,6 @@
 // ---------------------------------------------------------------------------
 // STORE DIRECTORY — generated from the mall's data.js (the source of truth).
+// The latest copy supplied is kept at reference/data-new.js.
 // Names, floors and categories are reproduced exactly as they appear there.
 // Logos come from the "Final Store Infos" artwork, trimmed and normalised.
 //
@@ -74,7 +75,7 @@ export const DINE_FILTERS: CategoryFilter[] = [
   { key: "cafe", label: "Cafe", icon: "<path d=\"M5 3h11v9a4 4 0 0 1-8 0V3M2 21h16\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M16 5h2a2 2 0 0 1 0 4h-2\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"/>" },
 ];
 
-/* 77 stores — food, cafés, restaurants and entertainment excluded. */
+/* 81 stores — food, cafés, restaurants and entertainment excluded. */
 export const SHOP_STORES: DirectoryStore[] = [
   { name: "ADIDAS", slug: "adidas", cat: "sportswear", floors: ["1f"], logo: "/images/logos/adidas.webp" },
   { name: "ALDO", slug: "aldo", cat: "footwear", floors: ["gf"], logo: "/images/logos/aldo.webp" },
@@ -82,6 +83,7 @@ export const SHOP_STORES: DirectoryStore[] = [
   { name: "ARETTO", slug: "aretto", cat: "kids", floors: ["2f"], logo: "/images/logos/aretto.webp" },
   { name: "ARROW", slug: "arrow", cat: "apparel", floors: ["1f"], logo: "/images/logos/arrow.webp" },
   { name: "ASICS", slug: "asics", cat: "sportswear", floors: ["1f"], logo: "/images/logos/asics.webp" },
+  { name: "AURELIA", slug: "aurelia", cat: "ethnic", floors: ["2f"], logo: "/images/logos/aurelia.webp", bg: "#f9a63f" },
   { name: "BABYSHOP", slug: "babyshop", cat: "kids", floors: ["2f"], logo: "/images/logos/babyshop.webp" },
   { name: "BARARA ETHNIC", slug: "barara-ethnic", cat: "ethnic", floors: ["2f"], logo: "/images/logos/barara-ethnic.webp" },
   { name: "BATH & BODY WORKS", slug: "bath-and-body-works", cat: "beauty", floors: ["gf"], logo: "/images/logos/bath-and-body-works.webp" },
@@ -135,6 +137,7 @@ export const SHOP_STORES: DirectoryStore[] = [
   { name: "SAFARI", slug: "safari", cat: "bags", floors: ["con"], logo: "/images/logos/safari.webp" },
   { name: "SAMSONITE", slug: "samsonite", cat: "bags", floors: ["1f"], logo: "/images/logos/samsonite.webp" },
   { name: "SAMSUNG", slug: "samsung", cat: "mobile", floors: ["1f"], logo: "/images/logos/samsung.webp" },
+  { name: "SEIKO", slug: "seiko", cat: "watches", floors: ["1f"], logo: "/images/logos/seiko.webp" },
   { name: "SKECHERS", slug: "skechers", cat: "sportswear", floors: ["1f"], logo: "/images/logos/skechers.webp" },
   { name: "SKINBAE", slug: "skinbae", cat: "beauty", floors: ["gf"], logo: "/images/logos/skinbae.webp" },
   { name: "SNITCH", slug: "snitch", cat: "apparel", floors: ["1f"], logo: "/images/logos/snitch.webp" },
@@ -145,17 +148,19 @@ export const SHOP_STORES: DirectoryStore[] = [
   { name: "THE SLEEP COMPANY", slug: "the-sleep-company", cat: "home", floors: ["con"], logo: "/images/logos/the-sleep-company.webp" },
   { name: "TISSOT", slug: "tissot", cat: "watches", floors: ["gf"], logo: "/images/logos/tissot.webp" },
   { name: "TISSOT MBO", slug: "tissot-mbo", cat: "watches", floors: ["gf"], logo: "/images/logos/tissot-mbo.webp" },
+  { name: "TITAN EYE+", slug: "titan-eye-plus", cat: "eyewear", floors: ["1f"], logo: "/images/logos/titan-eye-plus.webp" },
   { name: "TOMMY HILFIGER", slug: "tommy-hilfiger", cat: "apparel", floors: ["gf"], logo: "/images/logos/tommy-hilfiger.webp" },
   { name: "U.S. POLO ASSN.", slug: "us-polo-assn", cat: "apparel", floors: ["1f"], logo: "/images/logos/us-polo-assn.webp" },
   { name: "VAN HEUSEN", slug: "van-heusen", cat: "apparel", floors: ["1f"], logo: "/images/logos/van-heusen.webp" },
   { name: "VERO MODA", slug: "vero-moda", cat: "apparel", floors: ["gf"], logo: "/images/logos/vero-moda.webp" },
   { name: "VIVO", slug: "vivo", cat: "mobile", floors: ["con"], logo: "/images/logos/vivo.webp" },
+  { name: "W", slug: "w", cat: "ethnic", floors: ["2f"], logo: "/images/logos/w.webp" },
   { name: "WAKEFIT", slug: "wakefit", cat: "home", floors: ["con"], logo: "/images/logos/wakefit.webp", bg: "#48338e" },
   { name: "WESTSIDE", slug: "westside", cat: "apparel", floors: ["gf"], logo: "/images/logos/westside.webp" },
   { name: "ZUDIO", slug: "zudio", cat: "apparel", floors: ["1f"], logo: "/images/logos/zudio.webp", bg: "#120417" },
 ];
 
-/* 18 outlets. */
+/* 20 outlets. */
 export const DINE_STORES: DirectoryStore[] = [
   { name: "AMRITSARI EXPRESS", slug: "amritsari-express", cat: "food", floors: ["3f"], logo: "/images/logos/amritsari-express.webp" },
   { name: "BLUE TOKAI", slug: "blue-tokai", cat: "cafe", floors: ["gf"], logo: "/images/logos/blue-tokai.webp" },
@@ -167,7 +172,9 @@ export const DINE_STORES: DirectoryStore[] = [
   { name: "HOUSE OF CANDY", slug: "house-of-candy", cat: "food", floors: ["3f"], logo: "/images/logos/house-of-candy.webp" },
   { name: "KEVENTERS", slug: "keventers", cat: "food", floors: ["3f"], logo: "/images/logos/keventers.webp", bg: "#000000" },
   { name: "KFC", slug: "kfc", cat: "food", floors: ["3f"], logo: "/images/logos/kfc.webp" },
+  { name: "NANDO'S", slug: "nandos", cat: "restaurants", floors: ["2f"], logo: "/images/logos/nandos.webp" },
   { name: "PUNJAB GRILL", slug: "punjab-grill", cat: "restaurants", floors: ["2f"], logo: "/images/logos/punjab-grill.webp" },
+  { name: "RAJWADA BHOG", slug: "rajwada-bhog", cat: "restaurants", floors: ["3f"], logo: "/images/logos/rajwada-bhog.webp" },
   { name: "TACO BELL", slug: "taco-bell", cat: "food", floors: ["3f"], logo: "/images/logos/taco-bell.webp" },
   { name: "THE INDIAN STORIES", slug: "the-indian-stories", cat: "food", floors: ["3f"], logo: "/images/logos/the-indian-stories.webp" },
   { name: "THIRD WAVE COFFEE", slug: "third-wave-coffee", cat: "cafe", floors: ["1f"], logo: "/images/logos/third-wave-coffee.webp" },

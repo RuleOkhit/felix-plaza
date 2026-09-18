@@ -10,7 +10,7 @@ suggestions and composition notes) is the **Shot List** artifact.
 
 | Asset | Detail |
 | --- | --- |
-| Tenant logos | 99 files in `public/images/logos/`, ~2.1 MB total. Imported from `Final Store Infos`, trimmed and normalised to WebP, max 640 px. |
+| Tenant logos | 105 files in `public/images/logos/`, ~2.2 MB total. Imported from `Final Store Infos`, trimmed and normalised to WebP, max 640 px. |
 | Felix Plaza logo | `logo-felix-plaza.png` (brand purple) and `logo-felix-plaza-white.png` (knockout). Brand purple is **#352761**. |
 | Favicon | `src/app/icon.png` |
 | Adidas store page | `public/images/stores/adidas/` — banner + 3 gallery images |

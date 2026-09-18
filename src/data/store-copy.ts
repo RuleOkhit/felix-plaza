@@ -159,6 +159,11 @@ export const STORE_COPY: Record<string, StoreCopy> = {
   },
 
   /* ------------------------------------------------------ ETHNIC WEAR */
+  aurelia: {
+    tagline: "Everyday Ethnic Wear",
+    description:
+      "Aurelia makes easy, affordable ethnic wear for women, built around kurtas, suit sets and the bottoms and dupattas to go with them. Bright prints and simple cuts work for everyday wear and festive days alike. It comes from the same house as W, which is on the same floor.",
+  },
   "barara-ethnic": {
     tagline: "Made For The Occasion",
     description:
@@ -193,6 +198,11 @@ export const STORE_COPY: Record<string, StoreCopy> = {
     tagline: "Tarun Tahiliani, For Every Man",
     description:
       "Tasva is Tarun Tahiliani working with Aditya Birla Fashion to bring designer sensibility to accessible mens ethnic wear. Kurta sets, bandhgalas and sherwanis are cut with real attention to drape. Made to measure options are available if you are shopping for a wedding.",
+  },
+  w: {
+    tagline: "W For Woman",
+    description:
+      "W designs contemporary Indian wear for women, mixing traditional silhouettes with modern cuts. Kurtas, tunics, dresses and co ord sets cover office days as easily as festive evenings. Its sister label Aurelia is on the same floor.",
   },
 
   /* --------------------------------------------------------- FOOTWEAR */
@@ -282,6 +292,11 @@ export const STORE_COPY: Record<string, StoreCopy> = {
     description:
       "Helios is a multi brand watch store, so you can compare across houses without walking the mall. International and Indian names sit together across price bands. The place to start if you know your budget but not your brand.",
   },
+  seiko: {
+    tagline: "Japanese Watchmaking Since 1881",
+    description:
+      "Seiko has been making watches in Japan since 1881 and builds its own movements, from quartz to automatic. The Seiko 5 Sports, Presage and Prospex lines cover everyday, dress and dive watches across a wide spread of prices. A dependable place to buy a first proper watch or add to a collection.",
+  },
   tissot: {
     tagline: "Innovators By Tradition",
     description:
@@ -298,6 +313,11 @@ export const STORE_COPY: Record<string, StoreCopy> = {
     tagline: "House Of Titan",
     description:
       "Runway is the multi brand eyewear format from Titan, stocking international and Indian frames side by side. Prescription lenses, sunglasses and contact lenses are all handled here. On site eye testing means you can sort the whole thing in one visit.",
+  },
+  "titan-eye-plus": {
+    tagline: "Eye Tests, Frames And Lenses",
+    description:
+      "Titan Eye+ is the optical chain from Titan, with eye tests, prescription glasses, sunglasses and contact lenses under one roof. Frames run from house brands such as Titan and Fastrack to other labels across a wide price range. Get your eyes tested and choose your frames in the same visit.",
   },
 
   /* --------------------------------------------------- BEAUTY & SKIN */
@@ -504,10 +524,20 @@ export const STORE_COPY: Record<string, StoreCopy> = {
   },
 
   /* -------------------------------------------------------- RESTAURANT */
+  nandos: {
+    tagline: "Flame Grilled PERi-PERi Chicken",
+    description:
+      "Nando's flame grills its chicken and bastes it in PERi-PERi, with heat running from Lemon & Herb up to Extra Hot, so everyone at the table can pick their level. Quarters, halves and wraps sit alongside veggie options and sides like PERi-PERi chips and spicy rice. A relaxed sit down meal on the second floor.",
+  },
   "punjab-grill": {
     tagline: "Punjab, Plated With Care",
     description:
-      "Punjab Grill is a proper sit down restaurant serving North Indian food with the finish of a fine dining kitchen. Kebabs, dal and breads from the tandoor are the reason to book. Second floor, and the only full service restaurant at Felix Plaza.",
+      "Punjab Grill is a proper sit down restaurant serving North Indian food with the finish of a fine dining kitchen. Kebabs, dal and breads from the tandoor are the reason to book. Find it on the second floor.",
+  },
+  "rajwada-bhog": {
+    tagline: "Kathiawadi Thali Delight",
+    description:
+      "Rajwada Bhog serves the Kathiawadi thali, the hearty home style cooking of Saurashtra in Gujarat. A full thali brings breads, sabzis, dal, kadhi, rice and something sweet to the table together. A sit down meal on the third floor that works well for a family lunch.",
   },
 
   /* -------------------------------------------------------------- CAFÉ */

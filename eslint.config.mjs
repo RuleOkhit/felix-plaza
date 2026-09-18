@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Supplied data files kept for reference, not part of the build.
+    "reference/**",
   ]),
 ]);
 

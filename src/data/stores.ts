@@ -116,7 +116,7 @@ export const STORE_SECTION = new Map(STORES.map((s) => [s.slug, s.section]));
 
 /**
  * Neighbours worth walking to next. A category with enough members stands
- * on its own; a thin one (Eyewear has a single store) falls back to the
+ * on its own; a thin one (Eyewear has two stores) falls back to the
  * wider section, and the caller is told so it can title the strip honestly.
  */
 export function relatedStores(store: Store, limit = 8) {
