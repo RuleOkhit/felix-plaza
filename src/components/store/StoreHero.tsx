@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import type { Store } from "@/data/stores";
-import { BRAND } from "@/data/site";
 import { EASE } from "@/lib/motion";
 
 const SECTION_LABEL: Record<Store["section"], string> = {
@@ -52,28 +51,42 @@ const EscalatorIcon = (
   </svg>
 );
 
+// The header artwork: a portrait cut on phones, and a wide band turned on its
+// side for desktop. Only one is downloaded. Both are softened behind the
+// words and the logo, with the pattern left crisp in between. Each store has
+// its own cut (see heroArt in data/stores.ts).
+function HeroBackground({ art }: { art: string }) {
+  const common = { alt: "", sizes: "100vw", priority: true };
+  const {
+    props: { srcSet: desktop },
+  } = getImageProps({ ...common, src: `/images/store-hero/${art}-desktop.webp`, width: 1472, height: 491 });
+  const {
+    props: { srcSet: mobile, ...rest },
+  } = getImageProps({ ...common, src: `/images/store-hero/${art}-mobile.webp`, width: 736, height: 866 });
+
+  return (
+    <picture>
+      <source media="(min-width: 768px)" srcSet={desktop} />
+      <img
+        {...rest}
+        srcSet={mobile}
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+      />
+    </picture>
+  );
+}
+
 // Store header. The brand's mark is deliberately small and set to one side:
 // the name, the line the brand is known for, and where to find it carry the
-// header instead. The Felix insignia is watermarked across the band so the
-// page reads as ours before it reads as the tenant's.
+// header instead, over the house background artwork.
 export default function StoreHero({ store }: { store: Store }) {
   const cardBg = store.knockout ? "#232130" : store.bg ?? "#ffffff";
 
   return (
     <section className="relative overflow-hidden bg-ink pb-11 pt-24 md:pb-14 md:pt-32">
-      {/* Felix insignia, oversized and barely there */}
-      <Image
-        src={BRAND.insignia}
-        alt=""
-        aria-hidden
-        width={BRAND.insigniaWidth}
-        height={BRAND.insigniaHeight}
-        className="pointer-events-none absolute -right-16 -top-10 h-[300px] w-auto opacity-[0.05] [filter:brightness(0)_invert(1)] md:-right-10 md:h-[440px]"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(ellipse_70%_90%_at_10%_0%,rgba(255,255,255,0.13),transparent_62%)]"
-      />
+      <HeroBackground art={store.heroArt} />
 
       <div className="relative px-4 md:px-[60px]">
         <motion.nav

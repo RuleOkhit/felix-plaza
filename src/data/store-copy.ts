@@ -3,12 +3,12 @@
 //
 // One entry per store, keyed by the slug in store-directory.ts.
 //
-//   tagline      Short line shown under the description. Where a brand has a
-//                well known line of its own it is used; otherwise it is a
-//                plain descriptor written for Felix Plaza.
-//   description  Two or three sentences. Written to be read by a shopper
-//                deciding whether to walk over, so it says what is actually
-//                in the store rather than restating the category.
+//   tagline      The brand's own line where it has a well known one (adidas,
+//                "Impossible Is Nothing"). Otherwise a short, plain
+//                description of the store. Never an invented slogan.
+//   description  One or two short sentences: what the brand is and what you
+//                will find. Plain words, no insider detail, and nothing that
+//                would need checking with the store.
 //
 // House style: plain words, no em dashes, no marketing filler.
 // ---------------------------------------------------------------------------
@@ -16,566 +16,566 @@
 export type StoreCopy = { tagline: string; description: string };
 
 export const STORE_COPY: Record<string, StoreCopy> = {
-  /* ---------------------------------------------------------- APPAREL */
+  /* --------------------------------------------------------- APPAREL */
   arrow: {
-    tagline: "An American Original Since 1851",
+    tagline: "American Menswear Since 1851",
     description:
-      "Arrow has been making dress shirts since 1851 and still builds its collection around them. Expect crisp formals, structured blazers and knitwear that works under a jacket, with slim and tailored fits alongside the regular cut. A sensible first stop when you need something sharp for Monday morning.",
+      "Arrow is an American menswear brand known for its shirts. The store carries formal shirts, suits, trousers and smart casual wear.",
   },
   blackberrys: {
-    tagline: "Tailoring, Sharpened",
+    tagline: "Menswear For Work And Weekends",
     description:
-      "Blackberrys builds Indian menswear around fit, so the suits, blazers and trousers here are cut closer than most. The store carries formal and semi formal ranges together, which makes it easy to put a whole look together in one visit. Staff will handle basic alterations for you.",
+      "Blackberrys is an Indian menswear brand with formal, casual and occasion wear, from shirts and trousers to suits and blazers.",
   },
   "bonkers-corner": {
-    tagline: "Oversized, Loud, Unbothered",
+    tagline: "Everyday Streetwear",
     description:
-      "Bonkers Corner does graphic streetwear with a sense of humour, heavy on oversized tees, hoodies and co ord sets. Prints change often and drops move quickly, so the rack rarely looks the same twice. Popular with anyone shopping for something their parents would question.",
+      "Bonkers Corner is a streetwear brand known for its oversized tees, with hoodies, joggers and casual wear for men and women.",
   },
   "calvin-klein": {
-    tagline: "Modern Minimal Since 1968",
+    tagline: "Modern American Fashion Since 1968",
     description:
-      "Calvin Klein keeps its lines clean and its palette narrow, which is exactly why people come back to it. The store carries denim, underwear and everyday essentials alongside the logo pieces the brand is known for. Good for building a wardrobe that does not shout.",
+      "Calvin Klein is the New York label known for clean, modern design, with clothing, denim, underwear and accessories for men and women.",
   },
   "go-colors": {
-    tagline: "Bottoms, In Every Colour",
+    tagline: "Women's Bottom Wear",
     description:
-      "Go Colors does one thing properly, which is womens bottom wear, and carries it in a colour range no one else bothers with. Leggings, palazzos, jeggings and churidars come in regular and plus sizes across the same shades. Handy when you need a specific colour to match something you already own.",
+      "Go Colors specialises in women's bottom wear, with leggings, pants, jeggings and palazzos in a wide range of colours and fits.",
   },
   "h-and-m": {
     tagline: "Fashion And Quality At The Best Price",
     description:
-      "H&M covers womens, mens, kids and home in a single run of the floor. Collections turn over constantly, so it rewards a quick walk through even when you are not shopping for anything in particular. The basics section is where most people end up.",
+      "H&M offers affordable fashion for women, men and kids, with new styles arriving through the season.",
   },
   "jack-and-jones": {
     tagline: "Danish Denim Since 1990",
     description:
-      "Jack & Jones is built on jeans, and the wall of fits here is the reason to visit. Beyond denim there are shirts, jackets and knitwear cut for a younger, slimmer silhouette. Ask about the fit names if you are unsure, they are more useful than the size label.",
+      "Jack & Jones is a Danish menswear brand known for its denim, with jeans, shirts, tees and jackets for everyday wear.",
   },
   levis: {
     tagline: "Quality Never Goes Out Of Style",
     description:
-      "Levi's has been making jeans since 1873 and the store still organises itself around fit rather than trend. Trucker jackets, tees and the full denim range are all here, with staff who can tell which fit you actually want before you have finished describing it. Worth it for a pair that lasts years.",
+      "Levi's has been making jeans since 1873. Find denim in every fit, along with shirts, tees and jackets for men and women.",
   },
   lifestyle: {
-    tagline: "Your Style, Your Store",
+    tagline: "Fashion Department Store",
     description:
-      "Lifestyle works as a department store, so clothing, footwear, beauty and accessories are all covered without leaving the shop. Own labels sit next to national brands at most price points. The largest single store at Felix Plaza and a good place to start if you are not sure what you want.",
+      "Lifestyle is a department store with clothing, footwear, beauty and accessories for the whole family, from its own labels and well known brands.",
   },
   "louis-philippe": {
     tagline: "The Upper Crest",
     description:
-      "Louis Philippe sits at the formal end of Indian menswear, with suits, blazers and shirts finished more carefully than the price suggests. The permanent press shirts are the quiet favourite here. Come for a wedding outfit or an interview and you will leave sorted.",
+      "Louis Philippe offers premium menswear, from formal shirts and suits to smart casual wear and accessories.",
   },
   madame: {
-    tagline: "Dressed For The Moment",
+    tagline: "Women's Western Wear",
     description:
-      "Madame does womens fashion that leans occasion ready, with dresses, co ords and going out tops making up most of the floor. Styles move with the season rather than sitting as permanent stock. Easy place to find something for an evening you did not plan for.",
+      "Madame is an Indian fashion brand for women, with dresses, tops, co ord sets and jackets for work and evenings out.",
   },
   "marks-and-spencer": {
-    tagline: "Quality Worth Every Penny",
+    tagline: "British Retailer Since 1884",
     description:
-      "Marks & Spencer is the place people go for things they intend to keep, which mostly means shirts, knitwear, lingerie and school wear. Sizing runs true and the fabric quality is consistent across seasons. The lingerie fitting service is genuinely worth using.",
+      "Marks & Spencer is the British retailer known for quality clothing, lingerie and everyday essentials for women, men and kids.",
   },
   max: {
-    tagline: "Look Good, Feel Good",
+    tagline: "Fashion For The Whole Family",
     description:
-      "Max covers the whole family at prices that let you buy more than one thing. Womens, mens and kids sit together on one floor, with a large kids section at the back. Reliable for wardrobe filling rather than statement pieces.",
+      "Max offers affordable fashion for women, men and kids, from everyday basics to festive wear, along with footwear and accessories.",
   },
   only: {
-    tagline: "Danish Design, Worn Every Day",
+    tagline: "Danish Womenswear",
     description:
-      "Only is denim first womenswear from the same Danish house as Jack & Jones. Jeans in a wide fit range sit alongside tops, dresses and outerwear that are meant to be worn with them. Sizing is European, so try before you commit.",
+      "ONLY is a Danish fashion brand for women, known for its denim, along with tops, dresses and jackets.",
   },
   "pepe-jeans": {
-    tagline: "London Since 1973",
+    tagline: "London Denim Since 1973",
     description:
-      "Pepe Jeans came out of Portobello Road and still carries that slightly scruffy London feel. Denim leads, with tees, shirts and jackets built around it for both men and women. Fits run younger and closer than most Indian denim brands.",
+      "Pepe Jeans is a denim brand from London, with jeans, shirts, tees and jackets for men and women.",
   },
   "r-and-b": {
-    tagline: "Love It. Wear It.",
+    tagline: "Fashion For The Family",
     description:
-      "R&B is a family fashion store, so womens, mens, kids and accessories all share the floor. Prices sit low enough that it works for a full seasonal refresh rather than a single buy. The accessories wall near the till is better stocked than most.",
+      "R&B offers affordable, on trend fashion for women, men and kids.",
   },
   "rare-rabbit": {
-    tagline: "Considered Menswear",
+    tagline: "Premium Menswear",
     description:
-      "Rare Rabbit puts more thought into fabric and construction than the price point usually allows, which is why it has built a following. Shirts, overshirts and relaxed trousers make up the core. Come here if you have outgrown fast fashion but are not ready for a suit.",
+      "Rare Rabbit is a premium Indian menswear brand known for its shirts, with trousers, knitwear and smart casual wear.",
   },
   rareism: {
-    tagline: "Rare Rabbit, For Her",
+    tagline: "Womenswear From Rare Rabbit",
     description:
-      "Rareism is the womenswear line from the same house as Rare Rabbit and carries the same attention to cut and cloth. Expect relaxed silhouettes, muted colour and separates designed to be worn together. Quiet, wearable, not especially trend led.",
+      "Rareism is the womenswear label from Rare Rabbit, with dresses, tops, co ord sets and trousers.",
   },
   snitch: {
-    tagline: "New Drops Every Week",
+    tagline: "Fashion For Men",
     description:
-      "Snitch built its name online with a fast release cycle and brings the same rhythm to the store. Mens shirts, tees and trousers land in small runs and rarely return once they sell through. Check back often if you like something and want a second one.",
+      "Snitch is an Indian menswear brand with shirts, tees, denim and casual wear that follows the latest trends.",
   },
   "style-union": {
-    tagline: "Everyday Fashion, Every Day",
+    tagline: "Everyday Fashion",
     description:
-      "Style Union covers casual everyday wear for men and women without much ceremony. Tees, denim, shirts and layering pieces sit at approachable prices. Straightforward stop on the Concourse when you need a top for tonight.",
+      "Style Union offers casual everyday wear for men and women, including tees, shirts and denim, at easy prices.",
   },
   "sweet-dreams": {
-    tagline: "Loungewear Made For Lounging",
+    tagline: "Nightwear And Loungewear",
     description:
-      "Sweet Dreams does nightwear and loungewear properly, in cotton that survives washing. Pyjama sets, shorts and robes come for men, women and kids. The kind of shop you visit once and then keep returning to for gifting.",
+      "Sweet Dreams makes comfortable nightwear and loungewear, with pyjama sets, shorts and tees for relaxing at home.",
   },
   "the-bear-house": {
-    tagline: "Menswear With A Point Of View",
+    tagline: "Smart Casual Menswear",
     description:
-      "The Bear House makes mens shirts and casualwear with a bit more character than the high street, often in prints and textures you will not see elsewhere. Fits are slim and modern. Good for a shirt that reads as deliberate rather than default.",
+      "The Bear House is an Indian menswear brand with shirts, polos, knitwear and trousers for smart casual dressing.",
   },
   "tommy-hilfiger": {
     tagline: "Classic American Cool",
     description:
-      "Tommy Hilfiger has been doing preppy American sportswear since 1985 and the red, white and blue flag still runs through everything. Polos, chinos, oxford shirts and outerwear for men and women fill the floor. Dependable for pieces that will still look right years from now.",
+      "Tommy Hilfiger brings classic American style for men and women, from polos and shirts to denim and outerwear.",
   },
   "us-polo-assn": {
-    tagline: "The Official Brand Of The USPA",
+    tagline: "Official Brand Of The U.S. Polo Association",
     description:
-      "U.S. Polo Assn. is the licensed brand of the United States Polo Association, and the sport shows up honestly in the cut of the polos and knits. Mens, womens and kids ranges all sit here. Solid smart casual without formal stiffness.",
+      "U.S. Polo Assn. offers casual clothing, footwear and accessories for men, women and kids, inspired by the sport of polo.",
   },
   "van-heusen": {
-    tagline: "Dressed For Business",
+    tagline: "Power Dressing",
     description:
-      "Van Heusen focuses on workwear, with shirts, trousers and blazers built for people who wear them all week. Wrinkle resistant and stretch fabrics feature heavily. The womens formal range is stronger here than at most menswear led brands.",
+      "Van Heusen offers workwear and smart casual clothing for men and women, from shirts and trousers to blazers.",
   },
   "vero-moda": {
-    tagline: "Danish Design, Made Simple",
+    tagline: "Danish Womenswear",
     description:
-      "Vero Moda does contemporary womenswear with a Scandinavian eye, so silhouettes stay clean and colour stays restrained. Dresses, denim and outerwear form the backbone. Sizing is European and runs slightly small.",
+      "Vero Moda is a Danish fashion brand for women, with dresses, tops, trousers and outerwear for every day.",
   },
   westside: {
-    tagline: "Fashion, With A Tata Name",
+    tagline: "Fashion From The Tata Group",
     description:
-      "Westside runs on its own labels, which means you will not find the same pieces in the next store along. Clothing, footwear, beauty and home all sit under one roof, with a strong womenswear floor. The home section is genuinely worth a look.",
+      "Westside is Tata's fashion store, with its own labels for women, men and kids, along with footwear, beauty and home.",
   },
   zudio: {
-    tagline: "Fashion At Prices You Will Not Believe",
+    tagline: "Fashion At Easy Prices",
     description:
-      "Zudio keeps almost everything under a few hundred rupees and moves stock fast to do it. Womens, mens and kids all share the floor, along with beauty and small accessories. Come early in the week if you want size options.",
+      "Zudio, from the Tata group, offers the latest fashion for women, men and kids at low prices, along with footwear and beauty.",
   },
 
-  /* ------------------------------------------------------ ETHNIC WEAR */
+  /* ----------------------------------------------------- ETHNIC WEAR */
   aurelia: {
     tagline: "Everyday Ethnic Wear",
     description:
-      "Aurelia makes easy, affordable ethnic wear for women, built around kurtas, suit sets and the bottoms and dupattas to go with them. Bright prints and simple cuts work for everyday wear and festive days alike. It comes from the same house as W, which is on the same floor.",
+      "Aurelia offers easy, affordable ethnic wear for women, with kurtas, suit sets, bottoms and dupattas.",
   },
   "barara-ethnic": {
-    tagline: "Made For The Occasion",
+    tagline: "Festive And Wedding Wear",
     description:
-      "Barara Ethnic deals in occasion wear, which means lehengas, sherwanis and heavily worked suits rather than daily kurtas. Pieces are built for weddings and family functions where photographs matter. Allow time, this is not a quick in and out shop.",
+      "Barara Ethnic offers Indian ethnic wear for weddings, festivals and special occasions.",
   },
   biba: {
-    tagline: "Indian Wear, Every Day",
+    tagline: "Indian Wear For Women",
     description:
-      "Biba made everyday Indian wear a category and still does it better than most. Kurtas, suit sets and palazzos come in prints that work for office as easily as for a festival. Sizing is consistent, so once you know yours you can buy quickly.",
+      "Biba is one of India's best known ethnic wear brands, with kurtas, suit sets, dresses and more for women and girls.",
   },
   devo: {
-    tagline: "Made Of India",
+    tagline: "Ethnic Wear",
     description:
-      "Devo works with Indian textiles and craft traditions across its menswear and ethnic ranges. Kurtas, bandhgalas and jackets sit alongside more relaxed fusion pieces. A good middle ground if full traditional feels like too much.",
+      "Devo offers Indian ethnic wear for festive days and special occasions.",
   },
   libas: {
-    tagline: "Effortless Ethnic",
+    tagline: "Ethnic Wear For Women",
     description:
-      "Libas does Indian wear that you can put on without planning around it, mostly cotton and rayon kurtas, sets and dupattas. Prints refresh regularly and prices stay reasonable. The everyday half of your ethnic wardrobe lives here.",
+      "Libas offers everyday and festive ethnic wear for women, with kurtas, suit sets and dupattas.",
   },
   "meena-bazaar": {
-    tagline: "For Weddings And The Years After",
+    tagline: "Bridal And Festive Wear",
     description:
-      "Meena Bazaar has been dressing families for weddings for decades and the store reflects that, with heavy lehengas and sarees alongside lighter suit sets. Embroidery and fabric quality are the reason people come back generation after generation. Staff know how to work to a budget.",
+      "Meena Bazaar is known for sarees, lehengas and suits for weddings, festivals and special occasions.",
   },
   sabhyata: {
-    tagline: "Kurtas With A Classical Soul",
+    tagline: "Ethnic Wear",
     description:
-      "Sabhyata leans traditional, with kurtas and suit sets that borrow from classical Indian silhouettes rather than fusion trends. Fabrics run to chanderi, silk blends and cotton. Understated enough for work, dressy enough for a family evening.",
+      "Sabhyata offers Indian ethnic wear, with kurtas, suit sets and festive pieces inspired by traditional designs.",
   },
   tasva: {
-    tagline: "Tarun Tahiliani, For Every Man",
+    tagline: "Menswear By Tarun Tahiliani",
     description:
-      "Tasva is Tarun Tahiliani working with Aditya Birla Fashion to bring designer sensibility to accessible mens ethnic wear. Kurta sets, bandhgalas and sherwanis are cut with real attention to drape. Made to measure options are available if you are shopping for a wedding.",
+      "Tasva is Tarun Tahiliani's menswear label with Aditya Birla Fashion, offering kurtas, bandhgalas and sherwanis for festivals and weddings.",
   },
   w: {
-    tagline: "W For Woman",
+    tagline: "Contemporary Indian Wear",
     description:
-      "W designs contemporary Indian wear for women, mixing traditional silhouettes with modern cuts. Kurtas, tunics, dresses and co ord sets cover office days as easily as festive evenings. Its sister label Aurelia is on the same floor.",
+      "W offers contemporary Indian wear for women, with kurtas, tunics and dresses for work and special occasions.",
   },
 
-  /* --------------------------------------------------------- FOOTWEAR */
+  /* -------------------------------------------------------- FOOTWEAR */
   aldo: {
-    tagline: "Love The Shoes You Are In",
+    tagline: "Shoes And Accessories",
     description:
-      "Aldo does going out footwear for men and women, heavy on heels, boots and dress shoes with a bit of shine. Bags and small accessories share the floor. Where you go when the outfit is sorted and the shoes are not.",
+      "ALDO offers fashion footwear, bags and accessories for men and women, from heels and sneakers to formal shoes.",
   },
   birkenstock: {
-    tagline: "Footbeds Since 1774",
+    tagline: "Footwear Since 1774",
     description:
-      "Birkenstock has been building its cork footbed since 1774 and the shape is the entire point, moulding to your foot over the first few weeks. Arizona, Boston and Gizeh anchor the range in leather, suede and EVA. Buy the size the staff measure you for, not the one you expect.",
+      "Birkenstock is the German footwear brand famous for its contoured footbed, with sandals, clogs and shoes for men and women.",
   },
   crocs: {
     tagline: "Come As You Are",
     description:
-      "Crocs are comfortable, washable and impossible to argue about, which is why the store is always busy. Classic clogs and sandals come in the full colour range, plus the Jibbitz charms wall for personalising them. Kids sizes are well stocked.",
+      "Crocs are known for their light, comfortable clogs. Find clogs, sandals and slides for men, women and kids, plus Jibbitz charms to personalise them.",
   },
   inc5: {
-    tagline: "Shoes. Bags. Accessories. Attitude.",
+    tagline: "Women's Footwear",
     description:
-      "INC.5 does womens footwear across the whole range, from office block heels to party stilettos to everyday flats. Bags and belts sit alongside so you can match without a second stop. Comfort linings are better than the heel height suggests.",
+      "Inc.5 offers stylish footwear for women, from heels and flats to sneakers, along with bags.",
   },
   mochi: {
-    tagline: "Shoes And Accessories",
+    tagline: "Footwear For Men And Women",
     description:
-      "Mochi carries footwear for men and women across formal, casual and occasion, with a wide range of styles for the space. Leather formals and loafers are the strong suit. Staff are quick with sizing and will bring options without being asked twice.",
+      "Mochi offers footwear for men and women, from formal and casual shoes to sandals and heels, along with bags and accessories.",
   },
 
-  /* ------------------------------------------------------- SPORTSWEAR */
+  /* ------------------------------------------------------ SPORTSWEAR */
   adidas: {
     tagline: "Impossible Is Nothing",
     description:
-      "Adidas covers running, training and everyday wear in one store, with footwear along one wall and apparel through the rest. Ultraboost and Adizero sit on the performance side, Originals classics like Samba and Superstar on the other. Staff will talk you through cushioning and drop if you are buying for a distance you have not run before.",
+      "Adidas sportswear and footwear for running, training and everyday wear, for men, women and kids.",
   },
   asics: {
     tagline: "Sound Mind, Sound Body",
     description:
-      "ASICS is a runners shop first, and the wall of Gel cushioned models is the reason to come. Gel Nimbus, Kayano and Novablast cover neutral through support, with staff who understand the difference. Also worth a look for court shoes if you play badminton or tennis.",
+      "ASICS is a Japanese sports brand best known for its running shoes, with footwear and apparel for running and training.",
   },
   puma: {
     tagline: "Forever Faster",
     description:
-      "Puma sits between sport and street, so training gear shares the floor with lifestyle sneakers and football kit. Suede and RS silhouettes are the long running favourites. Cricket and football fans will find team merchandise here through the season.",
+      "Puma offers sports shoes, clothing and accessories for training, running and everyday wear.",
   },
   skechers: {
-    tagline: "Comfort, Engineered",
+    tagline: "The Comfort Technology Company",
     description:
-      "Skechers built its name on cushioning, and the memory foam and Arch Fit ranges are what most people walk out with. Walking shoes, slip ins and work footwear cover the range for men and women. A sensible option if you are on your feet all day.",
+      "Skechers makes comfortable footwear for walking, running and everyday wear, for men, women and kids.",
   },
 
-  /* -------------------------------------------------------- JEWELLERY */
+  /* ------------------------------------------------------- JEWELLERY */
   bluestone: {
-    tagline: "Designed Online, Tried On Here",
+    tagline: "Fine Jewellery",
     description:
-      "BlueStone started online and the store lets you handle the pieces before deciding, which matters with jewellery. Rings, pendants and everyday gold sit alongside solitaires. Custom design and resizing are handled in store.",
+      "BlueStone offers gold, diamond and platinum jewellery, from everyday pieces to engagement rings.",
   },
   caratlane: {
     tagline: "A Tanishq Partnership",
     description:
-      "CaratLane makes gold and diamond jewellery light enough to wear on a normal day rather than save for occasions. Everyday chains, studs and stackable rings form the bulk of the range. The Tanishq partnership means certification and buyback are straightforward.",
+      "CaratLane offers gold and diamond jewellery in modern designs, for everyday wear and special occasions.",
   },
   ethera: {
-    tagline: "Fine Jewellery, Everyday Ease",
+    tagline: "Fine Jewellery",
     description:
-      "Ethera works in fine jewellery designed for regular wear, with clean settings and restrained stone work. Pieces are made to layer rather than dominate. Worth browsing if you want something quieter than traditional bridal gold.",
+      "Ethera offers fine jewellery designed for everyday wear.",
   },
   giva: {
-    tagline: "Silver, Worn Every Day",
+    tagline: "Silver Jewellery",
     description:
-      "GIVA does sterling silver and lab grown diamond jewellery at prices that make it easy to own several pieces. Anti tarnish coating means they survive daily wear. A dependable stop for gifting when you do not want to commit to gold.",
+      "GIVA offers silver and gold jewellery for everyday wear and gifting, from rings and earrings to pendants.",
   },
   limelight: {
-    tagline: "Lab Grown CVD Diamonds",
+    tagline: "Lab Grown Diamond Jewellery",
     description:
-      "Limelight sells lab grown CVD diamonds, chemically identical to mined stones at a fraction of the price. Solitaires, studs and bridal sets come with certification. Staff are happy to explain the difference properly rather than glossing over it.",
+      "Limelight offers jewellery made with lab grown diamonds, from rings and earrings to necklaces.",
   },
   palmonas: {
-    tagline: "Demi Fine, Anti Tarnish",
+    tagline: "Demi Fine Jewellery",
     description:
-      "Palmonas sits in the demi fine space, gold plated over sterling silver with anti tarnish finishing. Layering chains, hoops and rings dominate the range. Priced for buying a handful at once rather than agonising over one.",
+      "Palmonas offers gold plated demi fine jewellery made for everyday wear.",
   },
 
-  /* ---------------------------------------------------------- WATCHES */
+  /* --------------------------------------------------------- WATCHES */
   helios: {
-    tagline: "Many Brands, One Counter",
+    tagline: "Watches From Leading Brands",
     description:
-      "Helios is a multi brand watch store, so you can compare across houses without walking the mall. International and Indian names sit together across price bands. The place to start if you know your budget but not your brand.",
+      "Helios is Titan's multi brand watch store, with watches from Indian and international brands under one roof.",
   },
   seiko: {
-    tagline: "Japanese Watchmaking Since 1881",
+    tagline: "Moving Ahead. Touching Hearts.",
     description:
-      "Seiko has been making watches in Japan since 1881 and builds its own movements, from quartz to automatic. The Seiko 5 Sports, Presage and Prospex lines cover everyday, dress and dive watches across a wide spread of prices. A dependable place to buy a first proper watch or add to a collection.",
+      "Seiko has been making watches in Japan since 1881, with automatic, solar and quartz watches for men and women.",
   },
   tissot: {
     tagline: "Innovators By Tradition",
     description:
-      "Tissot has been making Swiss watches in Le Locle since 1853 and still prices them within reach. The PRX, Seastar and T Touch lines cover dress, dive and connected. Servicing and strap changes are handled in store.",
+      "Tissot has been making Swiss watches since 1853, with classic, sports and smart watches for men and women.",
   },
   "tissot-mbo": {
-    tagline: "The Full Tissot Collection",
+    tagline: "Innovators By Tradition",
     description:
-      "The Tissot mono brand outlet carries the collection in more depth than a multi brand counter allows, including references that are hard to find elsewhere in the city. Staff know the movements properly. Worth the visit if you have a specific model in mind.",
+      "Swiss watches from Tissot, with classic, sports and smart models for men and women.",
   },
 
-  /* ---------------------------------------------------------- EYEWEAR */
+  /* --------------------------------------------------------- EYEWEAR */
   runway: {
     tagline: "House Of Titan",
     description:
-      "Runway is the multi brand eyewear format from Titan, stocking international and Indian frames side by side. Prescription lenses, sunglasses and contact lenses are all handled here. On site eye testing means you can sort the whole thing in one visit.",
+      "Runway is Titan's multi brand eyewear store, with frames, sunglasses and lenses from Indian and international brands.",
   },
   "titan-eye-plus": {
-    tagline: "Eye Tests, Frames And Lenses",
+    tagline: "Eyewear And Eye Tests",
     description:
-      "Titan Eye+ is the optical chain from Titan, with eye tests, prescription glasses, sunglasses and contact lenses under one roof. Frames run from house brands such as Titan and Fastrack to other labels across a wide price range. Get your eyes tested and choose your frames in the same visit.",
+      "Titan Eye+ offers eye tests, prescription glasses, sunglasses and contact lenses, with frames from Titan, Fastrack and more.",
   },
 
   /* --------------------------------------------------- BEAUTY & SKIN */
   "bath-and-body-works": {
-    tagline: "Fragrance For Hands And Home",
+    tagline: "Fragrance For Body And Home",
     description:
-      "Bath & Body Works is built around scent, with candles, body care and hand soaps rotating through seasonal collections. The candles are the reason most people walk in and the reason they leave with a bag. Testers are out, so smell before you buy.",
+      "Bath & Body Works offers fragrant body care, hand soaps and home fragrance, including its well known candles.",
   },
   "forest-essentials": {
     tagline: "Luxurious Ayurveda",
     description:
-      "Forest Essentials makes ayurvedic skincare with the finish and packaging of a luxury house. Facial ubtans, oils and the Mashobra honey range are long standing favourites. Staff will build a routine for your skin if you ask.",
+      "Forest Essentials offers luxury Ayurvedic skincare, haircare and body care, made with natural ingredients.",
   },
   "new-u": {
-    tagline: "Beauty, All Under One Roof",
+    tagline: "Beauty And Personal Care",
     description:
-      "New U is Dabur's multi brand beauty format, carrying skincare, haircare, fragrance and makeup from a wide spread of names. Useful when you want to compare brands side by side. Sits on the Concourse, so easy to reach on the way in.",
+      "New U is a beauty store with skincare, haircare, makeup and fragrance from a wide range of brands.",
   },
   "nykaa-luxe": {
-    tagline: "Luxury Beauty, In Person",
+    tagline: "Luxury Beauty",
     description:
-      "Nykaa Luxe carries the premium end of the Nykaa range, which means international makeup and skincare houses you would otherwise buy blind online. Testers are available across most counters. Come here to shade match properly.",
+      "Nykaa Luxe brings luxury makeup, skincare and fragrance from international brands.",
   },
   skinbae: {
-    tagline: "Skin Before Anything Else",
+    tagline: "Skincare",
     description:
-      "SkinBae focuses on actives and ingredient led skincare rather than heavy makeup. Serums, sunscreens and barrier repair products make up most of the shelf. Staff will steer you away from stacking things that should not go together.",
+      "SkinBae offers skincare products for everyday routines.",
   },
 
-  /* ------------------------------------------------------------ SALON */
+  /* ----------------------------------------------------------- SALON */
   "geetanjali-salon": {
-    tagline: "Hair, Skin, And An Afternoon To Yourself",
+    tagline: "Hair, Skin And Beauty",
     description:
-      "Geetanjali Salon covers hair, skin, nails and bridal across a full service floor. Appointments are advisable at weekends, though walk ins are usually managed. Bridal packages are booked well in advance, so plan ahead.",
+      "Geetanjali Salon offers hair, skin, nail and bridal services for men and women.",
   },
 
-  /* ------------------------------------------------------------- KIDS */
+  /* ------------------------------------------------------------ KIDS */
   babyshop: {
-    tagline: "Everything For The Under Tens",
+    tagline: "Kidswear And Baby Essentials",
     description:
-      "Babyshop covers newborn through early childhood in one place, clothing, nursery, feeding and toys included. Sizing runs by age and is reliable. The gifting section near the front saves time when you are invited to a first birthday.",
+      "Babyshop offers clothing, footwear and essentials for babies and kids.",
   },
   aretto: {
-    tagline: "Shoes That Grow",
+    tagline: "Kids' Footwear",
     description:
-      "Aretto makes childrens shoes that expand as feet grow, which solves the problem of outgrowing a pair mid season. Designs are light and school appropriate. Bring the child, the fitting matters more than usual here.",
+      "Aretto makes shoes for kids, designed to adjust as little feet grow.",
   },
 
-  /* -------------------------------------------------- HOME & LIFESTYLE */
+  /* ------------------------------------------------ HOME & LIFESTYLE */
   frido: {
-    tagline: "Sit Better, Feel Better",
+    tagline: "Everyday Comfort",
     description:
-      "Frido makes ergonomic cushions, insoles and support products for people who sit or stand too long. Wedge cushions and back supports are the best sellers. Try them in store, the difference is obvious within a minute.",
+      "Frido offers comfort products like cushions, insoles and supports, designed to ease everyday aches.",
   },
   happynest: {
-    tagline: "Home Essentials, Sorted",
+    tagline: "Home Essentials",
     description:
-      "HappyNest covers everyday home goods, from kitchen and storage to soft furnishing and decor. Prices are set for stocking up rather than splurging. Convenient Concourse stop when you are already carrying bags.",
+      "HappyNest offers everyday home products, from kitchen and storage to decor.",
   },
   market99: {
-    tagline: "Everything You Forgot You Needed",
+    tagline: "Home And Lifestyle Essentials",
     description:
-      "Market99 is a value store for household items, kitchenware, organisers and small decor, most of it priced to be bought without thinking. Stock changes constantly, so treat it as a browse rather than a list. On the third floor next to the food court.",
+      "Market99 offers affordable home and lifestyle products, from kitchenware and storage to decor and gifts.",
   },
   miniso: {
     tagline: "Life Is For Fun",
     description:
-      "Miniso does Japanese inspired lifestyle goods, stationery, small electronics, soft toys and beauty accessories at low prices. Licensed character collections rotate through the year and sell out fast. Reliably good for last minute gifts.",
+      "MINISO is a lifestyle store with affordable home goods, beauty products, stationery, toys and gifts.",
   },
   "mr-diy": {
     tagline: "Always Low Prices",
     description:
-      "MR.D.I.Y. stocks household and hardware goods across just about every category, from tools and electricals to stationery and party supplies. If something in the house has broken, it is probably fixable with a trip here. Concourse level, near the entrance.",
+      "MR. D.I.Y. offers home improvement and household products at low prices, from tools and hardware to kitchen and cleaning supplies.",
   },
   "the-sleep-company": {
-    tagline: "Sleep On SmartGRID",
+    tagline: "Mattresses And Sleep Essentials",
     description:
-      "The Sleep Company builds mattresses around its SmartGRID technology, which adapts to your body without the sink of memory foam. Mattresses, pillows and ergonomic chairs are all on the floor to try. Lie down properly for a while, the staff expect it.",
+      "The Sleep Company offers mattresses, pillows and ergonomic chairs made with its SmartGRID comfort technology.",
   },
   wakefit: {
-    tagline: "Sleep, Solved",
+    tagline: "Mattresses And Furniture",
     description:
-      "Wakefit sells mattresses, pillows and bedroom furniture direct, which keeps prices honest. Orthopaedic and dual comfort mattresses are the core range. Delivery and trial terms are explained clearly in store.",
+      "Wakefit offers mattresses, pillows and furniture for the bedroom, living room and home office.",
   },
 
-  /* -------------------------------------------------------------- BAGS */
+  /* ------------------------------------------------------------ BAGS */
   "american-tourister": {
-    tagline: "Travel Light, Travel Loud",
+    tagline: "Travel Luggage",
     description:
-      "American Tourister does colourful, hard wearing luggage at prices that do not hurt when a trolley gets scuffed. Cabin, check in and backpack ranges cover most trips. Warranty is handled through the store.",
+      "American Tourister offers colourful, durable luggage, backpacks and travel accessories.",
   },
   hidesign: {
-    tagline: "Leather, Made By Hand",
+    tagline: "Leather Bags And Accessories",
     description:
-      "Hidesign works in vegetable tanned leather, hand finished, with hardware built to outlast the bag. Work totes, satchels and wallets make up the range for men and women. The leather darkens with use, which is the point.",
+      "Hidesign offers leather bags, wallets, belts and accessories for men and women.",
   },
   safari: {
-    tagline: "Built To Take It",
+    tagline: "Luggage And Backpacks",
     description:
-      "Safari makes luggage designed to survive Indian travel, with polycarbonate hard cases and reinforced trolleys. Cabin sizes meet domestic airline limits. Good value when you need something that will last more than a couple of trips.",
+      "Safari offers luggage, backpacks and travel accessories for trips of every length.",
   },
   samsonite: {
-    tagline: "Engineered For The Journey",
+    tagline: "Luggage Since 1910",
     description:
-      "Samsonite sits at the premium end of luggage and it shows in the wheels, zips and shell construction. Cabin, check in and business ranges are all stocked. Worth the difference if you fly often.",
+      "Samsonite offers luggage, business bags and travel accessories built to last.",
   },
 
-  /* --------------------------------------------- MOBILE & ELECTRONICS */
+  /* -------------------------------------------- MOBILE & ELECTRONICS */
   samsung: {
     tagline: "Do What You Can't",
     description:
-      "The Samsung store covers the full ecosystem, Galaxy phones, tablets, watches and audio, with everything set up to try. Staff will transfer data from an old handset before you leave. Exchange and finance options are handled in store.",
+      "Samsung brings its smartphones, tablets, watches and earbuds, with the latest Galaxy devices to try in store.",
   },
   vivo: {
     tagline: "Camera And Music",
     description:
-      "vivo builds its phones around camera performance, and the store is set up so you can shoot and compare before deciding. The full current lineup is on display with accessories alongside. Service queries are handled at the counter.",
+      "vivo offers smartphones and accessories, with the latest models to try in store.",
   },
 
-  /* ------------------------------------------------ BOOKS & STATIONERY */
+  /* ---------------------------------------------- BOOKS & STATIONERY */
   "om-book-shop": {
-    tagline: "Where Words Create Worlds",
+    tagline: "Books And Stationery",
     description:
-      "Om Book Shop carries fiction, non fiction, childrens books and stationery across a properly browsable floor. The childrens section is large enough to lose half an hour in. Staff will order titles they do not have on the shelf.",
+      "Om Book Shop offers books for all ages, from bestsellers and fiction to children's books, along with stationery and gifts.",
   },
 
-  /* ---------------------------------------------------------- LINGERIE */
+  /* -------------------------------------------------------- LINGERIE */
   "nykd-by-nykaa": {
-    tagline: "Comfort, Designed In",
+    tagline: "Lingerie And Loungewear",
     description:
-      "Nykd by Nykaa makes lingerie and everyday intimates with comfort as the starting point rather than an afterthought. Wire free bras, cotton briefs and loungewear form the core. Fitting help is available and worth taking.",
+      "Nykd by Nykaa offers lingerie, sleepwear and loungewear designed for everyday comfort.",
   },
 
-  /* -------------------------------------------------------- FOOD COURT */
+  /* ------------------------------------------------------ FOOD COURT */
   "amritsari-express": {
-    tagline: "Amritsar, On A Plate",
+    tagline: "Amritsari Food",
     description:
-      "Amritsari Express does Punjabi food the way it is eaten in Amritsar, kulchas, chole and lassi included. Portions are generous and the kulchas come out hot. Third floor food court, worth the queue at lunch.",
+      "Amritsari Express serves Punjabi favourites from Amritsar, including kulchas, chole and lassi.",
   },
   "burger-king": {
     tagline: "Have It Your Way",
     description:
-      "Burger King flame grills its patties, which is the whole argument for choosing it. The Whopper anchors the menu alongside chicken, veg and paneer options. Third floor, with a good run of vegetarian choices for a burger chain.",
+      "Burger King serves flame grilled burgers, including the Whopper, along with fries, wraps and shakes.",
   },
   "cafe-chennai": {
-    tagline: "Dosa, Filter Coffee, Repeat",
+    tagline: "South Indian Food",
     description:
-      "Café Chennai serves South Indian staples through the day, dosas, idlis, vadas and proper filter coffee. Breakfast items stay on the menu until closing, which is the correct approach. Quick service even when the food court is full.",
+      "Café Chennai serves South Indian favourites like dosas, idlis and vadas, with filter coffee.",
   },
   "giani-ice-cream": {
     tagline: "Since 1956",
     description:
-      "Giani has been making ice cream in Delhi since 1956 and still leads with the thick, dense scoops it built its name on. Sundaes, shakes and falooda round out the menu. The rabri based flavours are the ones regulars order.",
+      "Giani's has been making ice cream since 1956, with scoops, sundaes and shakes.",
   },
   haldirams: {
     tagline: "Sweets And Snacks Since 1937",
     description:
-      "Haldiram's covers chaat, thalis, South Indian and a full sweets counter in one outlet. The namkeen and mithai boxes make it a standard stop before visiting anyone. Busy at every hour, though the counter moves quickly.",
+      "Haldiram's serves Indian sweets, snacks and meals, from chaat to thalis.",
   },
   "house-of-candy": {
-    tagline: "Pick And Mix, By The Scoop",
+    tagline: "Candy And Confectionery",
     description:
-      "House of Candy is a self serve confectionery wall, gummies, chocolates and sours sold by weight. Children treat it as the main attraction of the third floor. Bags are priced by what you fill, so pace yourself.",
+      "House of Candy offers gummies, chocolates and sweets, with pick and mix sold by weight.",
   },
   keventers: {
     tagline: "Milkshakes Since 1925",
     description:
-      "Keventers has been making thick milkshakes since 1925 and still serves them in the glass bottle. Classic flavours sit alongside seasonal ones. The bottle is yours to keep, which explains a lot of kitchen shelves in Delhi.",
+      "Keventers has been serving milkshakes since 1925 and is known for its classic glass bottles.",
   },
   kfc: {
     tagline: "It's Finger Lickin' Good",
     description:
-      "KFC does its Original Recipe chicken alongside burgers, wraps and rice bowls. Buckets are sized for sharing, which is how most tables here order. Third floor, with vegetarian options on the same menu.",
+      "KFC serves its signature fried chicken, along with burgers, wings and sides.",
   },
   "taco-bell": {
     tagline: "Live Más",
     description:
-      "Taco Bell serves Tex Mex built around tacos, burritos and quesadillas, with a strong vegetarian side of the menu. Build your own options let you set the spice level. Third floor, quick even at peak.",
+      "Taco Bell serves Mexican inspired food, including tacos, burritos, quesadillas and nachos.",
   },
   "the-indian-stories": {
-    tagline: "Regional Plates, One Counter",
+    tagline: "Indian Food",
     description:
-      "The Indian Stories moves across regional Indian cooking rather than sticking to one state, so the menu covers more ground than most food court counters. Thalis and rice plates are the easiest way in. Good option when the table cannot agree.",
+      "The Indian Stories serves food from different regions of India, with thalis, rice bowls and more.",
   },
   toniq: {
-    tagline: "Dry Bar And Kitchen",
+    tagline: "Food And Drinks",
     description:
-      "Toniq is a dry bar and kitchen, so the drinks list of mocktails and coolers gets as much attention as the food. Small plates and quick meals fill out the menu. A calmer place to sit than the main food court run.",
+      "Toniq serves mocktails, coolers and quick bites.",
   },
   "wow-china": {
-    tagline: "Desi Chinese, Done Right",
+    tagline: "Indo Chinese Food",
     description:
-      "Wow! China serves Indian Chinese without apology, chilli paneer, hakka noodles and manchurian included. Portions are built for sharing and the spice is real. Third floor food court.",
+      "Wow! China serves Indo Chinese favourites, from noodles and fried rice to Manchurian.",
   },
   "wow-kulfi": {
-    tagline: "Kulfi, The Way It Should Be",
+    tagline: "Kulfi And Desserts",
     description:
-      "Wow! Kulfi keeps to traditional kulfi, dense and slow set rather than whipped. Malai, kesar pista and seasonal fruit flavours lead. A better end to a food court meal than the obvious options.",
+      "Wow! Kulfi serves traditional kulfi in a range of flavours.",
   },
   "wow-momo": {
-    tagline: "Momos, Every Which Way",
+    tagline: "Momos And More",
     description:
-      "Wow! Momo does steamed, fried, tandoori and pan tossed momos across veg and chicken. The momo burger is exactly what it sounds like and has its defenders. Fast moving counter on the third floor.",
+      "Wow! Momo serves steamed, fried and pan fried momos, in veg and non veg options.",
   },
 
-  /* -------------------------------------------------------- RESTAURANT */
+  /* ------------------------------------------------------ RESTAURANT */
   nandos: {
     tagline: "Flame Grilled PERi-PERi Chicken",
     description:
-      "Nando's flame grills its chicken and bastes it in PERi-PERi, with heat running from Lemon & Herb up to Extra Hot, so everyone at the table can pick their level. Quarters, halves and wraps sit alongside veggie options and sides like PERi-PERi chips and spicy rice. A relaxed sit down meal on the second floor.",
+      "Nando's serves flame grilled PERi-PERi chicken, with spice levels from mild to extra hot, along with wraps, burgers and sides.",
   },
   "punjab-grill": {
-    tagline: "Punjab, Plated With Care",
+    tagline: "North Indian Dining",
     description:
-      "Punjab Grill is a proper sit down restaurant serving North Indian food with the finish of a fine dining kitchen. Kebabs, dal and breads from the tandoor are the reason to book. Find it on the second floor.",
+      "Punjab Grill is a sit down restaurant serving North Indian food, with kebabs, curries and breads from the tandoor.",
   },
   "rajwada-bhog": {
     tagline: "Kathiawadi Thali Delight",
     description:
-      "Rajwada Bhog serves the Kathiawadi thali, the hearty home style cooking of Saurashtra in Gujarat. A full thali brings breads, sabzis, dal, kadhi, rice and something sweet to the table together. A sit down meal on the third floor that works well for a family lunch.",
+      "Rajwada Bhog serves traditional Kathiawadi thalis from Gujarat.",
   },
 
-  /* -------------------------------------------------------------- CAFÉ */
+  /* ------------------------------------------------------------ CAFÉ */
   "blue-tokai": {
-    tagline: "Roasted In India",
+    tagline: "Coffee Roasters",
     description:
-      "Blue Tokai roasts single estate Indian coffee and lists the farm on the bag. Espresso, pour over and cold brew are all made properly, with beans to take home. Ground floor, and the quietest place to sit with a laptop.",
+      "Blue Tokai is an Indian specialty coffee roaster, serving coffee made from beans grown on Indian farms.",
   },
   chaayos: {
     tagline: "Meri Wali Chai",
     description:
-      "Chaayos lets you specify your chai down to the strength, sweetness and add ins, which is the whole idea. Snacks, sandwiches and maggi round out the menu. First floor, and a reliable meeting point.",
+      "Chaayos serves freshly made chai, customised the way you like it, along with snacks.",
   },
   "third-wave-coffee": {
-    tagline: "Coffee, Taken Seriously",
+    tagline: "Specialty Coffee",
     description:
-      "Third Wave Coffee roasts its own beans and trains its baristas to match, so the flat whites and cold brews hold up. Bakes and sandwiches are made fresh through the day. First floor, with enough seating to actually stay a while.",
+      "Third Wave Coffee serves specialty coffee, along with bakes and light meals.",
   },
 
-  /* ----------------------------------------------------- ENTERTAINMENT */
+  /* --------------------------------------------------- ENTERTAINMENT */
   cinepolis: {
-    tagline: "The Movies, Properly",
+    tagline: "Movies On The Big Screen",
     description:
-      "Cinépolis brings its full screen experience to the third floor, with recliner seating and a sound setup worth the ticket. New releases run across languages, and the in seat service means you do not miss a scene queueing. Book ahead for opening weekends.",
+      "Cinépolis shows the latest films on the big screen.",
   },
   "fun-block": {
-    tagline: "Play, Build, Repeat",
+    tagline: "Soft Play For Kids",
     description:
-      "Fun Block is a soft play and activity zone built for younger children, with climbing, building and role play areas. Supervision is on hand and parents can sit within sight. Second floor, and a sensible way to buy yourself an hour.",
+      "Fun Block is a soft play area for younger children, with climbing and play zones.",
   },
   funcity: {
-    tagline: "A Day Out For The Whole Family",
+    tagline: "Family Entertainment",
     description:
-      "FunCity packs rides, soft play and arcade games into one floor, covering toddlers through teenagers. Prepaid cards work across the machines and can be topped up as you go. Third floor, and busiest at weekends.",
+      "FunCity is a family entertainment centre with rides and arcade games for kids and teens.",
   },
   "game-x": {
-    tagline: "Press Start",
+    tagline: "Arcade Gaming",
     description:
-      "Game X is the arcade proper, with racing rigs, shooters and multiplayer cabinets alongside redemption games. It runs later than most of the mall, so it works as an after dinner stop. Second floor, next to the cinema run.",
+      "Game X is an arcade with racing, shooting and multiplayer games.",
   },
 };

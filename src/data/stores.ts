@@ -36,6 +36,8 @@ export type Store = {
   logo: string;
   bg?: string;
   knockout?: boolean;
+  /** Which header artwork the page uses, from public/images/store-hero */
+  heroArt: string;
   tagline: string;
   description: string;
   hours: StoreHours[];
@@ -57,6 +59,19 @@ const CLOSES_AT = 23;
 const CONTACTS: Record<string, { phone?: string; email?: string }> = {
   adidas: { phone: "1800-570-3944", email: "service@onlineshop.adidas.co.in" },
 };
+
+// Header artwork. Three backgrounds, each cut three ways, so neighbouring
+// pages rarely look the same. Every store keeps the same one from build to
+// build because it is picked from the slug, not at random.
+const HERO_ART = ["1a", "1b", "1c", "2a", "2b", "2c", "3a", "3b", "3c"];
+const HERO_ART_PINNED: Record<string, string> = { adidas: "2b" };
+
+function heroArtFor(slug: string) {
+  if (HERO_ART_PINNED[slug]) return HERO_ART_PINNED[slug];
+  let h = 0;
+  for (const ch of slug) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return HERO_ART[h % HERO_ART.length];
+}
 
 function floorName(floors: string[]) {
   const names = floors.map((f) => FLOOR_LABELS[f]?.name ?? f.toUpperCase());
@@ -80,6 +95,7 @@ function build(entry: DirectoryStore, section: Store["section"]): Store {
     logo: entry.logo,
     bg: entry.bg,
     knockout: entry.knockout,
+    heroArt: heroArtFor(entry.slug),
     tagline: copy?.tagline ?? "",
     description: copy?.description ?? "",
     hours: STORE_HOURS,
