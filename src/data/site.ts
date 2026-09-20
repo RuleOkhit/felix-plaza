@@ -52,7 +52,7 @@ export const NAV_LINKS: NavLink[] = [
   // Offers is parked for now: the page still exists under src/app/_offers
   // (an underscore folder is invisible to the router) and comes back by
   // renaming the folder and restoring this line.
-  { label: "Events", href: "https://events.felixplaza.com/", external: true },
+  { label: "Events", href: "/events" },
   { label: "Plan Your Visit", href: "/plan-your-visit" },
 ];
 

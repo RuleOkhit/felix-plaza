@@ -120,3 +120,22 @@ html.lenis body {
     radial-gradient(70% 110% at 92% 100%, rgba(91, 95, 199, 0.35), transparent 62%),
     #17161f;
 }
+
+/* Slow drift for event images standing in for a video until one is
+   supplied. Switched off for anyone who prefers reduced motion. */
+@keyframes kenburns {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+.animate-kenburns {
+  animation: kenburns 16s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-kenburns {
+    animation: none;
+  }
+}

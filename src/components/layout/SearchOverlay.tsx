@@ -119,10 +119,9 @@ const PAGES: Entry[] = [
   {
     key: "page-events",
     name: "Events",
-    sub: "Opens the events site",
-    href: "https://events.felixplaza.com/",
-    external: true,
-    haystack: "events whats on",
+    sub: "What's on at Felix Plaza, month by month",
+    href: "/events",
+    haystack: "events whats on naruto festival workshop mango yoga run club bhajan fun club",
   },
 ];
 
