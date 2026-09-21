@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import type { Art, FelixEvent } from "@/data/events";
 import Reveal from "@/components/ui/Reveal";
-import EventArt, { hasFormat } from "./EventArt";
+import EventArt, { artRatio } from "./EventArt";
 
 // Public files need the deploy sub-path in front of them (see image-loader).
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -13,75 +13,83 @@ function tint(hex: string, alpha: number) {
   return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
 }
 
-// The frame at the top of the page is 4:5 on phones and 16:9 on desktop.
-const FRAME = { phone: 4 / 5, desk: 16 / 9 };
-
-/** How much of the frame an image of this shape fills when shown whole. */
-function fit(art: Art, frame: number) {
-  const r = art.width / art.height;
-  return r >= frame
-    ? { w: "100%", h: `${((frame / r) * 100).toFixed(2)}%` }
-    : { w: `${((r / frame) * 100).toFixed(2)}%`, h: "100%" };
+/**
+ * Photos laid out in justified rows, the way a picture desk would: each row
+ * is filled to the same width and every photo in it shares a height, with
+ * widths following the photo's own proportions. Nothing is cropped, and a
+ * row of wide shots simply sits shorter than a row of tall ones.
+ *
+ * `target` is the total width over height a full row aims for, so a bigger
+ * number means more photos per row and a shorter row.
+ */
+function justify(photos: Art[], target: number, max: number) {
+  const rows: { photos: Art[]; sum: number }[] = [];
+  let current: Art[] = [];
+  let sum = 0;
+  for (const p of photos) {
+    current.push(p);
+    sum += p.width / p.height;
+    if (sum >= target || current.length === max) {
+      rows.push({ photos: current, sum });
+      current = [];
+      sum = 0;
+    }
+  }
+  if (current.length) rows.push({ photos: current, sum });
+  return rows;
 }
 
-const FEATHER =
-  "[mask-composite:intersect] [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent),linear-gradient(to_bottom,transparent,black_6%,black_94%,transparent)]";
-
-// One piece of artwork shown whole inside the frame, its edges feathered into
-// a blurred copy of itself so it blends into the frame instead of sitting in
-// a box.
-function Framed({ art, alt, frame }: { art: Art; alt: string; frame: number }) {
-  const { w, h } = fit(art, frame);
+function PhotoRows({
+  event,
+  photos,
+  target,
+  max,
+  gapY,
+  gapX,
+}: {
+  event: FelixEvent;
+  photos: Art[];
+  target: number;
+  max: number;
+  // Written out in full because Tailwind only sees class names it can read
+  // in the source.
+  gapY: string;
+  gapX: string;
+}) {
   return (
-    <>
-      <Image src={art.src} alt="" aria-hidden fill sizes="50vw" className="scale-110 object-cover blur-3xl saturate-125" />
-      <div className="absolute inset-0 grid place-items-center">
-        <div className={`relative ${FEATHER}`} style={{ width: w, height: h }}>
-          <Image src={art.src} alt={alt} fill priority sizes="100vw" className="object-cover" />
-        </div>
-      </div>
-    </>
-  );
-}
-
-// The top of the page: the event's video, playing muted on a loop. Until a
-// video is supplied the event's artwork stands in, drifting slowly so the
-// frame still feels alive.
-function EventMedia({ event }: { event: FelixEvent }) {
-  const alt = `${event.title}, ${event.when}`;
-  const phoneArt = event.poster.portrait ?? event.poster.landscape;
-  const deskArt = event.poster.landscape ?? event.poster.portrait;
-  const wide = hasFormat(event, "landscape");
-
-  return (
-    <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-ink md:aspect-video">
-      {event.video ? (
-        <video
-          className="absolute inset-0 h-full w-full object-cover"
-          src={`${BASE}${event.video}`}
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
-      ) : (
-        <div className="absolute inset-0 animate-kenburns">
-          <div className="absolute inset-0 md:hidden">
-            {phoneArt ? (
-              <Framed art={phoneArt} alt={alt} frame={FRAME.phone} />
-            ) : (
-              <EventArt event={event} format="portrait" sizes="100vw" />
-            )}
-          </div>
-          <div className="absolute inset-0 hidden md:block">
-            {deskArt ? (
-              <Framed art={deskArt} alt={alt} frame={FRAME.desk} />
-            ) : (
-              <EventArt event={event} format={wide ? "landscape" : "portrait"} sizes="100vw" />
-            )}
-          </div>
-        </div>
-      )}
+    <div className={`flex flex-col ${gapY}`}>
+      {justify(photos, target, max).map((row, r) => {
+        // A short last row keeps the same rhythm by taking only the width it
+        // needs, tucked to alternating sides rather than stretched.
+        const partial = row.sum < target * 0.8;
+        const style: CSSProperties = partial
+          ? { width: `${Math.min(100, (row.sum / target) * 100).toFixed(1)}%`, marginLeft: r % 2 ? "auto" : undefined }
+          : {};
+        return (
+          <Reveal key={r}>
+            <div className={`flex ${gapX}`} style={style}>
+              {row.photos.map((p, i) => {
+                const ratio = p.width / p.height;
+                return (
+                  <div
+                    key={p.src}
+                    className="relative overflow-hidden rounded-xl bg-ink/5"
+                    style={{ flexGrow: ratio, flexBasis: 0, aspectRatio: ratio }}
+                  >
+                    <Image
+                      src={p.src}
+                      alt={`${event.title}, photo ${r * max + i + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 40vw"
+                      className="object-cover"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </Reveal>
+        );
+      })}
     </div>
   );
 }
@@ -90,7 +98,6 @@ function EventMedia({ event }: { event: FelixEvent }) {
 function PhotoPlaceholder({ event, index }: { event: FelixEvent; index: number }) {
   const { from, to } = event.theme;
   const angle = [135, 200, 60, 160, 20, 110][index % 6];
-  // Three tones in turn, strong, pale and cool, so the spread has some rhythm.
   const wash = [
     `linear-gradient(${angle}deg, ${tint(from, 0.6)}, ${tint(to, 0.5)}), #ffffff`,
     `linear-gradient(${angle}deg, ${tint(from, 0.18)}, ${tint(to, 0.12)}), #faf8fc`,
@@ -106,82 +113,45 @@ function PhotoPlaceholder({ event, index }: { event: FelixEvent; index: number }
   );
 }
 
-// Placeholder slots take turns at different shapes, and the columns start at
-// different heights, so the spread reads like a magazine page, not a grid.
 const SHAPES = ["4 / 5", "1 / 1", "3 / 4", "5 / 4", "4 / 5", "1 / 1"];
 
-type Slot = { art?: Art; i: number };
-
-function Photo({ event, slot }: { event: FelixEvent; slot: Slot }) {
-  const { art, i } = slot;
-  return (
-    <Reveal delay={(i % 3) * 0.08}>
-      <div
-        className="relative overflow-hidden rounded-xl"
-        style={{ aspectRatio: art ? `${art.width} / ${art.height}` : SHAPES[i % SHAPES.length] }}
-      >
-        {art ? (
-          <Image src={art.src} alt={`${event.title}, photo ${i + 1}`} fill sizes="(max-width: 768px) 90vw, 40vw" className="object-cover" />
-        ) : (
-          <PhotoPlaceholder event={event} index={i} />
-        )}
-      </div>
-    </Reveal>
-  );
-}
-
-// The photos, straight after the text. A single picture is set off to one
-// side at its own proportions; several are laid out in staggered columns.
+// The photo spread: justified rows on desktop, shorter rows on phones so the
+// page does not turn into a long scroll. Events still waiting on photos show
+// empty slots instead.
 function Photos({ event }: { event: FelixEvent }) {
-  const slots: Slot[] = event.gallery?.length
-    ? event.gallery.map((art, i) => ({ art, i }))
-    : Array.from({ length: event.galleryPlaceholders ?? 0 }, (_, i) => ({ i }));
-  if (!slots.length) return null;
+  const photos = event.gallery ?? [];
+  const waiting = event.galleryPlaceholders ?? 0;
+  if (!photos.length && !waiting) return null;
 
   const { from, to } = event.theme;
   // No band and no hard edge: a soft bloom of the event's colours that fades
   // out into the page on every side.
   const bloom: CSSProperties = {
-    background: `radial-gradient(55% 60% at 72% 40%, ${tint(from, 0.12)}, transparent 70%), radial-gradient(45% 50% at 22% 78%, ${tint(to, 0.08)}, transparent 70%)`,
+    background: `radial-gradient(55% 60% at 72% 30%, ${tint(from, 0.13)}, transparent 70%), radial-gradient(45% 55% at 20% 80%, ${tint(to, 0.09)}, transparent 70%)`,
   };
 
-  if (slots.length === 1) {
-    return (
-      <section className="px-4 pb-16 md:px-[60px] md:pb-24" style={bloom}>
-        <div className="grid items-end gap-6 md:grid-cols-12 md:gap-8">
-          <div className="w-[82%] justify-self-end md:col-span-5 md:col-start-8 md:w-full">
-            <Photo event={event} slot={slots[0]} />
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  const columns = (count: number) =>
-    Array.from({ length: count }, (_, c) => slots.filter(({ i }) => i % count === c));
-
   return (
-    <section className="px-4 pb-16 md:px-[60px] md:pb-24" style={bloom}>
-      {/* Phones: two columns, the second set lower */}
-      <div className="grid grid-cols-2 gap-3 md:hidden">
-        {columns(2).map((col, c) => (
-          <div key={c} className={`flex flex-col gap-3 ${c === 1 ? "mt-12" : ""}`}>
-            {col.map((slot) => (
-              <Photo key={slot.i} event={event} slot={slot} />
-            ))}
+    <section className="px-4 pb-16 pt-10 md:px-[60px] md:pb-24 md:pt-14" style={bloom}>
+      {photos.length > 0 ? (
+        <>
+          <div className="md:hidden">
+            <PhotoRows event={event} photos={photos} target={1.6} max={2} gapY="gap-y-3" gapX="gap-x-3" />
           </div>
-        ))}
-      </div>
-      {/* Desktop: three columns at three different heights */}
-      <div className="hidden grid-cols-3 gap-6 md:grid lg:gap-8">
-        {columns(3).map((col, c) => (
-          <div key={c} className={`flex flex-col gap-6 lg:gap-8 ${["", "mt-24", "mt-10"][c]}`}>
-            {col.map((slot) => (
-              <Photo key={slot.i} event={event} slot={slot} />
-            ))}
+          <div className="hidden md:block">
+            <PhotoRows event={event} photos={photos} target={2.7} max={3} gapY="gap-y-6" gapX="gap-x-6" />
           </div>
-        ))}
-      </div>
+        </>
+      ) : (
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-6">
+          {Array.from({ length: waiting }, (_, i) => (
+            <Reveal key={i} delay={(i % 3) * 0.08}>
+              <div className="relative overflow-hidden rounded-xl" style={{ aspectRatio: SHAPES[i % SHAPES.length] }}>
+                <PhotoPlaceholder event={event} index={i} />
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
@@ -208,8 +178,9 @@ function NeighbourLink({ event, dir }: { event: FelixEvent; dir: "previous" | "n
   );
 }
 
-// A single event: the video (or its stand in) up top, the details beneath,
-// the photos straight after, then a way on to the events either side.
+// A single event: the poster beside the write up, the photos underneath, then
+// a way on to the events either side. The poster is never stretched across
+// the top; it keeps its own proportions next to the words.
 export default function EventView({
   event,
   previous,
@@ -220,13 +191,16 @@ export default function EventView({
   next?: FelixEvent;
 }) {
   const { from, to } = event.theme;
+  const ratio = artRatio(event, "portrait");
+  const cover: CSSProperties = {
+    aspectRatio: ratio,
+    // Very tall artwork is held back so it does not tower over the text.
+    maxWidth: ratio < 0.7 ? "420px" : undefined,
+  };
+
   return (
     <>
-      <section className="px-4 pt-[84px] md:px-[60px] md:pt-[100px]">
-        <EventMedia event={event} />
-      </section>
-
-      <section className="px-4 pb-12 pt-12 md:px-[60px] md:pb-16 md:pt-20">
+      <section className="px-4 pt-[84px] md:px-[60px] md:pt-[104px]">
         <nav aria-label="Breadcrumb" className="text-[11px] font-bold uppercase tracking-[0.18em] text-ink/40">
           <Link href="/events" className="transition-colors hover:text-ink">
             Events
@@ -235,8 +209,36 @@ export default function EventView({
           <span className="text-ink/70">{event.title}</span>
         </nav>
 
-        <div className="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-7">
+        <div className="mt-6 grid gap-8 md:mt-8 lg:grid-cols-12 lg:gap-14">
+          {/* The poster (or the event video), beside the words rather than
+              stretched across the top */}
+          <div className="lg:col-span-5">
+            <div
+              className="relative mx-auto w-full overflow-hidden rounded-2xl shadow-[0_26px_60px_-30px_rgba(23,22,31,0.6)] lg:mx-0"
+              style={cover}
+            >
+              {event.video ? (
+                <video
+                  className="absolute inset-0 h-full w-full object-cover"
+                  src={`${BASE}${event.video}`}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
+              ) : (
+                <EventArt
+                  event={event}
+                  format="portrait"
+                  sizes="(max-width: 1024px) 92vw, 44vw"
+                  priority
+                />
+              )}
+            </div>
+          </div>
+
+          {/* The write up */}
+          <div className="lg:col-span-6 lg:col-start-7 lg:pt-2">
             <span
               aria-hidden
               className="block h-1 w-16 rounded-full"
@@ -245,7 +247,7 @@ export default function EventView({
             <p className="mt-5 text-xs font-bold uppercase tracking-[0.22em] text-felix-pink">
               {event.when}
             </p>
-            <h1 className="mt-3 font-display text-[38px] uppercase leading-[0.95] tracking-wide text-ink md:text-[60px]">
+            <h1 className="mt-3 font-display text-[36px] uppercase leading-[0.95] tracking-wide text-ink md:text-[54px]">
               {event.title}
             </h1>
             {event.subtitle && (
@@ -253,18 +255,16 @@ export default function EventView({
                 {event.subtitle}
               </p>
             )}
-            <p className="mt-7 text-lg leading-relaxed text-ink md:text-xl">{event.summary}</p>
+            <p className="mt-6 text-lg leading-relaxed text-ink md:text-xl">{event.summary}</p>
             {event.description.map((p) => (
               <p key={p} className="mt-4 leading-relaxed text-ink/70 md:text-lg">
                 {p}
               </p>
             ))}
-          </div>
 
-          <aside className="lg:col-span-4 lg:col-start-9">
-            <dl className="border-t border-ink/10">
+            <dl className="mt-8 grid gap-x-10 gap-y-5 border-t border-ink/10 pt-6 sm:grid-cols-2">
               {event.facts.map((f) => (
-                <div key={f.label} className="border-b border-ink/10 py-4">
+                <div key={f.label}>
                   <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink/45">
                     {f.label}
                   </dt>
@@ -272,14 +272,15 @@ export default function EventView({
                 </div>
               ))}
             </dl>
+
             <Link
               href="/plan-your-visit"
-              className="mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-primary transition-colors hover:text-ink"
+              className="mt-7 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-primary transition-colors hover:text-ink"
             >
               Plan your visit
               <span aria-hidden>→</span>
             </Link>
-          </aside>
+          </div>
         </div>
       </section>
 

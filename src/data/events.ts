@@ -81,99 +81,139 @@ export const EVENTS: FelixEvent[] = [
   },
   {
     slug: "bhajan-jamming",
-    title: "Bhajan Jamming",
+    title: "Raas Rhythm",
+    subtitle: "A Celebration Of Music & Bhakti",
     month: "2026-09",
-    when: "September 2026",
-    summary: "Devotional music, sung together.",
+    when: "5 September 2026",
+    summary: "Some evenings are meant to be heard. Some are meant to be felt.",
     description: [
-      "Photos and highlights from Bhajan Jamming will be added here.",
-    ],
-    facts: [{ label: "When", value: "September 2026" }, WHERE],
-    theme: { from: "#f2a93b", to: "#7a1f3d" },
-    poster: {},
-    galleryPlaceholders: 6,
-  },
-  {
-    slug: "felix-fun-club",
-    title: "Felix Fun Club",
-    subtitle: "Make, Discover, Experiment, Create",
-    month: "2026-08",
-    when: "August 2026",
-    summary: "Creative sessions for kids, with Magic Mondays and Talent Thursdays.",
-    description: [
-      "Felix Fun Club is a set of hands on creative sessions for kids, built around two themes.",
-      "Magic Mondays are where imagination meets making, with Bappa's Little Clay Studio, Ninja Mission: Cape & Mask, Puzzle Play Lab and Wands & Wonder Slime.",
-      "Talent Thursdays are where creativity meets inspiration, from Meet Pablo Picasso and Meet Vincent Van Gogh to Aero Modelling.",
+      "Raas Rhythm brought music and bhakti together for an evening of soulful melodies, positive energy and moments of connection.",
+      "Come for the music. Stay for the feeling.",
     ],
     facts: [
-      { label: "When", value: "August 2026" },
+      { label: "When", value: "5 September 2026" },
       WHERE,
-      { label: "Sessions", value: "Magic Mondays and Talent Thursdays" },
     ],
-    theme: { from: "#e0609a", to: "#2b2f86" },
+    theme: { from: "#d4b872", to: "#2c5738" },
     poster: {
-      // The middle panel of the banner, cut out as a 3:4 poster for phones
-      portrait: { src: "/images/events/felix-fun-club/portrait.webp", width: 1050, height: 1400 },
-      landscape: { src: "/images/events/felix-fun-club/landscape.webp", width: 2600, height: 1156 },
+      portrait: { src: "/images/events/bhajan-jamming/cover.webp", width: 1200, height: 1600 },
     },
-  },
-  {
-    slug: "feathers-of-freedom",
-    title: "Feathers Of Freedom",
-    month: "2026-08",
-    when: "August 2026",
-    summary: "An Independence Day celebration at Felix Plaza.",
-    description: [
-      "Photos and highlights from Feathers Of Freedom will be added here.",
+    gallery: [
+      { src: "/images/events/bhajan-jamming/photo-1.webp", width: 1200, height: 1600 },
+      { src: "/images/events/bhajan-jamming/photo-2.webp", width: 1200, height: 1600 },
+      { src: "/images/events/bhajan-jamming/photo-3.webp", width: 1200, height: 1600 },
+      { src: "/images/events/bhajan-jamming/photo-4.webp", width: 1600, height: 1067 },
+      { src: "/images/events/bhajan-jamming/photo-5.webp", width: 1600, height: 1067 },
+      { src: "/images/events/bhajan-jamming/photo-6.webp", width: 1600, height: 1067 },
+      { src: "/images/events/bhajan-jamming/photo-7.webp", width: 1600, height: 1067 },
     ],
-    facts: [{ label: "When", value: "August 2026" }, WHERE],
-    theme: { from: "#7cc4f5", to: "#2f5fb8" },
-    poster: {},
-    placeholderLandscape: true,
-    galleryPlaceholders: 6,
   },
   {
     slug: "family-run-club",
     title: "Family Run Club",
+    subtitle: "Lace Up, Together",
     month: "2026-08",
-    when: "August 2026",
-    summary: "A run for the whole family.",
+    when: "30 August 2026",
+    summary: "Some Sundays are for brunch. Some are for passing the baton.",
     description: [
-      "Photos and highlights from the Family Run Club will be added here.",
+      "The Felix Plaza Family Run brought families and friends together for a fun filled Sunday of teamwork, movement and friendly competition.",
+      "Participants picked their teams, took on the relay and made the morning one to remember.",
     ],
-    facts: [{ label: "When", value: "August 2026" }, WHERE],
-    theme: { from: "#ff8a5c", to: "#8a3fd1" },
-    poster: {},
-    galleryPlaceholders: 6,
+    facts: [
+      { label: "When", value: "30 August 2026" },
+      WHERE,
+    ],
+    theme: { from: "#cdf24a", to: "#3f8f2c" },
+    poster: {
+      portrait: { src: "/images/events/family-run-club/cover.webp", width: 1200, height: 1600 },
+    },
+    gallery: [
+      { src: "/images/events/family-run-club/photo-1.webp", width: 1067, height: 1600 },
+      { src: "/images/events/family-run-club/photo-2.webp", width: 1600, height: 1067 },
+      { src: "/images/events/family-run-club/photo-3.webp", width: 1600, height: 1067 },
+      { src: "/images/events/family-run-club/photo-4.webp", width: 1067, height: 1600 },
+      { src: "/images/events/family-run-club/photo-5.webp", width: 1600, height: 1067 },
+      { src: "/images/events/family-run-club/photo-6.webp", width: 1600, height: 1067 },
+    ],
   },
   {
-    slug: "mango-fest",
-    title: "Mango Fest",
-    month: "2026-06",
-    when: "June 2026",
-    summary: "A summer celebration of mangoes.",
+    slug: "feathers-of-freedom",
+    title: "Feathers Of Freedom",
+    subtitle: "Every Feather Tells A Story",
+    month: "2026-08",
+    when: "August 2026",
+    summary: "Every feather tells a story. Every colour reflects the spirit of our nation.",
     description: [
-      "Photos and highlights from Mango Fest will be added here.",
+      "Feathers of Freedom celebrated India's pride, culture and togetherness through experiences inspired by the spirit of the nation.",
+      "A celebration of colours, stories and moments that brought the spirit of India to life.",
     ],
-    facts: [{ label: "When", value: "June 2026" }, WHERE],
-    theme: { from: "#ffd24d", to: "#f07c1c" },
-    poster: {},
-    placeholderLandscape: true,
-    galleryPlaceholders: 6,
+    facts: [
+      { label: "When", value: "August 2026" },
+      { label: "Highlights", value: "Kids activity zone" },
+      WHERE,
+    ],
+    theme: { from: "#f4801f", to: "#1a8a46" },
+    poster: {
+      portrait: { src: "/images/events/feathers-of-freedom/cover.webp", width: 1200, height: 1600 },
+    },
+    gallery: [
+      { src: "/images/events/feathers-of-freedom/photo-1.webp", width: 1201, height: 1600 },
+      { src: "/images/events/feathers-of-freedom/photo-2.webp", width: 1600, height: 1067 },
+      { src: "/images/events/feathers-of-freedom/photo-3.webp", width: 1600, height: 1067 },
+    ],
   },
   {
     slug: "yog-mahotsav",
     title: "YOG Mahotsav",
+    subtitle: "Pause. Breathe. Reconnect.",
     month: "2026-06",
-    when: "June 2026",
-    summary: "A celebration of yoga, marking International Yoga Day.",
+    when: "20 June 2026",
+    summary: "A day of movement, mindfulness and positive energy.",
     description: [
-      "Photos and highlights from YOG Mahotsav will be added here.",
+      "On Yoga Day, Felix Plaza hosted an experience dedicated to health, harmony and holistic well being.",
+      "A refreshing celebration of yoga, mindfulness and wellness, bringing people together to pause, reconnect and embrace a healthier way of living.",
     ],
-    facts: [{ label: "When", value: "June 2026" }, WHERE],
-    theme: { from: "#f6b26b", to: "#2a7f7a" },
-    poster: {},
-    galleryPlaceholders: 6,
+    facts: [
+      { label: "When", value: "20 June 2026" },
+      WHERE,
+    ],
+    theme: { from: "#8a6fe0", to: "#4b3aa8" },
+    poster: {
+      portrait: { src: "/images/events/yog-mahotsav/cover.webp", width: 1200, height: 1600 },
+    },
+    gallery: [
+      { src: "/images/events/yog-mahotsav/photo-1.webp", width: 669, height: 1600 },
+      { src: "/images/events/yog-mahotsav/photo-2.webp", width: 1200, height: 1600 },
+      { src: "/images/events/yog-mahotsav/photo-3.webp", width: 1600, height: 900 },
+    ],
+  },
+  {
+    slug: "mango-fest",
+    title: "Mango Fest",
+    subtitle: "Flavours Of Summer",
+    month: "2026-06",
+    when: "13–14 June 2026",
+    summary: "A weekend given over to the king of fruits.",
+    description: [
+      "Mango Fest brought the flavours of summer to life with a vibrant celebration dedicated to the king of fruits.",
+      "From delicious bites and refreshing treats to fun experiences and summer vibes, the weekend was all about good food, great energy and mango lovers coming together.",
+    ],
+    facts: [
+      { label: "When", value: "13–14 June 2026" },
+      WHERE,
+    ],
+    theme: { from: "#ffc233", to: "#f2760c" },
+    poster: {
+      portrait: { src: "/images/events/mango-fest/cover.webp", width: 1200, height: 1600 },
+    },
+    gallery: [
+      { src: "/images/events/mango-fest/photo-1.webp", width: 1200, height: 1600 },
+      { src: "/images/events/mango-fest/photo-2.webp", width: 1200, height: 1600 },
+      { src: "/images/events/mango-fest/photo-3.webp", width: 1200, height: 1600 },
+      { src: "/images/events/mango-fest/photo-4.webp", width: 1600, height: 1200 },
+      { src: "/images/events/mango-fest/photo-5.webp", width: 1600, height: 1200 },
+      { src: "/images/events/mango-fest/photo-6.webp", width: 1200, height: 1600 },
+    ],
   },
   {
     slug: "moments-with-mom",
@@ -188,18 +228,52 @@ export const EVENTS: FelixEvent[] = [
     ],
     facts: [
       { label: "When", value: "May 2026" },
-      WHERE,
       { label: "Activities", value: "Tote bag painting and glow jar making, with treats along the way" },
+      WHERE,
     ],
     theme: { from: "#f7a1bd", to: "#e23d73" },
     poster: {
-      portrait: { src: "/images/events/moments-with-mom/cover.webp", width: 1440, height: 1920 },
+      portrait: { src: "/images/events/moments-with-mom/cover.webp", width: 1200, height: 1600 },
     },
     gallery: [
-      { src: "/images/events/moments-with-mom/activities.webp", width: 1440, height: 1920 },
+      { src: "/images/events/moments-with-mom/photo-1.webp", width: 1201, height: 1600 },
+      { src: "/images/events/moments-with-mom/photo-2.webp", width: 1201, height: 1600 },
+      { src: "/images/events/moments-with-mom/photo-3.webp", width: 1201, height: 1600 },
+      { src: "/images/events/moments-with-mom/photo-4.webp", width: 1201, height: 1600 },
+      { src: "/images/events/moments-with-mom/photo-5.webp", width: 1201, height: 1600 },
     ],
   },
 ];
+
+/*
+ * Parked: Felix Fun Club is out of the listing for now. Its artwork is still
+ * in public/images/events/felix-fun-club, so adding this entry back to EVENTS
+ * brings the event and its page straight back.
+ *
+ * {
+ *   slug: "felix-fun-club",
+ *   title: "Felix Fun Club",
+ *   subtitle: "Make, Discover, Experiment, Create",
+ *   month: "2026-08",
+ *   when: "August 2026",
+ *   ...
+ * }
+ */
+
+/*
+ * Parked: Felix Fun Club is out of the listing for now. Its artwork is still
+ * in public/images/events/felix-fun-club, so adding this entry back to EVENTS
+ * brings the event and its page straight back.
+ *
+ * {
+ *   slug: "felix-fun-club",
+ *   title: "Felix Fun Club",
+ *   subtitle: "Make, Discover, Experiment, Create",
+ *   month: "2026-08",
+ *   when: "August 2026",
+ *   ...
+ * }
+ */
 
 /** The event the page opens on. */
 export const FEATURED_EVENT_SLUG = "naruto";
