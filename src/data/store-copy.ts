@@ -287,6 +287,11 @@ export const STORE_COPY: Record<string, StoreCopy> = {
   },
 
   /* --------------------------------------------------------- WATCHES */
+  casio: {
+    tagline: "Watches From Japan",
+    description:
+      "Casio has been making watches in Japan since 1974, from the tough G-SHOCK line to the EDIFICE dress range and its well known digital models.",
+  },
   helios: {
     tagline: "Watches From Leading Brands",
     description:
