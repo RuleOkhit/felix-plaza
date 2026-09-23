@@ -1,4 +1,4 @@
-import { HERO_IMG, SITE } from "./site";
+import { HERO_IMG, HERO_IMG_PHONE, SITE } from "./site";
 import {
   DINE_STORES,
   ENTERTAINMENT_STORES,
@@ -18,15 +18,18 @@ import { onSite } from "./parked";
 
 export type HeroSlide = {
   title: string;
+  /** 16:9 artwork for desktop */
   image: string;
+  /** 9:16 artwork for phones */
+  phone: string;
   href: string;
 };
 
 export const HERO_SLIDES: HeroSlide[] = [
-  { title: "Shop", image: HERO_IMG.shop, href: "/shop" },
-  { title: "Dine", image: HERO_IMG.dine, href: "/dine" },
-  { title: "Entertain", image: HERO_IMG.entertain, href: "/entertain" },
-  { title: "Unwind", image: HERO_IMG.unwind, href: "/plan-your-visit" },
+  { title: "Shop", image: HERO_IMG.shop, phone: HERO_IMG_PHONE.shop, href: "/shop" },
+  { title: "Dine", image: HERO_IMG.dine, phone: HERO_IMG_PHONE.dine, href: "/dine" },
+  { title: "Entertain", image: HERO_IMG.entertain, phone: HERO_IMG_PHONE.entertain, href: "/entertain" },
+  { title: "Unwind", image: HERO_IMG.unwind, phone: HERO_IMG_PHONE.unwind, href: "/plan-your-visit" },
 ];
 
 export type BrandCard = {

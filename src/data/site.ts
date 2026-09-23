@@ -81,16 +81,25 @@ export const IMG = {
 
 export type ImgKey = keyof typeof IMG;
 
-// Hero slider backgrounds: finished 2560x1440 artwork, one per slide. The
-// word, the rule under it and the chevron motif are part of the image, so
-// HeroSlider deliberately draws no heading of its own over the top. The type
-// sits in the left half of the frame, which is why the slider anchors the
-// crop left rather than centring it.
+// Hero slider backgrounds: finished artwork, one per slide, in two cuts.
+// The word, the rule under it and the chevron motif are part of the image,
+// so HeroSlider deliberately draws no heading of its own over the top.
+//   HERO_IMG        2560x1440, for desktop and anything held landscape. The
+//                   type sits in the left half, so the crop is anchored left.
+//   HERO_IMG_PHONE  1080x1920, a separate 9:16 cut made to fill a phone
+//                   screen held upright.
 export const HERO_IMG = {
   shop: "/images/hero/hero-shop.webp",
   dine: "/images/hero/hero-dine.webp",
   entertain: "/images/hero/hero-entertain.webp",
   unwind: "/images/hero/hero-unwind.webp",
+} as const;
+
+export const HERO_IMG_PHONE = {
+  shop: "/images/hero/hero-shop-phone.webp",
+  dine: "/images/hero/hero-dine-phone.webp",
+  entertain: "/images/hero/hero-entertain-phone.webp",
+  unwind: "/images/hero/hero-unwind-phone.webp",
 } as const;
 
 // Inner-page banner photography. Each entry carries the object-position its

@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
-import { HERO_SLIDES } from "@/data/home";
+import { HERO_SLIDES, type HeroSlide } from "@/data/home";
 import { SITE } from "@/data/site";
 import { EASE } from "@/lib/motion";
 
@@ -17,16 +17,41 @@ import { EASE } from "@/lib/motion";
 // each frame is already colour graded. So this component draws no heading of
 // its own and no heavy scrim; doing either would double up on the design.
 //
-// What the artwork costs us is freedom over the crop. The type sits in the
-// left half, between 65% and 79% of the frame's height, so:
-//   - the image is anchored left, never centred, or the first letter goes;
-//   - the box keeps a near-square shape on phones, because a full-height
-//     portrait crop of a 16:9 frame would show the middle third only and cut
-//     the word out completely;
-//   - the caption and dots sit low and compact, clear of the baked rule.
+// Every slide comes in two cuts. Desktop, and anything held landscape, gets
+// the 16:9 frame, anchored left because the type sits in the left half.
+// Phones held upright get a 9:16 cut made for the purpose, so the hero fills
+// the screen there too. On screens taller than 9:16 the sides crop a little,
+// anchored near the left because the word starts right at the left edge; the
+// height stops at 199vw so even the tallest screen loses no more than about a
+// tenth of the width. The caption and dots sit low and compact, clear of the
+// baked rule, and the caption steps aside on a phone held sideways, where the
+// hero is too short to hold both.
+const DESK_MEDIA = "(min-width: 1024px), (orientation: landscape)";
+
+function SlideArt({ slide, priority }: { slide: HeroSlide; priority: boolean }) {
+  const common = { alt: slide.title, sizes: "100vw", priority };
+  const {
+    props: { srcSet: desktop },
+  } = getImageProps({ ...common, src: slide.image, width: 2560, height: 1440 });
+  const {
+    props: { srcSet: phone, ...rest },
+  } = getImageProps({ ...common, src: slide.phone, width: 1080, height: 1920 });
+  return (
+    <picture>
+      <source media={DESK_MEDIA} srcSet={desktop} />
+      <img
+        {...rest}
+        srcSet={phone}
+        alt={slide.title}
+        className="absolute inset-0 h-full w-full object-cover max-lg:portrait:object-[12%_center] max-lg:landscape:object-[0%_center] lg:object-[4%_center]"
+      />
+    </picture>
+  );
+}
+
 export default function HeroSlider() {
   return (
-    <section className="relative h-[400px] w-full overflow-hidden lg:h-svh lg:min-h-[700px]">
+    <section className="relative w-full overflow-hidden max-lg:portrait:h-[min(100svh,199vw)] max-lg:landscape:h-[min(100svh,56.25vw)] lg:h-svh lg:min-h-[700px]">
       <Swiper
         modules={[Autoplay, EffectFade, Navigation, Pagination]}
         effect="fade"
@@ -40,14 +65,7 @@ export default function HeroSlider() {
       >
         {HERO_SLIDES.map((slide, i) => (
           <SwiperSlide key={slide.title} className="relative h-full">
-            <Image
-              src={slide.image}
-              alt={slide.title}
-              fill
-              priority={i === 0}
-              sizes="100vw"
-              className="object-cover object-[0%_center] lg:object-[4%_center]"
-            />
+            <SlideArt slide={slide} priority={i === 0} />
             {/* Only enough shading to hold the caption and the dots. The
                 artwork is graded already, so anything more flattens it. */}
             <div
@@ -64,7 +82,7 @@ export default function HeroSlider() {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.7, ease: EASE }}
-        className="absolute inset-x-0 bottom-[52px] z-10 px-4 lg:bottom-[58px] lg:px-[60px]"
+        className="absolute inset-x-0 bottom-[52px] z-10 px-4 max-lg:landscape:hidden lg:bottom-[58px] lg:px-[60px]"
       >
         <ul className="flex flex-wrap items-center gap-x-5 gap-y-1 text-[13px] text-white/90 lg:text-sm">
           <li className="inline-flex items-center gap-2">
