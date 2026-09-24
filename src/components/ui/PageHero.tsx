@@ -42,11 +42,11 @@ export default function PageHero({
           photograph keeps its colour instead of going flat behind a wash. */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent"
+        className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/10 to-transparent"
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10"
+        className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"
       />
 
       <div className="relative z-10 w-full px-4 pb-8 md:px-[60px] md:pb-12">

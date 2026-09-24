@@ -102,14 +102,19 @@ export const HERO_IMG_PHONE = {
   unwind: "/images/hero/hero-unwind-phone.webp",
 } as const;
 
-// Inner-page banner photography. Each entry carries the object-position its
-// own composition needs: these are wide letterbox frames cut from squarer
-// photographs, so a plain centre crop clips the subject.
+// Inner-page banner photography, from Hero Images/Sub Banners. The banner
+// is a wide letterbox on desktop and nearer 16:10 on phones, so each entry
+// carries the object-position for the part of the photograph that matters:
+//   shop       the middle and lower part: hands, sunglasses and bags
+//   dine       the bottom: the plate under the smoke
+//   entertain  the centre: the lane and the pins
+//   visit      the bottom: the building and its signage (the sky and the
+//              slogan above are trimmed off the file itself)
 export const BANNER = {
-  shop: { src: "/images/banners/shop.webp", focus: "58% 44%" },
-  dine: { src: "/images/banners/dine.webp", focus: "50% 50%" },
-  entertain: { src: "/images/banners/entertain.webp", focus: "50% 38%" },
-  visit: { src: "/images/banners/plan-your-visit.webp", focus: "62% 48%" },
+  shop: { src: "/images/banners/shop.webp", focus: "50% 72%" },
+  dine: { src: "/images/banners/dine.webp", focus: "50% 90%" },
+  entertain: { src: "/images/banners/entertain.webp", focus: "50% 50%" },
+  visit: { src: "/images/banners/plan-your-visit.webp", focus: "50% 70%" },
 } as const;
 
 // Tenant logos (transparent PNG / SVG, displayed contained on a light tile).
