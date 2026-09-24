@@ -11,9 +11,9 @@ export const SITE = {
   whatsapp: "919355778800", // wa.me path (no +, no spaces)
   email: "info.desk@felixrealty.com",
   address: "NH-48, Sector 82A, Gurugram",
-  hours: "11:00 AM to 11:00 PM",
+  hours: "11:00 AM to 10:00 PM",
   /** Closing time on its own, for copy like "open till …". Keep in step with `hours`. */
-  closes: "11:00 PM",
+  closes: "10:00 PM",
   mapsUrl: "https://maps.app.goo.gl/4qgFhVqp1fYWG3KQ7",
   /** The in-house store directory on the main site. */
   directoryUrl: "https://felixplaza.com/directory/",

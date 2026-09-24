@@ -49,10 +49,10 @@ export type Store = {
 
 /** Mall wide trading hours. Every store keeps the same times. */
 export const STORE_HOURS: StoreHours[] = [
-  { days: "Monday to Sunday", time: "11:00 AM to 11:00 PM" },
+  { days: "Monday to Sunday", time: "11:00 AM to 10:00 PM" },
 ];
 const OPENS_AT = 11;
-const CLOSES_AT = 23;
+const CLOSES_AT = 22;
 
 // Only brands whose contact details have actually been confirmed. Everything
 // else is deliberately left blank rather than guessed at.
