@@ -27,7 +27,7 @@ const PARKING: Amenity[] = [
     ),
   },
   {
-    label: "Car Parking",
+    label: "3 Level Car Parking",
     icon: (
       <>
         <path d="M5 16.5h14M6.5 16.5V19a1 1 0 0 1-1 1H4.5a1 1 0 0 1-1-1v-2.5" />
@@ -39,11 +39,16 @@ const PARKING: Amenity[] = [
   },
   {
     label: "Two Wheelers",
+    // A motorbike rather than a bicycle: seat and tank on top, the engine
+    // block between the wheels, and front forks up to the handlebar.
     icon: (
       <>
-        <circle cx="5.5" cy="17" r="3.5" />
-        <circle cx="18.5" cy="17" r="3.5" />
-        <path d="M5.5 17 9 9h4l3 8M12 9h4M9.5 9 8 6H6" />
+        <circle cx="5" cy="16.5" r="3" />
+        <circle cx="19" cy="16.5" r="3" />
+        <path d="M5 16.5 8.5 13" />
+        <path d="M3.5 10.8h4.2c.9-1.4 2.6-2 4.4-1.6l1.4.3" />
+        <path d="M8.3 12.5h4.9l1.2 3H9.2Z" />
+        <path d="M14.2 8.2h2.3M15.6 8.2 19 16.5" />
       </>
     ),
   },
@@ -120,6 +125,27 @@ const SERVICES: Amenity[] = [
         <path d="M5 21V4.2a1.2 1.2 0 0 1 1.2-1.2h11.6A1.2 1.2 0 0 1 19 4.2V21" />
         <path d="M3 21h18" />
         <circle cx="15.4" cy="12.2" r="1.1" />
+      </>
+    ),
+  },
+  {
+    label: "Free WiFi",
+    icon: (
+      <>
+        <path d="M2.5 9a14 14 0 0 1 19 0" />
+        <path d="M5.6 12.4a9.6 9.6 0 0 1 12.8 0" />
+        <path d="M8.7 15.8a5 5 0 0 1 6.6 0" />
+        <circle cx="12" cy="19.2" r="0.9" fill="currentColor" />
+      </>
+    ),
+  },
+  {
+    label: "Clothes Tailoring",
+    icon: (
+      <>
+        <circle cx="6" cy="6" r="2.6" />
+        <circle cx="6" cy="18" r="2.6" />
+        <path d="M8.2 7.5 20 17M8.2 16.5 20 7" />
       </>
     ),
   },
