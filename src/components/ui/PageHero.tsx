@@ -39,14 +39,15 @@ export default function PageHero({
 
       {/* Readability, kept as light as the type allows. Weighted to the
           left where the words sit and cleared entirely on the right, so the
-          photograph keeps its colour instead of going flat behind a wash. */}
+          artwork keeps its colour. The shade is the Felix purple rather than
+          black, which sits more kindly on the pastel illustrations. */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/10 to-transparent"
+        className="absolute inset-0 bg-gradient-to-r from-felix/60 via-felix/15 to-transparent"
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"
+        className="absolute inset-0 bg-gradient-to-t from-felix/35 via-transparent to-transparent"
       />
 
       <div className="relative z-10 w-full px-4 pb-8 md:px-[60px] md:pb-12">
