@@ -103,14 +103,15 @@ export const HERO_IMG_PHONE = {
 } as const;
 
 // Inner-page banners, from Hero Images/Sub Banners. Shop, Dine and Entertain
-// are 4:1 illustrations; Plan Your Visit is a photograph with its orange
-// edge strip trimmed. All are anchored to the bottom, so any crop (a phone
-// shows a taller slice) comes off the top.
+// are 4:1 illustrations, anchored to the bottom so any crop comes off the
+// top. Plan Your Visit is a 2.47:1 illustration, taller than the banner, so
+// on desktop it is shown whole (see PageHero `whole`); on phones the crop is
+// split, mostly sky off the top, keeping the sun, balloons and road in frame.
 export const BANNER = {
   shop: { src: "/images/banners/shop.webp", focus: "50% 100%" },
   dine: { src: "/images/banners/dine.webp", focus: "50% 100%" },
   entertain: { src: "/images/banners/entertain.webp", focus: "50% 100%" },
-  visit: { src: "/images/banners/plan-your-visit.webp", focus: "50% 100%" },
+  visit: { src: "/images/banners/plan-your-visit.webp", focus: "50% 72%" },
 } as const;
 
 // Tenant logos (transparent PNG / SVG, displayed contained on a light tile).

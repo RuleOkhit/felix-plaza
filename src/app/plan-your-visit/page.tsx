@@ -203,6 +203,7 @@ export default function PlanYourVisitPage() {
         title="Plan Your Visit"
         image={BANNER.visit.src}
         focus={BANNER.visit.focus}
+        whole={{ ratio: 1482 / 600 }}
         eyebrow="Before You Set Off"
       />
 

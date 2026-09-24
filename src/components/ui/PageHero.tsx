@@ -14,16 +14,23 @@ import { EASE } from "@/lib/motion";
 // vertically and the phone crops them horizontally, so each one carries both
 // axes: without them the crop takes the middle and clips hands, feet and the
 // bottom of a bag.
+//
+// `whole` is for artwork taller than the desktop banner that should not be
+// cropped: on desktop the full image sits in the middle at its own
+// proportions (`ratio`, width over height), its sides feathered into a
+// blurred copy of itself. Phones still fill the banner as normal.
 export default function PageHero({
   title,
   image,
   eyebrow,
   focus = "center",
+  whole,
 }: {
   title: string;
   image: string;
   eyebrow?: string;
   focus?: string;
+  whole?: { ratio: number };
 }) {
   return (
     <section className="relative flex h-[240px] items-end overflow-hidden md:h-[46vh] md:max-h-[480px] md:min-h-[300px]">
@@ -33,9 +40,19 @@ export default function PageHero({
         fill
         priority
         sizes="100vw"
-        className="object-cover"
+        className={`object-cover ${whole ? "md:scale-110 md:blur-2xl md:saturate-125" : ""}`}
         style={{ objectPosition: focus }}
       />
+      {whole && (
+        <div className="absolute inset-0 hidden justify-center md:flex">
+          <div
+            className="relative h-full shrink-0 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+            style={{ aspectRatio: whole.ratio }}
+          >
+            <Image src={image} alt="" fill priority sizes="100vw" className="object-cover" />
+          </div>
+        </div>
+      )}
 
       {/* Readability, kept as light as the type allows. Weighted to the
           left where the words sit and cleared entirely on the right, so the
