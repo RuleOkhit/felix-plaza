@@ -62,7 +62,6 @@ function feature(
 export const TOP_SHOPS = feature(onSite(SHOP_STORES), "shop", [
   "h-and-m",
   "westside",
-  "levis",
   "marks-and-spencer",
   "lifestyle",
   "adidas",
