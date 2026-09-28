@@ -63,12 +63,11 @@ export const EVENTS: FelixEvent[] = [
     when: "25–27 September 2026",
     summary: "Three days of workshops, games, self defence and challenges for young shinobi.",
     description: [
-      "Felix Plaza presents The Ultimate Shinobi Experience, a Naruto meet and greet in association with Crunchyroll and Sony YAY!.",
-      "Across the three days there are workshops, fun games, self defence sessions and exciting challenges for young fans and their families.",
-      "Timings and entry details will be shared closer to the event.",
+      "Felix Plaza presented The Ultimate Shinobi Experience, a Naruto meet and greet in association with Crunchyroll and Sony YAY!.",
+      "Across the three days, young fans and their families met Naruto and took on workshops, fun games, self defence sessions and exciting challenges.",
     ],
     facts: [
-      { label: "When", value: "25–27 September 2026" },
+      { label: "When", value: "25–27 September 2026, 1 PM to 8 PM" },
       WHERE,
       { label: "Presented with", value: "Crunchyroll and Sony YAY!" },
       { label: "Highlights", value: "Workshops, fun games, self defence, exciting challenges" },
@@ -78,6 +77,14 @@ export const EVENTS: FelixEvent[] = [
       portrait: { src: "/images/events/naruto/portrait.webp", width: 1080, height: 1920 },
       landscape: { src: "/images/events/naruto/landscape.webp", width: 1920, height: 1080 },
     },
+    gallery: [
+      { src: "/images/events/naruto/photo-1.webp", width: 1148, height: 1600 },
+      { src: "/images/events/naruto/photo-2.webp", width: 1600, height: 1067 },
+      { src: "/images/events/naruto/photo-3.webp", width: 1600, height: 1067 },
+      { src: "/images/events/naruto/photo-4.webp", width: 1600, height: 1067 },
+      { src: "/images/events/naruto/photo-5.webp", width: 1067, height: 1600 },
+      { src: "/images/events/naruto/photo-6.webp", width: 1067, height: 1600 },
+    ],
   },
   {
     slug: "bhajan-jamming",
