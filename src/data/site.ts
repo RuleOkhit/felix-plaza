@@ -103,13 +103,13 @@ export const HERO_IMG_PHONE = {
 } as const;
 
 // Inner-page banners, from Hero Images/Sub Banners: 4:1 artwork in the same
-// style as the homepage hero. Dine, Entertain and Plan Your Visit carry their
-// title in the artwork (`titled`), so the page draws none of its own and
-// their phone crop is anchored left, where the words are. Shop is a
-// photograph, cut from the bottom of the frame and warmed to match the
-// others, with its title set by PageHero.
+// style as the homepage hero. Each carries its title in the artwork
+// (`titled`), so the page draws none of its own and the phone crop is
+// anchored left, where the words are. Shop was supplied as a plain
+// photograph: it is cut from the bottom of the frame, lightly graded to
+// sit with the others and titled in their lettering.
 export const BANNER = {
-  shop: { src: "/images/banners/shop.webp", focus: "70% 50%", titled: false },
+  shop: { src: "/images/banners/shop.webp", focus: "0% 50%", titled: true },
   dine: { src: "/images/banners/dine.webp", focus: "0% 50%", titled: true },
   entertain: { src: "/images/banners/entertain.webp", focus: "0% 50%", titled: true },
   visit: { src: "/images/banners/plan-your-visit.webp", focus: "0% 50%", titled: true },
