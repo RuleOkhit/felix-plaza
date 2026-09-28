@@ -75,11 +75,12 @@ export const DINE_FILTERS: CategoryFilter[] = [
   { key: "cafe", label: "Cafe", icon: "<path d=\"M5 3h11v9a4 4 0 0 1-8 0V3M2 21h16\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M16 5h2a2 2 0 0 1 0 4h-2\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"/>" },
 ];
 
-/* 82 stores — food, cafés, restaurants and entertainment excluded. */
+/* 83 stores — food, cafés, restaurants and entertainment excluded. */
 export const SHOP_STORES: DirectoryStore[] = [
   { name: "ADIDAS", slug: "adidas", cat: "sportswear", floors: ["1f"], logo: "/images/logos/adidas.webp" },
   { name: "ALDO", slug: "aldo", cat: "footwear", floors: ["gf"], logo: "/images/logos/aldo.webp" },
   { name: "AMERICAN TOURISTER", slug: "american-tourister", cat: "bags", floors: ["con"], logo: "/images/logos/american-tourister.webp" },
+  { name: "APTRONIX", slug: "aptronix", cat: "mobile", floors: ["gf"], logo: "/images/logos/aptronix.webp", bg: "#000000" },
   { name: "ARETTO", slug: "aretto", cat: "kids", floors: ["2f"], logo: "/images/logos/aretto.webp" },
   { name: "ARROW", slug: "arrow", cat: "apparel", floors: ["1f"], logo: "/images/logos/arrow.webp" },
   { name: "ASICS", slug: "asics", cat: "sportswear", floors: ["1f"], logo: "/images/logos/asics.webp" },

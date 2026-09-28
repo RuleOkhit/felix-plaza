@@ -431,6 +431,11 @@ export const STORE_COPY: Record<string, StoreCopy> = {
   },
 
   /* -------------------------------------------- MOBILE & ELECTRONICS */
+  aptronix: {
+    tagline: "Apple Products And Accessories",
+    description:
+      "Aptronix is an Apple reseller, with iPhone, iPad, Mac, Apple Watch and AirPods, along with accessories to go with them.",
+  },
   samsung: {
     tagline: "Do What You Can't",
     description:
