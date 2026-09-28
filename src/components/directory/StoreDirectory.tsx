@@ -56,9 +56,9 @@ function StoreCard({ store, section }: { store: DirectoryStore; section: string 
 // cropped) on a light tile so marks of any proportion sit consistently.
 export default function StoreDirectory({
   title,
-  eyebrow,
   heroImage,
   heroFocus,
+  heroTitled,
   intro,
   stores,
   filters,
@@ -67,9 +67,12 @@ export default function StoreDirectory({
   section,
 }: {
   title: string;
-  eyebrow: string;
+  /** No longer shown: the banners follow the homepage hero, which has no eyebrow line */
+  eyebrow?: string;
   heroImage: string;
   heroFocus?: string;
+  /** The banner artwork already carries the page title */
+  heroTitled?: boolean;
   intro: string;
   stores: DirectoryStore[];
   filters: CategoryFilter[];
@@ -97,7 +100,7 @@ export default function StoreDirectory({
 
   return (
     <>
-      <PageHero title={title} image={heroImage} eyebrow={eyebrow} focus={heroFocus} />
+      <PageHero title={title} image={heroImage} focus={heroFocus} titled={heroTitled} />
 
       <section className="pb-[50px] pt-[36px] md:pb-[70px] md:pt-[50px]">
         <div className="px-4 md:px-[60px]">

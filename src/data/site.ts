@@ -102,16 +102,17 @@ export const HERO_IMG_PHONE = {
   unwind: "/images/hero/hero-unwind-phone.webp",
 } as const;
 
-// Inner-page banners, from Hero Images/Sub Banners. Shop, Dine and Entertain
-// are 4:1 illustrations, anchored to the bottom so any crop comes off the
-// top. Plan Your Visit is a 2.47:1 illustration, taller than the banner, so
-// on desktop it is shown whole (see PageHero `whole`); on phones the crop is
-// split, mostly sky off the top, keeping the sun, balloons and road in frame.
+// Inner-page banners, from Hero Images/Sub Banners: 4:1 artwork in the same
+// style as the homepage hero. Dine, Entertain and Plan Your Visit carry their
+// title in the artwork (`titled`), so the page draws none of its own and
+// their phone crop is anchored left, where the words are. Shop is a
+// photograph, cut from the bottom of the frame and warmed to match the
+// others, with its title set by PageHero.
 export const BANNER = {
-  shop: { src: "/images/banners/shop.webp", focus: "50% 100%" },
-  dine: { src: "/images/banners/dine.webp", focus: "50% 100%" },
-  entertain: { src: "/images/banners/entertain.webp", focus: "50% 100%" },
-  visit: { src: "/images/banners/plan-your-visit.webp", focus: "50% 72%" },
+  shop: { src: "/images/banners/shop.webp", focus: "70% 50%", titled: false },
+  dine: { src: "/images/banners/dine.webp", focus: "0% 50%", titled: true },
+  entertain: { src: "/images/banners/entertain.webp", focus: "0% 50%", titled: true },
+  visit: { src: "/images/banners/plan-your-visit.webp", focus: "0% 50%", titled: true },
 } as const;
 
 // Tenant logos (transparent PNG / SVG, displayed contained on a light tile).

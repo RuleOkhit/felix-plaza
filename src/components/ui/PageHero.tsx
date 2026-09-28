@@ -4,89 +4,65 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { EASE } from "@/lib/motion";
 
-// Inner-page banner. The title sits bottom left rather than dead centre:
-// every one of these photographs carries its subject in the middle or to
-// the right, so centred type would land on a face, a handbag or a bowl of
-// pasta. Left aligning it also lines the title up with the page content
-// underneath, which is left aligned throughout.
+// Inner-page banner, in the same language as the homepage hero: finished
+// 4:1 artwork with the page name set large on the left, a thin rule under it
+// ending in a small ring.
 //
-// `focus` is the object-position for the crop. Desktop crops these images
-// vertically and the phone crops them horizontally, so each one carries both
-// axes: without them the crop takes the middle and clips hands, feet and the
-// bottom of a bag.
+// Most banners carry that title in the artwork itself (`titled`), so the page
+// only keeps its heading for screen readers and draws nothing over the top.
+// For artwork without one, the title is set here in the same style.
 //
-// `whole` is for artwork taller than the desktop banner that should not be
-// cropped: on desktop the full image sits in the middle at its own
-// proportions (`ratio`, width over height), its sides feathered into a
-// blurred copy of itself. Phones still fill the banner as normal.
+// The banner sits below the fixed navigation bar and keeps the artwork's 4:1
+// shape on desktop, so nothing is cropped. Phones get a taller 5:2 slice,
+// cut according to `focus`: titled artwork is anchored left, where its words
+// are.
 export default function PageHero({
   title,
   image,
-  eyebrow,
   focus = "center",
-  whole,
+  titled = false,
 }: {
   title: string;
   image: string;
-  eyebrow?: string;
   focus?: string;
-  whole?: { ratio: number };
+  titled?: boolean;
 }) {
   return (
-    <section className="relative flex h-[240px] items-end overflow-hidden md:h-[46vh] md:max-h-[480px] md:min-h-[300px]">
+    <section className="relative mt-[64px] flex aspect-[5/2] items-end overflow-hidden md:mt-[72px] md:aspect-[4/1]">
       <Image
         src={image}
         alt=""
         fill
         priority
         sizes="100vw"
-        className={`object-cover ${whole ? "md:scale-110 md:blur-2xl md:saturate-125" : ""}`}
+        className="object-cover"
         style={{ objectPosition: focus }}
       />
-      {whole && (
-        <div className="absolute inset-0 hidden justify-center md:flex">
-          <div
-            className="relative h-full shrink-0 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
-            style={{ aspectRatio: whole.ratio }}
+
+      {titled ? (
+        <h1 className="sr-only">{title}</h1>
+      ) : (
+        <div className="relative z-10 w-full px-4 pb-[12%] md:px-[3.6%] md:pb-[3.4%]">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, ease: EASE, delay: 0.15 }}
+            className="font-display text-[34px] uppercase leading-none text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.35)] md:text-[6.6vw]"
           >
-            <Image src={image} alt="" fill priority sizes="100vw" className="object-cover" />
-          </div>
+            {title}
+          </motion.h1>
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.9, delay: 0.35 }}
+            className="mt-2 flex w-[48%] items-center md:mt-[0.6vw] md:w-[24%]"
+          >
+            <span className="h-px flex-1 bg-white/85" />
+            <span className="h-2 w-2 shrink-0 rounded-full border border-white/85 md:h-[0.55vw] md:w-[0.55vw]" />
+          </motion.span>
         </div>
       )}
-
-      {/* Readability, kept as light as the type allows. Weighted to the
-          left where the words sit and cleared entirely on the right, so the
-          artwork keeps its colour. The shade is the Felix purple rather than
-          black, which sits more kindly on the pastel illustrations. */}
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-r from-felix/60 via-felix/15 to-transparent"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-felix/35 via-transparent to-transparent"
-      />
-
-      <div className="relative z-10 w-full px-4 pb-8 md:px-[60px] md:pb-12">
-        {eyebrow && (
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
-            className="mb-2.5 text-[11px] font-bold uppercase tracking-[0.24em] text-white/70 md:mb-3"
-          >
-            {eyebrow}
-          </motion.p>
-        )}
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, ease: EASE, delay: 0.18 }}
-          className="font-display text-[32px] uppercase leading-[0.95] tracking-[0.05em] text-white [text-shadow:0_2px_28px_rgba(0,0,0,0.45)] sm:text-[42px] sm:tracking-[0.06em] md:text-[62px]"
-        >
-          {title}
-        </motion.h1>
-      </div>
     </section>
   );
 }

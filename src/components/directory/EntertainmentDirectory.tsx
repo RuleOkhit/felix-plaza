@@ -23,7 +23,7 @@ export default function EntertainmentDirectory() {
         title="Entertain"
         image={BANNER.entertain.src}
         focus={BANNER.entertain.focus}
-        eyebrow="What's On"
+        titled={BANNER.entertain.titled}
       />
 
       <section className="py-[40px] md:py-[80px]">

@@ -13,6 +13,7 @@ export default function ShopPage() {
       eyebrow="Store Directory"
       heroImage={BANNER.shop.src}
       heroFocus={BANNER.shop.focus}
+      heroTitled={BANNER.shop.titled}
       intro="Denim and formals, ethnic wear, jewellery, beauty, luggage and home, spread across every floor. Filter by what you came for, or take your time and browse the lot."
       stores={onSite(SHOP_STORES)}
       filters={SHOP_FILTERS}

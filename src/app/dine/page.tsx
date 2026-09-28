@@ -13,6 +13,7 @@ export default function DinePage() {
       eyebrow="Food & Drink"
       heroImage={BANNER.dine.src}
       heroFocus={BANNER.dine.focus}
+      heroTitled={BANNER.dine.titled}
       intro="Filter coffee and slow mornings, a food court that settles every argument, and a proper sit down meal when the occasion calls for one."
       stores={onSite(DINE_STORES)}
       filters={DINE_FILTERS}
