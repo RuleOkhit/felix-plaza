@@ -1,0 +1,47 @@
+name: Build site for the web server
+
+# Builds the site for the root of a domain (example.com/shop/, rather than
+# the /felix-plaza/ sub-path GitHub Pages uses) and keeps it on the workflow
+# run as a download named "felix-plaza-site", ready to upload to the
+# document root of an Apache (LAMP) server.
+#
+# This is built here, on Linux, on purpose: a static export made on Windows
+# saves the per-page data files under the wrong names (folders instead of
+# dotted file names), and moving between pages then fails on the server.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        # No BASE_PATH: the site is served from the domain root.
+        run: npm run build
+
+      - name: Add Apache settings
+        run: cp deploy/apache/.htaccess out/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: felix-plaza-site
+          path: out
+          # .htaccess starts with a dot, which upload-artifact skips unless told
+          include-hidden-files: true
+          retention-days: 90
