@@ -13,8 +13,8 @@
 // `video` plays at the top of the event page; `gallery` is the photo spread
 // under the text. `galleryPlaceholders` holds slots open for photos to come.
 //
-// Real artwork so far: Naruto, Felix Fun Club and Moments With MoM. Copy for
-// the other events is placeholder text, to be replaced when it is supplied.
+// The featured event (FEATURED_EVENT_SLUG) opens the events page full screen;
+// its `opener` picks the loading animation for that.
 // ---------------------------------------------------------------------------
 
 export type EventTheme = {
@@ -50,11 +50,67 @@ export type FelixEvent = {
   galleryPlaceholders?: number;
   /** Whether the placeholder artwork should include a 16:9 version */
   placeholderLandscape?: boolean;
+  /**
+   * The loading animation when this is the featured event: Naruto's swirl
+   * (the default), or a rangoli that blooms open and lets a few marigold
+   * petals fall.
+   */
+  opener?: "swirl" | "rangoli";
 };
 
 const WHERE: EventFact = { label: "Where", value: "Felix Plaza, Sector 82A, Gurugram" };
 
 export const EVENTS: FelixEvent[] = [
+  {
+    slug: "rangrez-night",
+    title: "Rangrez Night",
+    subtitle: "The Festive Nights Are Calling",
+    month: "2026-10",
+    when: "This Navratri",
+    summary: "Navratri is about to get more exciting at Felix Plaza.",
+    description: [
+      "Rangrez Night brings dandiya to Felix Plaza this Navratri. Put on your brightest colours and come dance with us.",
+      "Dates and details are coming soon. Stay tuned.",
+    ],
+    facts: [
+      { label: "When", value: "Navratri 2026, dates coming soon" },
+      WHERE,
+    ],
+    theme: { from: "#f2a516", to: "#9b1c1c" },
+    poster: {
+      portrait: { src: "/images/events/rangrez-night/portrait.webp", width: 1080, height: 1920 },
+      landscape: { src: "/images/events/rangrez-night/landscape.webp", width: 2160, height: 960 },
+    },
+    opener: "rangoli",
+  },
+  {
+    slug: "robo-arena",
+    title: "Robo Arena",
+    subtitle: "Drive. Compete. Conquer.",
+    month: "2026-10",
+    when: "2–4 October 2026",
+    summary: "The bots were ready, the arena was waiting, and visitors took the controls.",
+    description: [
+      "For three days, Felix Plaza had an arena full of real robots and an open invitation to anyone who thought they had what it takes.",
+      "Young drivers took the controls, steered their bots around the arena and competed to come out on top.",
+    ],
+    facts: [
+      { label: "When", value: "2–4 October 2026, 11 AM to 8 PM" },
+      WHERE,
+    ],
+    theme: { from: "#ff3d8b", to: "#2b2470" },
+    poster: {
+      portrait: { src: "/images/events/robo-arena/cover.webp", width: 1080, height: 1920 },
+    },
+    gallery: [
+      { src: "/images/events/robo-arena/photo-1.webp", width: 1200, height: 1600 },
+      { src: "/images/events/robo-arena/photo-2.webp", width: 1600, height: 1200 },
+      { src: "/images/events/robo-arena/photo-3.webp", width: 1200, height: 1600 },
+      { src: "/images/events/robo-arena/photo-4.webp", width: 1200, height: 1600 },
+      { src: "/images/events/robo-arena/photo-5.webp", width: 1200, height: 1600 },
+      { src: "/images/events/robo-arena/photo-6.webp", width: 1200, height: 1600 },
+    ],
+  },
   {
     slug: "naruto",
     title: "Naruto Meet & Greet",
@@ -267,23 +323,8 @@ export const EVENTS: FelixEvent[] = [
  * }
  */
 
-/*
- * Parked: Felix Fun Club is out of the listing for now. Its artwork is still
- * in public/images/events/felix-fun-club, so adding this entry back to EVENTS
- * brings the event and its page straight back.
- *
- * {
- *   slug: "felix-fun-club",
- *   title: "Felix Fun Club",
- *   subtitle: "Make, Discover, Experiment, Create",
- *   month: "2026-08",
- *   when: "August 2026",
- *   ...
- * }
- */
-
 /** The event the page opens on. */
-export const FEATURED_EVENT_SLUG = "naruto";
+export const FEATURED_EVENT_SLUG = "rangrez-night";
 
 export function getEvent(slug: string) {
   return EVENTS.find((e) => e.slug === slug);

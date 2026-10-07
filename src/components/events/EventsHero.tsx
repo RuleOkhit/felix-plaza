@@ -8,6 +8,7 @@ import type { FelixEvent } from "@/data/events";
 import { artRatio } from "./EventArt";
 import { getLenis } from "@/components/layout/SmoothScroll";
 import { EASE, smoothScrollTo } from "@/lib/motion";
+import { PetalShower, Rangoli } from "./RangoliOpener";
 
 // A spiral in the spirit of the Uzumaki swirl, drawn once as a path.
 const SPIRAL = (() => {
@@ -23,10 +24,12 @@ const SPIRAL = (() => {
   return d;
 })();
 
-// Shortest time the swirl stays up, so a cached image still gets its moment.
+// Shortest time the loader stays up, so a cached image still gets its moment.
+// The rangoli takes a little longer to draw itself, so it is held longer.
 // (Every animated value below is driven by state rather than an `initial`,
 // because the site's page transition skips initial states on first load.)
 const MIN_SWIRL_MS = 900;
+const MIN_RANGOLI_MS = 1500;
 
 // Full-screen opener for the featured event.
 //
@@ -35,8 +38,11 @@ const MIN_SWIRL_MS = 900;
 // fit the screen. Its edges are feathered into a soft, blurred copy of itself
 // that fills whatever space is left, so there is never a hard border.
 //
-// While the artwork loads, a swirl spins in the middle of the frame. Once it
-// is ready the swirl bursts outwards and the picture opens up from the centre.
+// While the artwork loads, a loader turns in the middle of the frame: the
+// Naruto swirl, or for a festive event (`opener: "rangoli"`) a rangoli that
+// draws itself. Once the artwork is ready the loader bursts outwards and the
+// picture opens up from the centre; the rangoli then lets a few marigold
+// petals fall across it, once.
 // The page then drifts down a touch on its own, so the events below are
 // visible straight away. Both are skipped for anyone who prefers less motion,
 // and the drift is cancelled if the visitor starts scrolling first.
@@ -49,6 +55,7 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
   const imgRef = useRef<HTMLImageElement>(null);
   const touched = useRef(false);
   const open = Boolean(reduced) || (loaded && minDone);
+  const rangoli = event.opener === "rangoli";
 
   const deskArt = event.poster.landscape ?? event.poster.portrait!;
   const phoneArt = event.poster.portrait ?? event.poster.landscape!;
@@ -69,7 +76,7 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
   useEffect(() => {
     if (imgRef.current?.complete) setLoaded(true);
     const raf = requestAnimationFrame(() => setDrawn(true));
-    const t1 = window.setTimeout(() => setMinDone(true), MIN_SWIRL_MS);
+    const t1 = window.setTimeout(() => setMinDone(true), rangoli ? MIN_RANGOLI_MS : MIN_SWIRL_MS);
     // Never leave the page waiting on a slow image.
     const t2 = window.setTimeout(() => setLoaded(true), 4000);
     const stop = () => (touched.current = true);
@@ -85,7 +92,7 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
       window.removeEventListener("touchstart", stop);
       window.removeEventListener("keydown", stop);
     };
-  }, []);
+  }, [rangoli]);
 
   // The drift: a short glide down once the reveal has settled.
   const onRevealed = () => {
@@ -142,7 +149,14 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
         </div>
       </motion.div>
 
-      {/* The swirl: spins while the artwork loads, then bursts outwards */}
+      {/* Petals over the opened artwork, for the festive opener */}
+      {!reduced && rangoli && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 top-[64px] md:top-[72px]">
+          <PetalShower open={open} />
+        </div>
+      )}
+
+      {/* The loader: turns while the artwork loads, then bursts outwards */}
       {!reduced && (
         <motion.div
           aria-hidden
@@ -150,22 +164,26 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
           animate={open ? { opacity: 0, scale: 3.2 } : { opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: EASE }}
         >
-          <motion.svg
-            viewBox="0 0 100 100"
-            className="h-32 w-32 md:h-40 md:w-40"
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 1.3, ease: "linear" }}
-          >
-            <motion.path
-              d={SPIRAL}
-              fill="none"
-              stroke={event.theme.from}
-              strokeWidth={4.5}
-              strokeLinecap="round"
-              animate={{ pathLength: drawn ? 1 : 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            />
-          </motion.svg>
+          {rangoli ? (
+            <Rangoli drawn={drawn} />
+          ) : (
+            <motion.svg
+              viewBox="0 0 100 100"
+              className="h-32 w-32 md:h-40 md:w-40"
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 1.3, ease: "linear" }}
+            >
+              <motion.path
+                d={SPIRAL}
+                fill="none"
+                stroke={event.theme.from}
+                strokeWidth={4.5}
+                strokeLinecap="round"
+                animate={{ pathLength: drawn ? 1 : 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              />
+            </motion.svg>
+          )}
         </motion.div>
       )}
 

@@ -121,7 +121,7 @@ const PAGES: Entry[] = [
     name: "Events",
     sub: "What's on at Felix Plaza, month by month",
     href: "/events",
-    haystack: "events whats on naruto festival workshop mango yoga run club bhajan fun club",
+    haystack: "events whats on rangrez night navratri dandiya garba robo arena robots naruto festival workshop mango yoga run club bhajan fun club",
   },
 ];
 
