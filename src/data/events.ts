@@ -52,10 +52,9 @@ export type FelixEvent = {
   placeholderLandscape?: boolean;
   /**
    * The loading animation when this is the featured event: Naruto's swirl
-   * (the default), or a rangoli that blooms open and lets a few marigold
-   * petals fall.
+   * (the default), or dandiya sticks striking in rhythm for a festive one.
    */
-  opener?: "swirl" | "rangoli";
+  opener?: "swirl" | "dandiya";
 };
 
 const WHERE: EventFact = { label: "Where", value: "Felix Plaza, Sector 82A, Gurugram" };
@@ -81,7 +80,7 @@ export const EVENTS: FelixEvent[] = [
       portrait: { src: "/images/events/rangrez-night/portrait.webp", width: 1080, height: 1920 },
       landscape: { src: "/images/events/rangrez-night/landscape.webp", width: 2160, height: 960 },
     },
-    opener: "rangoli",
+    opener: "dandiya",
   },
   {
     slug: "robo-arena",

@@ -99,7 +99,7 @@ const ENTERTAINMENT_BLURBS: Record<string, string> = {
   cinepolis: "The latest blockbusters on the big screen.",
   funcity: "Rides and arcade games for toddlers through to teens.",
   "fun-block": "Soft play and climbing zones for younger children.",
-  "game-x": "Racing rigs, shooters and multiplayer arcade games.",
+  "game-x": "Arcade games, VR and bowling, with food on site.",
 };
 
 export const ENTERTAINMENT: EntertainCard[] = onSite(ENTERTAINMENT_STORES).map((v) => ({

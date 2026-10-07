@@ -584,8 +584,8 @@ export const STORE_COPY: Record<string, StoreCopy> = {
       "FunCity is a family entertainment centre with rides and arcade games for kids and teens.",
   },
   "game-x": {
-    tagline: "Arcade Gaming",
+    tagline: "Arcade, VR And Bowling",
     description:
-      "Game X is an arcade with racing, shooting and multiplayer games.",
+      "Game X has racing, shooting and multiplayer arcade games, virtual reality and bowling, with food on site for a break between games.",
   },
 };

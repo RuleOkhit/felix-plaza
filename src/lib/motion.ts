@@ -30,14 +30,18 @@ export const viewportOnce = { once: true, margin: "-80px" } as const;
 // Animated anchor scrolling with the site's ease-out feel. Timer-driven
 // (not rAF, not native smooth) so it also works in environments that drop
 // smooth-scroll animations or never fire animation frames; each step
-// scrolls with behavior:"instant" to bypass CSS scroll-behavior.
-export function smoothScrollTo(targetY: number, duration = 900) {
+// scrolls with behavior:"instant" to bypass CSS scroll-behavior. Pass
+// `ease` for a different curve.
+export function smoothScrollTo(
+  targetY: number,
+  duration = 900,
+  ease: (t: number) => number = (t) => 1 - Math.pow(1 - t, 5), // ≈ EASE curve
+) {
   const startY = window.scrollY;
   const maxY = document.documentElement.scrollHeight - window.innerHeight;
   const delta = Math.min(Math.max(targetY, 0), maxY) - startY;
   if (Math.abs(delta) < 1) return;
   const start = performance.now();
-  const ease = (t: number) => 1 - Math.pow(1 - t, 5); // ≈ EASE curve
   const step = () => {
     const p = Math.min(1, (performance.now() - start) / duration);
     window.scrollTo({ top: startY + delta * ease(p), behavior: "instant" });
