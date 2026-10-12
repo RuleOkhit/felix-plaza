@@ -3,8 +3,15 @@ import StoreDirectory from "@/components/directory/StoreDirectory";
 import { DINE_FILTERS, DINE_STORES } from "@/data/store-directory";
 import { onSite } from "@/data/parked";
 import { BANNER } from "@/data/site";
+import { pageMetadata } from "@/lib/seo";
+import { storesIn } from "@/data/stores";
 
-export const metadata: Metadata = { title: "Dine" };
+export const metadata: Metadata = pageMetadata({
+  title: "Restaurants, Cafés and Food Court at Felix Plaza, Gurugram",
+  absoluteTitle: true,
+  description: `${storesIn("dine").length} places to eat at Felix Plaza, Sector 82A, Gurugram: a food court, cafés and sit-down restaurants. See every outlet and its floor.`,
+  path: "/dine/",
+});
 
 export default function DinePage() {
   return (

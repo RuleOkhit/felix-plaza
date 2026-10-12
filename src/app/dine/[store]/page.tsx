@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import StorePageView from "@/components/store/StorePageView";
 import { getStore, storesIn } from "@/data/stores";
+import { storeMetadata } from "@/lib/seo";
 
 type Params = { store: string };
 
@@ -23,7 +24,7 @@ export async function generateMetadata({
   const { store: slug } = await params;
   const store = getStore(slug);
   if (!store) return {};
-  return { title: store.name, description: store.description };
+  return storeMetadata(store);
 }
 
 export default async function StorePage({

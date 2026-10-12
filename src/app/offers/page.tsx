@@ -4,11 +4,14 @@ import Reveal from "@/components/ui/Reveal";
 import OffersGrid from "@/components/offers/OffersGrid";
 import { currentOffers, offerView } from "@/data/offers";
 import { BANNER } from "@/data/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Offers",
-  description: "Current offers from stores at Felix Plaza.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Offers and Deals at Felix Plaza, Gurugram",
+  absoluteTitle: true,
+  description: "The latest offers and deals from stores at Felix Plaza, Sector 82A, Gurugram.",
+  path: "/offers/",
+});
 
 // Offers: the banner, a line of introduction and every running offer, poster
 // first. Store lookups happen here so the page's script does not have to

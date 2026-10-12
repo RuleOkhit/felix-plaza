@@ -17,6 +17,21 @@ export const SITE = {
   mapsUrl: "https://maps.app.goo.gl/4qgFhVqp1fYWG3KQ7",
   /** The in-house store directory on the main site. */
   directoryUrl: "https://felixplaza.com/directory/",
+
+  // For search engines and AI tools (src/lib/seo.ts). Address, pin and hours
+  // match the Google Business Profile, checked on Google Maps 12 Oct 2026.
+  /** The one address the site lives at: https, no www. */
+  url: "https://felixplaza.com",
+  postal: {
+    street: "NH 48, Sector 82A",
+    locality: "Gurugram",
+    region: "Haryana",
+    postalCode: "122012",
+    country: "IN",
+  },
+  geo: { lat: 28.3831359, lng: 76.966372 },
+  /** Opening and closing time, 24 hour, every day of the week. */
+  open24: { opens: "11:00", closes: "22:00" },
 };
 
 // Builds a WhatsApp deep link, optionally pre-filling the first message.
@@ -54,10 +69,11 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Plan Your Visit", href: "/plan-your-visit" },
 ];
 
+// The site sets no cookies of its own, so cookies are covered inside the
+// privacy policy rather than on a page of their own.
 export const FOOTER_LEGAL_LINKS: NavLink[] = [
-  { label: "Privacy Policy", href: "#" },
-  { label: "Terms & Conditions", href: "#" },
-  { label: "Cookie Policy", href: "#" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms & Conditions", href: "/terms" },
 ];
 
 export const SOCIAL_LINKS = [

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import EventView from "@/components/events/EventView";
 import { EVENTS, getEvent, neighbours } from "@/data/events";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, eventJsonLd, eventMetadata } from "@/lib/seo";
 
 type Params = { event: string };
 
@@ -21,7 +23,7 @@ export async function generateMetadata({
   const { event: slug } = await params;
   const event = getEvent(slug);
   if (!event) return {};
-  return { title: event.title, description: event.summary };
+  return eventMetadata(event);
 }
 
 export default async function EventPage({
@@ -33,5 +35,18 @@ export default async function EventPage({
   const event = getEvent(slug);
   if (!event) notFound();
   const { previous, next } = neighbours(slug);
-  return <EventView event={event} previous={previous} next={next} />;
+  return (
+    <>
+      <JsonLd
+        data={[
+          eventJsonLd(event),
+          breadcrumbJsonLd([
+            { name: "Events", path: "/events/" },
+            { name: event.title, path: `/events/${event.slug}/` },
+          ]),
+        ]}
+      />
+      <EventView event={event} previous={previous} next={next} />
+    </>
+  );
 }

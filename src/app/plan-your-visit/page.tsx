@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import { BANNER, SITE } from "@/data/site";
 import PageHero from "@/components/ui/PageHero";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Plan Your Visit" };
+export const metadata: Metadata = pageMetadata({
+  title: "Plan Your Visit: Timings, Parking and Address | Felix Plaza",
+  absoluteTitle: true,
+  description: "Felix Plaza is open daily, 11 AM to 10 PM, at NH 48, Sector 82A, Gurugram. Three level car parking, valet, EV charging, free wheelchairs and prams, a baby feeding room and free WiFi.",
+  path: "/plan-your-visit/",
+});
 
 type Amenity = { label: string; icon: React.ReactNode };
 

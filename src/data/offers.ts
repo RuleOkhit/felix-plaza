@@ -71,9 +71,14 @@ export function currentOffers(now = new Date()): Offer[] {
   return running([...OFFERS, ...PREVIEW_REPEATS], now);
 }
 
+/** Real offers still running (never the preview repeats). */
+export function liveOffers(now = new Date()): Offer[] {
+  return running(OFFERS, now);
+}
+
 /** One store's running offers, for its own page. */
 export function storeOffers(store: string, now = new Date()): Offer[] {
-  return running(OFFERS, now).filter((o) => o.store === store);
+  return liveOffers(now).filter((o) => o.store === store);
 }
 
 const SECTIONS = [

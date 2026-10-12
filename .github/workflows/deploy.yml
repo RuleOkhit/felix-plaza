@@ -41,6 +41,9 @@ jobs:
           # Inlined into the client bundle so the image loader can prefix
           # /public paths to match.
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          # This is the test copy: every page asks search engines to leave
+          # it out of their results (see NOINDEX in src/lib/seo.ts).
+          NOINDEX: "1"
         run: npm run build
 
       - name: Add .nojekyll

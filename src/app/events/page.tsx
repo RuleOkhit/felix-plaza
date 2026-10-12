@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import EventsHero from "@/components/events/EventsHero";
 import EventMonths from "@/components/events/EventMonths";
 import { FEATURED_EVENT_SLUG, eventGroups, getEvent } from "@/data/events";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Events",
-  description: "Events at Felix Plaza, month by month.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Events at Felix Plaza, Gurugram",
+  absoluteTitle: true,
+  description: "Festivals, family days, workshops and live events at Felix Plaza, Sector 82A, Gurugram, month by month.",
+  path: "/events/",
+});
 
 // Events: the featured event full screen (components/events/EventsHero),
 // then every event by month. When there is no upcoming event to lead with,

@@ -37,6 +37,12 @@ export type FelixEvent = {
   month: string | null;
   /** How the date reads on cards and on the event page */
   when: string;
+  /**
+   * Exact dates for search engines ("2026-10-02", or with a time,
+   * "2026-10-02T11:00+05:30"). Left out while the dates are not confirmed;
+   * such events are simply not described to search engines as events.
+   */
+  dates?: { start: string; end?: string };
   /** One line for the cards */
   summary: string;
   /** Paragraphs for the event page */
@@ -88,6 +94,7 @@ export const EVENTS: FelixEvent[] = [
     subtitle: "Drive. Compete. Conquer.",
     month: "2026-10",
     when: "2–4 October 2026",
+    dates: { start: "2026-10-02T11:00+05:30", end: "2026-10-04T20:00+05:30" },
     summary: "The bots were ready, the arena was waiting, and visitors took the controls.",
     description: [
       "For three days, Felix Plaza had an arena full of real robots and an open invitation to anyone who thought they had what it takes.",
@@ -116,6 +123,7 @@ export const EVENTS: FelixEvent[] = [
     subtitle: "The Ultimate Shinobi Experience",
     month: "2026-09",
     when: "25–27 September 2026",
+    dates: { start: "2026-09-25T13:00+05:30", end: "2026-09-27T20:00+05:30" },
     summary: "Three days of workshops, games, self defence and challenges for young shinobi.",
     description: [
       "Felix Plaza presented The Ultimate Shinobi Experience, a Naruto meet and greet in association with Crunchyroll and Sony YAY!.",
@@ -147,6 +155,7 @@ export const EVENTS: FelixEvent[] = [
     subtitle: "A Celebration Of Music & Bhakti",
     month: "2026-09",
     when: "5 September 2026",
+    dates: { start: "2026-09-05" },
     summary: "Some evenings are meant to be heard. Some are meant to be felt.",
     description: [
       "Raas Rhythm brought music and bhakti together for an evening of soulful melodies, positive energy and moments of connection.",
@@ -176,6 +185,7 @@ export const EVENTS: FelixEvent[] = [
     subtitle: "Lace Up, Together",
     month: "2026-08",
     when: "30 August 2026",
+    dates: { start: "2026-08-30" },
     summary: "Some Sundays are for brunch. Some are for passing the baton.",
     description: [
       "The Felix Plaza Family Run brought families and friends together for a fun filled Sunday of teamwork, movement and friendly competition.",
@@ -230,6 +240,7 @@ export const EVENTS: FelixEvent[] = [
     subtitle: "Pause. Breathe. Reconnect.",
     month: "2026-06",
     when: "20 June 2026",
+    dates: { start: "2026-06-20" },
     summary: "A day of movement, mindfulness and positive energy.",
     description: [
       "On Yoga Day, Felix Plaza hosted an experience dedicated to health, harmony and holistic well being.",
@@ -255,6 +266,7 @@ export const EVENTS: FelixEvent[] = [
     subtitle: "Flavours Of Summer",
     month: "2026-06",
     when: "13–14 June 2026",
+    dates: { start: "2026-06-13", end: "2026-06-14" },
     summary: "A weekend given over to the king of fruits.",
     description: [
       "Mango Fest brought the flavours of summer to life with a vibrant celebration dedicated to the king of fruits.",
