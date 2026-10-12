@@ -62,3 +62,6 @@ next-env.d.ts
 /Hero Images/
 /Extra Images/
 /Events/
+
+# Supplied offer posters. The web-ready copies live in public/images/offers.
+/Offers/

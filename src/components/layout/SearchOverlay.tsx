@@ -117,6 +117,13 @@ const PAGES: Entry[] = [
       "plan visit hours timings parking valet ev charging wheelchair pram lost and found first aid medical ambulance feeding room washroom accessible address directions contact",
   },
   {
+    key: "page-offers",
+    name: "Offers",
+    sub: "Current deals from stores at Felix Plaza",
+    href: "/offers",
+    haystack: "offers deals discount discounts sale off promotion",
+  },
+  {
     key: "page-events",
     name: "Events",
     sub: "What's on at Felix Plaza, month by month",

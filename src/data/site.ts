@@ -49,9 +49,7 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Shop", href: "/shop" },
   { label: "Dine", href: "/dine" },
   { label: "Entertain", href: "/entertain" },
-  // Offers is parked for now: the page still exists under src/app/_offers
-  // (an underscore folder is invisible to the router) and comes back by
-  // renaming the folder and restoring this line.
+  { label: "Offers", href: "/offers" },
   { label: "Events", href: "/events" },
   { label: "Plan Your Visit", href: "/plan-your-visit" },
 ];
@@ -107,12 +105,15 @@ export const HERO_IMG_PHONE = {
 // (`titled`), so the page draws none of its own and the phone crop is
 // anchored left, where the words are. Shop was supplied as a plain
 // photograph: it is cut from the bottom of the frame, lightly graded to
-// sit with the others and titled in their lettering.
+// sit with the others and titled in their lettering. Offers is a placeholder
+// until its own artwork arrives: the mall atrium from the Shop hero photo,
+// titled the same way. Replace the file when the real banner comes.
 export const BANNER = {
   shop: { src: "/images/banners/shop.webp", focus: "0% 50%", titled: true },
   dine: { src: "/images/banners/dine.webp", focus: "0% 50%", titled: true },
   entertain: { src: "/images/banners/entertain.webp", focus: "0% 50%", titled: true },
   visit: { src: "/images/banners/plan-your-visit.webp", focus: "0% 50%", titled: true },
+  offers: { src: "/images/banners/offers.webp", focus: "0% 50%", titled: true },
 } as const;
 
 // Tenant logos (transparent PNG / SVG, displayed contained on a light tile).

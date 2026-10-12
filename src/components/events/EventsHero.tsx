@@ -31,9 +31,9 @@ const SPIRAL = (() => {
 const MIN_SWIRL_MS = 900;
 const MIN_DANDIYA_MS = 1700;
 
-// How far the artwork may be zoomed past its own shape to fill the space:
-// 1.12 crops at most about 5% off each side, which keeps the type on the
-// creatives clear of the edges.
+// How far the desktop artwork may be zoomed past its own shape to fill more
+// of the screen: 1.12 crops at most about 5% off each side, which keeps the
+// type on the creatives clear of the edges.
 const FILL = 1.12;
 
 // The drift down after the reveal, gentle at both ends.
@@ -41,12 +41,12 @@ const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2
 
 // Full-screen opener for the featured event.
 //
-// The creative carries all of its own type, so it is never cropped hard: the
-// wide artwork on desktop and the 9:16 one on phones. The hero takes its
-// height from the artwork (up to the height of the screen) and the artwork
-// fills it edge to edge, zoomed in slightly where the screen's shape differs
-// from the artwork's (see FILL). On the rare screen where even that is not
-// enough, a soft, blurred copy fills the sides.
+// The hero fills the screen. The creative carries all of its own type, so it
+// is never cropped hard: on phones the 9:16 cut fills the screen (the shapes
+// are close, so very little is lost); on desktop the wide cut is zoomed in a
+// little (see FILL) and whatever space is left is filled by a soft, blurred
+// copy of it, with the artwork's edges fading into that rather than meeting
+// it at a line.
 //
 // While the artwork loads, a loader plays in the middle of the frame: the
 // Naruto swirl, or for a festive event (`opener: "dandiya"`) a pair of
@@ -82,14 +82,16 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
   const sizing = {
     "--ratio-phone": artRatio(event, event.poster.portrait ? "portrait" : "landscape"),
     "--ratio-desk": artRatio(event, event.poster.landscape ? "landscape" : "portrait"),
-    height: `calc(var(--nav) + min(100svh - var(--nav), 100vw / var(--ratio) * ${FILL}))`,
     background: dandiya
       ? "radial-gradient(60% 55% at 50% 52%, #5c1322 0%, #2a070e 62%, #14040a 100%)"
       : undefined,
   } as CSSProperties;
-  // The frame fills the height under the navigation bar and as much of the
-  // width as FILL allows.
-  const frame = { width: `min(100%, 100cqh * var(--ratio) * ${FILL})` } as CSSProperties;
+  // On desktop the frame is the artwork's shape, zoomed by FILL, as large as
+  // the space under the navigation bar allows.
+  const frame = {
+    "--frame-w": `min(100%, 100cqh * var(--ratio) * ${FILL})`,
+    "--frame-h": `min(100%, 100cqw / var(--ratio) * ${FILL})`,
+  } as CSSProperties;
 
   useEffect(() => {
     if (imgRef.current?.complete) setLoaded(true);
@@ -142,7 +144,7 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
   return (
     <section
       style={sizing}
-      className="relative overflow-hidden bg-[#150c10] [--nav:64px] [--ratio:var(--ratio-phone)] md:[--nav:72px] md:[--ratio:var(--ratio-desk)]"
+      className="relative h-svh min-h-[520px] overflow-hidden bg-[#150c10] [--nav:64px] [--ratio:var(--ratio-phone)] md:[--nav:72px] md:[--ratio:var(--ratio-desk)]"
     >
       {/* The artwork, opened from the centre once it is ready */}
       <motion.div
@@ -151,10 +153,14 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
         transition={reduced ? { duration: 0 } : { duration: 1.1, ease: EASE, delay: 0.12 }}
         onAnimationComplete={open ? onRevealed : undefined}
       >
-        {/* Only seen at the sides on screens far wider than the artwork */}
-        {picture("pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover blur-2xl brightness-90")}
-        <div className="absolute inset-0 flex justify-center">
-          <Link href={`/events/${event.slug}`} style={frame} className="relative block h-full overflow-hidden">
+        {/* A soft, blurred copy of the artwork fills the space around it */}
+        {picture("pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover blur-3xl brightness-90")}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Link
+            href={`/events/${event.slug}`}
+            style={frame}
+            className="relative block h-full w-full overflow-hidden md:h-(--frame-h) md:w-(--frame-w) md:[mask-image:linear-gradient(to_bottom,transparent,black_8%,black_92%,transparent)]"
+          >
             <motion.div
               className="absolute inset-0"
               animate={{ scale: open ? 1 : 1.08 }}
