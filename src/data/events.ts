@@ -67,26 +67,35 @@ const WHERE: EventFact = { label: "Where", value: "Felix Plaza, Sector 82A, Guru
 
 export const EVENTS: FelixEvent[] = [
   {
-    slug: "rangrez-night",
-    title: "Rangrez Night",
-    subtitle: "The Festive Nights Are Calling",
+    slug: "nav-utsav",
+    title: "Nav-Utsav",
+    subtitle: "Gurugram's Biggest Dandiya Festival",
     month: "2026-10",
-    when: "This Navratri",
-    summary: "Navratri is about to get more exciting at Felix Plaza.",
+    when: "17 October 2026",
+    dates: { start: "2026-10-17T18:00+05:30", end: "2026-10-17T22:00+05:30" },
+    summary: "Gurugram went Dandiya at Felix Plaza.",
     description: [
-      "Rangrez Night brings dandiya to Felix Plaza this Navratri. Put on your brightest colours and come dance with us.",
-      "Dates and details are coming soon. Stay tuned.",
+      "Nav-Utsav brought the festive spirit of Navratri to Felix Plaza, from a Dandiya night to flea market finds, delicious food and endless fun.",
+      "Dandiya gangs from across Gurugram filled the outdoor garden and danced until the last song.",
     ],
     facts: [
-      { label: "When", value: "Navratri 2026, dates coming soon" },
+      { label: "When", value: "17 October 2026, 6 PM to 10 PM" },
       WHERE,
+      { label: "Highlights", value: "Dandiya, flea market, food and fun" },
     ],
     theme: { from: "#f2a516", to: "#9b1c1c" },
     poster: {
-      portrait: { src: "/images/events/rangrez-night/portrait.webp", width: 1080, height: 1920 },
-      landscape: { src: "/images/events/rangrez-night/landscape.webp", width: 2160, height: 960 },
+      portrait: { src: "/images/events/nav-utsav/portrait.webp", width: 810, height: 1440 },
+      landscape: { src: "/images/events/nav-utsav/landscape.webp", width: 2160, height: 960 },
     },
-    opener: "dandiya",
+    gallery: [
+      { src: "/images/events/nav-utsav/photo-1.webp", width: 1600, height: 1067 },
+      { src: "/images/events/nav-utsav/photo-2.webp", width: 1600, height: 900 },
+      { src: "/images/events/nav-utsav/photo-3.webp", width: 1600, height: 1067 },
+      { src: "/images/events/nav-utsav/photo-4.webp", width: 896, height: 1600 },
+      { src: "/images/events/nav-utsav/photo-5.webp", width: 1600, height: 900 },
+      { src: "/images/events/nav-utsav/photo-6.webp", width: 1600, height: 900 },
+    ],
   },
   {
     slug: "robo-arena",
@@ -334,8 +343,14 @@ export const EVENTS: FelixEvent[] = [
  * }
  */
 
+/*
+ * Retired: "Rangrez Night" was the teaser for the Navratri dandiya night,
+ * which ran as Nav-Utsav (above). Its artwork is still in
+ * public/images/events/rangrez-night.
+ */
+
 /** The event the page opens on. */
-export const FEATURED_EVENT_SLUG = "rangrez-night";
+export const FEATURED_EVENT_SLUG = "nav-utsav";
 
 export function getEvent(slug: string) {
   return EVENTS.find((e) => e.slug === slug);

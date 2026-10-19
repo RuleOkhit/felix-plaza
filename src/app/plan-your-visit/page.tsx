@@ -263,7 +263,7 @@ export default function PlanYourVisitPage() {
         {/* The questions people ask before they come */}
         <section id="faq" className="border-t border-ink/10 py-9 pb-14 md:py-12 md:pb-20">
           <h2 className="font-display text-[22px] uppercase tracking-[0.08em] text-ink md:text-[28px]">
-            Questions
+            FAQs
           </h2>
           <div className="mt-5">
             <FaqList />

@@ -78,8 +78,4 @@ export const FAQS: Faq[] = [
     q: "Does Felix Plaza have an outdoor area for events?",
     a: "Yes. Felix Plaza has a 2-acre outdoor garden that hosts festivals and family events through the year, such as Mango Fest, YOG Mahotsav and NAV-UTSAV.",
   },
-  {
-    q: "Why is it called Felix Plaza?",
-    a: "Felix is Latin for lucky, the same word behind Felix Felicis, the luck potion in Harry Potter. So Felix Plaza is, quite literally, the lucky plaza.",
-  },
 ];
