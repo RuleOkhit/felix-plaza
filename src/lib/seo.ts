@@ -122,14 +122,14 @@ export function pageMetadata({ title, absoluteTitle, description, path, image }:
 // ---------------------------------------------------------- structured data
 
 /** The mall: what it is, where, when it is open, how to reach it. */
-export function mallJsonLd(storeCount: number) {
+export function mallJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "ShoppingCenter",
     "@id": MALL_ID,
     name: SITE.name,
     alternateName: ["Felix Plaza Mall", "Felix Plaza Gurugram"],
-    description: `${SITE.name} is a shopping mall on NH 48 in Sector 82A, Gurugram, with ${storeCount} stores, restaurants and entertainment venues.`,
+    description: `${SITE.name} is a shopping mall on NH 48 in Sector 82A, Gurugram, with ${SITE.storeCount} stores, a food court, a Cinépolis cinema and a 2-acre outdoor garden. It is fully air-conditioned.`,
     url: `${SITE.url}/`,
     logo: absolute(BRAND.logo),
     image: absolute(SHARE_IMAGE.url),
@@ -233,6 +233,19 @@ export function eventJsonLd(event: FelixEvent) {
       address: POSTAL_ADDRESS,
     },
     organizer: { "@type": "Organization", name: SITE.name, url: `${SITE.url}/` },
+  };
+}
+
+/** Questions and answers, as shown on the page they sit on. */
+export function faqJsonLd(faqs: { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
   };
 }
 

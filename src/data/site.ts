@@ -30,6 +30,8 @@ export const SITE = {
     country: "IN",
   },
   geo: { lat: 28.3831359, lng: 76.966372 },
+  /** How the store count is always written: never an exact number. */
+  storeCount: "150+",
   /** Opening and closing time, 24 hour, every day of the week. */
   open24: { opens: "11:00", closes: "22:00" },
 };

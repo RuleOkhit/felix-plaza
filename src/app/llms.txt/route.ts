@@ -2,6 +2,7 @@ import { SITE } from "@/data/site";
 import { STORES, type Store } from "@/data/stores";
 import { eventGroups } from "@/data/events";
 import { liveOffers, offerView } from "@/data/offers";
+import { ABOUT, FAQS } from "@/data/faq";
 import { ADDRESS_LINE, absolute } from "@/lib/seo";
 
 export const dynamic = "force-static";
@@ -26,7 +27,11 @@ export function GET() {
 
   const text = `# ${SITE.name}
 
-> ${SITE.name} is a shopping mall on NH 48 in Sector 82A, Gurugram (New Gurgaon), Haryana, India. It has ${STORES.length} stores, restaurants and entertainment venues, including Cinépolis and FunCity. It is open every day from 11 AM to 10 PM.
+> ${SITE.name} is a shopping mall on NH 48 in Sector 82A, Gurugram (New Gurgaon), Haryana, India. It has ${SITE.storeCount} stores, a food court, a 4-screen Cinépolis, FunCity, Fun Block and Game X, and a 2-acre outdoor garden for events. It is fully air-conditioned and open every day from 11 AM to 10 PM.
+
+${ABOUT.body}
+
+${ABOUT.name}
 
 ## Visiting
 
@@ -35,17 +40,21 @@ export function GET() {
 - Opening hours: 11:00 AM to 10:00 PM, Monday to Sunday
 - Phone: ${SITE.phone}
 - Email: ${SITE.email}
-- Parking: three level car parking, two wheeler parking, valet parking and EV charging
+- Parking: three levels of paid car parking, paid valet parking, two wheeler parking and EV charging
 - Facilities: free wheelchairs and baby prams, baby feeding room, accessible washrooms, first aid and medical room, ambulance service, lost and found, free WiFi, clothes tailoring
 - Plan your visit: ${absolute("/plan-your-visit/")}
 
 ## Sections
 
-- [Shop](${absolute("/shop/")}): ${shop.length} stores, from fashion and footwear to jewellery, beauty, electronics and home
-- [Dine](${absolute("/dine/")}): ${dine.length} food court outlets, cafés and restaurants
+- [Shop](${absolute("/shop/")}): ${SITE.storeCount} stores across fashion, footwear, jewellery, beauty, electronics and home
+- [Dine](${absolute("/dine/")}): a food court, cafés and restaurants
 - [Entertain](${absolute("/entertain/")}): ${entertain.map((s) => s.name).join(", ")}
 - [Offers](${absolute("/offers/")}): current offers from stores
 - [Events](${absolute("/events/")}): events at the mall, month by month
+
+## Questions and answers
+
+${FAQS.map((f) => `### ${f.q}\n\n${f.a}`).join("\n\n")}
 
 ## Shops
 

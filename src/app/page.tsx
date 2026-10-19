@@ -6,13 +6,14 @@ import EntertainGrid from "@/components/home/EntertainGrid";
 import ContactSection from "@/components/home/ContactSection";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { DINE_SPOTS, SECTION_INTROS, TOP_SHOPS } from "@/data/home";
-import { STORES } from "@/data/stores";
+import { SITE } from "@/data/site";
+import AboutSection from "@/components/home/AboutSection";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Felix Plaza | Shopping Mall in Sector 82A, Gurugram",
   absoluteTitle: true,
-  description: `Felix Plaza is a shopping mall on NH 48 in Sector 82A, Gurugram, with ${STORES.length} stores, restaurants and entertainment venues, including Cinépolis and FunCity. Open daily, 11 AM to 10 PM.`,
+  description: `Felix Plaza is a shopping mall on NH 48 in Sector 82A, Gurugram, with ${SITE.storeCount} stores, a food court, Cinépolis, FunCity and a 2-acre outdoor garden. Fully air-conditioned and open daily, 11 AM to 10 PM.`,
   path: "/",
 });
 
@@ -29,6 +30,8 @@ export default function Home() {
           visually, so this one is for screen readers and search engines. */}
       <h1 className="sr-only">Felix Plaza, a shopping mall in Sector 82A, Gurugram</h1>
       <HeroSlider />
+
+      <AboutSection />
 
       {/* Top shops */}
       <section className="ground-soft py-[44px] md:py-[70px]">

@@ -6,7 +6,6 @@ import Footer from "@/components/layout/Footer";
 import PageTransition from "@/components/layout/PageTransition";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import { SITE } from "@/data/site";
-import { STORES } from "@/data/stores";
 import JsonLd from "@/components/seo/JsonLd";
 import { NOINDEX, SHARE_IMAGE, VERIFICATION, mallJsonLd, websiteJsonLd } from "@/lib/seo";
 
@@ -60,7 +59,7 @@ export default function RootLayout({
         className={`${display.variable} ${body.variable} bg-white font-body text-ink antialiased`}
       >
         {/* What the mall is, for search engines and AI tools, on every page */}
-        <JsonLd data={[mallJsonLd(STORES.length), websiteJsonLd()]} />
+        <JsonLd data={[mallJsonLd(), websiteJsonLd()]} />
         <SmoothScroll />
         <Navbar />
         <PageTransition>

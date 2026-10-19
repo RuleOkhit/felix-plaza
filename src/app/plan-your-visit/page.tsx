@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { BANNER, SITE } from "@/data/site";
 import PageHero from "@/components/ui/PageHero";
-import { pageMetadata } from "@/lib/seo";
+import { faqJsonLd, pageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/seo/JsonLd";
+import FaqList from "@/components/visit/FaqList";
+import { FAQS } from "@/data/faq";
 
 export const metadata: Metadata = pageMetadata({
   title: "Plan Your Visit: Timings, Parking and Address | Felix Plaza",
@@ -205,6 +208,7 @@ function List({ heading, items }: { heading: string; items: Amenity[] }) {
 export default function PlanYourVisitPage() {
   return (
     <>
+      <JsonLd data={faqJsonLd(FAQS)} />
       <PageHero
         title="Plan Your Visit"
         image={BANNER.visit.src}
@@ -254,6 +258,16 @@ export default function PlanYourVisitPage() {
               &rarr;
             </span>
           </a>
+        </section>
+
+        {/* The questions people ask before they come */}
+        <section id="faq" className="border-t border-ink/10 py-9 pb-14 md:py-12 md:pb-20">
+          <h2 className="font-display text-[22px] uppercase tracking-[0.08em] text-ink md:text-[28px]">
+            Questions
+          </h2>
+          <div className="mt-5">
+            <FaqList />
+          </div>
         </section>
       </div>
     </>
