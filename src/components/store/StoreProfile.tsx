@@ -58,7 +58,15 @@ function DetailRow({
 // the floor, so this is just the write up and the practical detail, kept in
 // a light bordered panel rather than another filled box. A store with a
 // running offer shows it under the write up, beside the panel.
-export default function StoreProfile({ store, offers = [] }: { store: Store; offers?: OfferView[] }) {
+export default function StoreProfile({
+  store,
+  offers = [],
+  upcomingOffers = [],
+}: {
+  store: Store;
+  offers?: OfferView[];
+  upcomingOffers?: OfferView[];
+}) {
   return (
     <section className="py-[40px] md:py-[64px]">
       <div className="px-4 md:px-[60px]">
@@ -76,7 +84,7 @@ export default function StoreProfile({ store, offers = [] }: { store: Store; off
                 {store.description}
               </p>
             </Reveal>
-            <StoreOffers storeName={store.name} offers={offers} />
+            <StoreOffers storeName={store.name} offers={offers} upcoming={upcomingOffers} />
           </div>
 
           {/* Practical detail */}

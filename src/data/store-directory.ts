@@ -75,7 +75,7 @@ export const DINE_FILTERS: CategoryFilter[] = [
   { key: "cafe", label: "Cafe", icon: "<path d=\"M5 3h11v9a4 4 0 0 1-8 0V3M2 21h16\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M16 5h2a2 2 0 0 1 0 4h-2\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"/>" },
 ];
 
-/* 83 stores — food, cafés, restaurants and entertainment excluded. */
+/* 84 stores — food, cafés, restaurants and entertainment excluded. */
 export const SHOP_STORES: DirectoryStore[] = [
   { name: "ADIDAS", slug: "adidas", cat: "sportswear", floors: ["1f"], logo: "/images/logos/adidas.webp" },
   { name: "ALDO", slug: "aldo", cat: "footwear", floors: ["gf"], logo: "/images/logos/aldo.webp" },
@@ -131,6 +131,7 @@ export const SHOP_STORES: DirectoryStore[] = [
   { name: "PALMONAS", slug: "palmonas", cat: "jewellery", floors: ["gf"], logo: "/images/logos/palmonas.webp" },
   { name: "PEPE JEANS", slug: "pepe-jeans", cat: "apparel", floors: ["1f"], logo: "/images/logos/pepe-jeans.webp" },
   { name: "PUMA", slug: "puma", cat: "sportswear", floors: ["1f"], logo: "/images/logos/puma.webp" },
+  { name: "PURPLE UNITED KIDS", slug: "purple-united-kids", cat: "kids", floors: ["2f"], logo: "/images/logos/purple-united-kids.webp" },
   { name: "R&B", slug: "r-and-b", cat: "apparel", floors: ["1f"], logo: "/images/logos/r-and-b.webp" },
   { name: "RARE RABBIT", slug: "rare-rabbit", cat: "apparel", floors: ["gf"], logo: "/images/logos/rare-rabbit.webp" },
   { name: "RAREISM", slug: "rareism", cat: "apparel", floors: ["gf"], logo: "/images/logos/rareism.webp" },
@@ -169,6 +170,7 @@ export const DINE_STORES: DirectoryStore[] = [
   { name: "BURGER KING", slug: "burger-king", cat: "food", floors: ["3f"], logo: "/images/logos/burger-king.webp" },
   { name: "CAFÉ CHENNAI", slug: "cafe-chennai", cat: "food", floors: ["3f"], logo: "/images/logos/cafe-chennai.webp" },
   { name: "CHAAYOS", slug: "chaayos", cat: "cafe", floors: ["1f"], logo: "/images/logos/chaayos.webp", bg: "#018c36" },
+  { name: "DOMINO'S", slug: "dominos", cat: "food", floors: ["3f"], logo: "/images/logos/dominos.webp" },
   { name: "GIANI ICE CREAM", slug: "giani-ice-cream", cat: "food", floors: ["3f"], logo: "/images/logos/giani-ice-cream.webp" },
   { name: "HALDIRAM'S", slug: "haldirams", cat: "food", floors: ["3f"], logo: "/images/logos/haldirams.webp" },
   { name: "HOUSE OF CANDY", slug: "house-of-candy", cat: "food", floors: ["3f"], logo: "/images/logos/house-of-candy.webp" },

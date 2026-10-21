@@ -76,7 +76,7 @@ ${
     ? `
 ## Current offers
 
-${offers.map((o) => `- ${o.store.name}: ${o.title}, ${o.detail}${o.ends ? ` (${o.ends.toLowerCase()})` : ""}${o.terms ? `. ${o.terms}` : ""}`).join("\n")}
+${offers.map((o) => `- ${o.store.name}: ${o.title}, ${o.detail}${o.terms ? `. ${o.terms}` : ""}`).join("\n")}
 `
     : ""
 }`;

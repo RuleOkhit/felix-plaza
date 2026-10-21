@@ -9,10 +9,14 @@
 // to OFFERS with its pixel size. `store` is the store's slug from
 // store-directory.ts, which supplies its name, floor and page link.
 //
-// `ends` is the last day of the offer ("2026-10-31"). The site leaves an
-// offer out once that day has passed, counted from the day it was built, so
-// a rebuild clears expired offers on its own. Leave it out for offers
-// without an end date.
+// Timing: `starts` and `ends` put an offer up and take it down by
+// themselves, with no rebuild or upload needed. Write either a day,
+// "2026-10-31" (the whole day, India time), or an exact moment,
+// "2026-10-21T11:30+05:30". The site leaves out offers that have ended (or
+// not begun) when it is built, and the visitor's browser checks again on
+// every visit, and at the very moment an offer ends while a page is open, so
+// the grid closes up around it. The dates are never shown to visitors.
+// Leave them out for an offer that has no end.
 // ---------------------------------------------------------------------------
 
 import type { Art } from "./events";
@@ -23,6 +27,7 @@ import {
   SHOP_STORES,
 } from "./store-directory";
 import { onSite } from "./parked";
+import { isRunning } from "@/lib/offer-time";
 
 export type Offer = {
   slug: string;
@@ -34,13 +39,18 @@ export type Offer = {
   detail: string;
   /** The poster's own line, where it has one */
   tagline?: string;
-  /** Last day of the offer, "YYYY-MM-DD" */
+  /** When it goes up: "YYYY-MM-DD" (from the start of that day, IST) or an exact time */
+  starts?: string;
+  /** When it comes down: "YYYY-MM-DD" (to the end of that day, IST) or an exact time */
   ends?: string;
   /** Small print, where the poster mentions it */
   terms?: string;
   poster: Art;
 };
 
+// An `ends` day is the last day the offer runs: it comes down at midnight
+// at the end of that day, India time (ends "2026-11-15" = gone from 16 Nov).
+// Ordered as they appear on the page; ended ones drop out and the rest close up.
 const OFFERS: Offer[] = [
   {
     slug: "caratlane-diamond-designs",
@@ -49,26 +59,92 @@ const OFFERS: Offer[] = [
     detail: "On MRP of all diamond designs",
     tagline: "It's a big deal",
     terms: "T&C apply",
+    ends: "2026-11-15",
     poster: { src: "/images/offers/caratlane.webp", width: 720, height: 1080 },
+  },
+  {
+    slug: "ethera-festive-season",
+    store: "ethera",
+    title: "Up to 30% Off On Diamonds",
+    detail: "50% off making charges, plus a free gold coin",
+    tagline: "This festive season, sparkle smarter",
+    terms: "T&C apply",
+    ends: "2026-11-10",
+    poster: { src: "/images/offers/ethera.webp", width: 1024, height: 673 },
+  },
+  {
+    slug: "runway-ray-ban-meta",
+    store: "runway",
+    title: "20% Off Ray-Ban Meta",
+    detail: "On Ray-Ban Meta (Gen 2) smart glasses",
+    terms: "Some styles excluded",
+    ends: "2026-11-08",
+    poster: { src: "/images/offers/runway.webp", width: 1024, height: 1536 },
+  },
+  {
+    slug: "madame-travel-vanity-combo",
+    store: "madame",
+    title: "Travel + Vanity Combo at ₹99",
+    detail: "On shopping worth ₹14,999",
+    terms: "More offers in store",
+    ends: "2026-11-30",
+    poster: { src: "/images/offers/madame.webp", width: 922, height: 1280 },
+  },
+  {
+    slug: "r-and-b-free-travel-bag",
+    store: "r-and-b",
+    title: "Free Travel Bag",
+    detail: "On a spend of ₹3,999",
+    tagline: "Love it. Wear it.",
+    ends: "2026-11-10",
+    poster: { src: "/images/offers/r-and-b.webp", width: 720, height: 1280 },
+  },
+  {
+    slug: "the-bear-house-festive-edit",
+    store: "the-bear-house",
+    title: "The Festive Edit",
+    detail: "Festive menswear for the young gentlemen",
+    terms: "T&C apply",
+    ends: "2026-11-30",
+    poster: { src: "/images/offers/the-bear-house.webp", width: 1080, height: 1920 },
   },
 ];
 
-// TEMPORARY: the first offer repeated, to preview the offers page with
-// several offers on it. Only the offers page shows these. Set to [] (or
-// delete) before the page goes live.
-const PREVIEW_REPEATS: Offer[] = Array.from({ length: 7 }, (_, i) => ({
-  ...OFFERS[0],
-  slug: `${OFFERS[0].slug}-${i + 2}`,
-}));
+// Preview only: repeats of the first offer, to see a full page while there
+// were few real offers. Off now; leave empty for the live site.
+const PREVIEW_REPEATS: Offer[] = [];
+
+/** A day means the whole day in India; anything else is an exact moment. */
+function moment(value: string | undefined, edge: "start" | "end") {
+  if (!value) return undefined;
+  const iso = /^\d{4}-\d{2}-\d{2}$/.test(value)
+    ? `${value}T${edge === "start" ? "00:00:00" : "23:59:59.999"}+05:30`
+    : value;
+  return new Date(iso).getTime();
+}
 
 function running(offers: Offer[], now: Date) {
-  const today = now.toISOString().slice(0, 10);
-  return offers.filter((o) => !o.ends || o.ends >= today);
+  const t = now.getTime();
+  return offers.filter((o) => isRunning({ startsAt: moment(o.starts, "start"), endsAt: moment(o.ends, "end") }, t));
 }
 
 /** Everything for the offers page, still running on the day of the build. */
 export function currentOffers(now = new Date()): Offer[] {
   return running([...OFFERS, ...PREVIEW_REPEATS], now);
+}
+
+/** Offers not up yet when the site is built; the browser shows each at its start. */
+export function upcomingOffers(now = new Date()): Offer[] {
+  const t = now.getTime();
+  return [...OFFERS, ...PREVIEW_REPEATS].filter((o) => {
+    const s = moment(o.starts, "start");
+    return s !== undefined && s > t;
+  });
+}
+
+/** One store's offers not up yet, for its own page. */
+export function storeUpcomingOffers(store: string, now = new Date()): Offer[] {
+  return upcomingOffers(now).filter((o) => o.store === store && OFFERS.includes(o));
 }
 
 /** Real offers still running (never the preview repeats). */
@@ -102,13 +178,6 @@ function offerStore(offer: Offer) {
   return { name: offer.store, floor: "", href: undefined };
 }
 
-/** "Till 31 October", for offers with an end date. */
-function offerEnds(offer: Offer) {
-  if (!offer.ends) return undefined;
-  const d = new Date(`${offer.ends}T00:00:00`);
-  return `Till ${d.getDate()} ${d.toLocaleString("en-GB", { month: "long" })}`;
-}
-
 /** An offer with its store looked up, ready for the page to show. */
 export type OfferView = {
   slug: string;
@@ -116,7 +185,9 @@ export type OfferView = {
   detail: string;
   tagline?: string;
   terms?: string;
-  ends?: string;
+  /** When it goes up and comes down, in milliseconds; never shown */
+  startsAt?: number;
+  endsAt?: number;
   poster: Art;
   store: { name: string; floor: string; href?: string };
 };
@@ -128,7 +199,8 @@ export function offerView(o: Offer): OfferView {
     detail: o.detail,
     tagline: o.tagline,
     terms: o.terms,
-    ends: offerEnds(o),
+    startsAt: moment(o.starts, "start"),
+    endsAt: moment(o.ends, "end"),
     poster: o.poster,
     store: offerStore(o),
   };

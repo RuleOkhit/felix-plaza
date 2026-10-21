@@ -360,6 +360,11 @@ export const STORE_COPY: Record<string, StoreCopy> = {
   },
 
   /* ------------------------------------------------------------ KIDS */
+  "purple-united-kids": {
+    tagline: "Fashion For Kids",
+    description:
+      "Purple United Kids is an Indian kidswear brand with everyday, party and occasion clothing for babies, boys and girls.",
+  },
   babyshop: {
     tagline: "Kidswear And Baby Essentials",
     description:
@@ -462,6 +467,11 @@ export const STORE_COPY: Record<string, StoreCopy> = {
   },
 
   /* ------------------------------------------------------ FOOD COURT */
+  dominos: {
+    tagline: "Pizza Delivery And Dine In",
+    description:
+      "Domino's serves freshly made pizzas, along with garlic bread, sides, desserts and drinks.",
+  },
   "amritsari-express": {
     tagline: "Amritsari Food",
     description:

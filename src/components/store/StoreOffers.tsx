@@ -6,11 +6,22 @@ import { useRef, useState } from "react";
 import type { OfferView } from "@/data/offers";
 import Reveal from "@/components/ui/Reveal";
 import OfferViewer from "@/components/offers/OfferViewer";
+import { useLiveOffers } from "@/components/offers/useLiveOffers";
 
 // A store's running offers, set under its write up and beside the visiting
 // panel: a small poster with the deal written out next to it. A tap opens the
 // poster large, in the same viewer the offers page uses.
-export default function StoreOffers({ storeName, offers }: { storeName: string; offers: OfferView[] }) {
+export default function StoreOffers({
+  storeName,
+  offers: built,
+  upcoming,
+}: {
+  storeName: string;
+  offers: OfferView[];
+  upcoming?: OfferView[];
+}) {
+  // Only what is running right now; the block goes once the last offer ends.
+  const offers = useLiveOffers(built, upcoming);
   const [index, setIndex] = useState<number | null>(null);
   const opener = useRef<HTMLButtonElement | null>(null);
   if (!offers.length) return null;
@@ -61,11 +72,7 @@ export default function StoreOffers({ storeName, offers }: { storeName: string; 
                   {o.title}
                 </span>
                 <span className="mt-2 block leading-snug text-ink/70 md:text-lg">{o.detail}</span>
-                {(o.ends || o.terms) && (
-                  <span className="mt-2 block text-xs text-ink/45">
-                    {[o.ends, o.terms].filter(Boolean).join(" · ")}
-                  </span>
-                )}
+                {o.terms && <span className="mt-2 block text-xs text-ink/45">{o.terms}</span>}
                 <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-primary">
                   View offer
                   <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>

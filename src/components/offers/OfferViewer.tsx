@@ -30,7 +30,8 @@ export default function OfferViewer({
   const reduced = useReducedMotion();
   const [dir, setDir] = useState(1);
   const dialogRef = useRef<HTMLDivElement>(null);
-  const open = index !== null;
+  // Closed too if the offer it showed has just ended and dropped out.
+  const open = index !== null && index < offers.length;
   const many = offers.length > 1;
 
   const step = useCallback(
@@ -69,10 +70,10 @@ export default function OfferViewer({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose, step]);
 
-  const offer = index === null ? null : offers[index];
+  const offer = open ? offers[index!] : null;
   const ratio = offer ? offer.poster.width / offer.poster.height : 1;
   const stop = (e: React.MouseEvent) => e.stopPropagation();
-  const meta = offer ? [offer.store.floor, offer.ends, offer.terms].filter(Boolean).join(" · ") : "";
+  const meta = offer ? [offer.store.floor, offer.terms].filter(Boolean).join(" · ") : "";
 
   const storeLinkEl =
     offer && storeLink && offer.store.href ? (

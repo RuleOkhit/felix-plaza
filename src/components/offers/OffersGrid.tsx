@@ -5,10 +5,14 @@ import { useRef, useState } from "react";
 import type { OfferView } from "@/data/offers";
 import Reveal from "@/components/ui/Reveal";
 import OfferViewer from "./OfferViewer";
+import { useLiveOffers } from "./useLiveOffers";
 
 // The offers, poster first: each one is shown whole at its own shape, with
 // the store and the deal written underneath. A tap opens the viewer.
-export default function OffersGrid({ offers }: { offers: OfferView[] }) {
+export default function OffersGrid({ offers: built, upcoming }: { offers: OfferView[]; upcoming?: OfferView[] }) {
+  // Only what is running right now: an offer drops out when it ends, and an
+  // upcoming one joins when it starts.
+  const offers = useLiveOffers(built, upcoming);
   const [index, setIndex] = useState<number | null>(null);
   const opener = useRef<HTMLButtonElement | null>(null);
 
@@ -24,7 +28,9 @@ export default function OffersGrid({ offers }: { offers: OfferView[] }) {
     <>
       <ul className="grid grid-cols-2 gap-x-3 gap-y-10 px-4 pb-20 pt-4 md:grid-cols-3 md:gap-x-6 md:gap-y-14 md:px-[60px] md:pb-28 lg:grid-cols-4">
         {offers.map((o, i) => (
-          <li key={o.slug}>
+          // A wide poster takes two columns, so it stands about as tall as
+          // the portrait ones beside it rather than as a short strip.
+          <li key={o.slug} className={o.poster.width > o.poster.height ? "col-span-2" : undefined}>
             <Reveal delay={(i % 4) * 0.06}>
               <button
                 type="button"
@@ -54,11 +60,7 @@ export default function OffersGrid({ offers }: { offers: OfferView[] }) {
                   {o.title}
                 </span>
                 <span className="mt-1 block text-sm leading-snug text-ink/60">{o.detail}</span>
-                {(o.store.floor || o.ends) && (
-                  <span className="mt-2 block text-xs text-ink/40">
-                    {[o.store.floor, o.ends].filter(Boolean).join(" · ")}
-                  </span>
-                )}
+                {o.store.floor && <span className="mt-2 block text-xs text-ink/40">{o.store.floor}</span>}
               </button>
             </Reveal>
           </li>

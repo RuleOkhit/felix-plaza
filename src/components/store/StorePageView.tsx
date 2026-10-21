@@ -1,5 +1,5 @@
 import type { Store } from "@/data/stores";
-import { offerView, storeOffers } from "@/data/offers";
+import { offerView, storeOffers, storeUpcomingOffers } from "@/data/offers";
 import JsonLd from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd, storeJsonLd } from "@/lib/seo";
 import StoreHero from "./StoreHero";
@@ -10,6 +10,7 @@ import RelatedStores from "./RelatedStores";
 // the store is running are looked up here and shown with its write up.
 export default function StorePageView({ store }: { store: Store }) {
   const offers = storeOffers(store.slug).map(offerView);
+  const upcoming = storeUpcomingOffers(store.slug).map(offerView);
   const section = { shop: "Shop", dine: "Dine", entertain: "Entertain" }[store.section];
   return (
     <>
@@ -23,7 +24,7 @@ export default function StorePageView({ store }: { store: Store }) {
         ]}
       />
       <StoreHero store={store} />
-      <StoreProfile store={store} offers={offers} />
+      <StoreProfile store={store} offers={offers} upcomingOffers={upcoming} />
       <RelatedStores store={store} />
     </>
   );

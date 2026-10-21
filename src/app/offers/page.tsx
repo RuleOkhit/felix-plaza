@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageHero from "@/components/ui/PageHero";
 import Reveal from "@/components/ui/Reveal";
 import OffersGrid from "@/components/offers/OffersGrid";
-import { currentOffers, offerView } from "@/data/offers";
+import { currentOffers, offerView, upcomingOffers } from "@/data/offers";
 import { BANNER } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 
@@ -18,6 +18,7 @@ export const metadata: Metadata = pageMetadata({
 // carry the whole directory.
 export default function OffersPage() {
   const offers = currentOffers().map(offerView);
+  const upcoming = upcomingOffers().map(offerView);
   return (
     <>
       <PageHero title="Offers" image={BANNER.offers.src} focus={BANNER.offers.focus} titled={BANNER.offers.titled} />
@@ -32,7 +33,7 @@ export default function OffersPage() {
         </div>
       </section>
 
-      <OffersGrid offers={offers} />
+      <OffersGrid offers={offers} upcoming={upcoming} />
     </>
   );
 }
