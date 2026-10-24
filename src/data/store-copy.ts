@@ -159,6 +159,11 @@ export const STORE_COPY: Record<string, StoreCopy> = {
   },
 
   /* ----------------------------------------------------- ETHNIC WEAR */
+  "sri-ram-and-son": {
+    tagline: "Since 1882",
+    description:
+      "Sri Ram & Son is a family name in ethnic wear since 1882, with traditional and festive clothing for weddings, celebrations and occasions.",
+  },
   aurelia: {
     tagline: "Everyday Ethnic Wear",
     description:
@@ -259,6 +264,11 @@ export const STORE_COPY: Record<string, StoreCopy> = {
     tagline: "Fine Jewellery",
     description:
       "BlueStone offers gold, diamond and platinum jewellery, from everyday pieces to engagement rings.",
+  },
+  "pushpanjali-jewels": {
+    tagline: "Fine Jewellery",
+    description:
+      "Pushpanjali Jewels offers gold and diamond jewellery, from everyday pieces to bridal and festive sets.",
   },
   caratlane: {
     tagline: "A Tanishq Partnership",

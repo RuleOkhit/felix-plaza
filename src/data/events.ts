@@ -58,14 +58,39 @@ export type FelixEvent = {
   placeholderLandscape?: boolean;
   /**
    * The loading animation when this is the featured event: Naruto's swirl
-   * (the default), or dandiya sticks striking in rhythm for a festive one.
+   * (the default), dandiya sticks striking in rhythm for a festive one, or
+   * a gem drawing itself in gold for a jewellery one.
    */
-  opener?: "swirl" | "dandiya";
+  opener?: "swirl" | "dandiya" | "jewel";
 };
 
 const WHERE: EventFact = { label: "Where", value: "Felix Plaza, Sector 82A, Gurugram" };
 
 export const EVENTS: FelixEvent[] = [
+  {
+    slug: "jewel-fest",
+    title: "The Jewel Fest",
+    subtitle: "Where Elegance Meets Exclusivity",
+    month: "2026-10",
+    when: "24 & 25 October 2026",
+    dates: { start: "2026-10-24", end: "2026-10-25" },
+    summary: "The Jewel Fest is here. Top jewellery brands, one exclusive destination, and a piece that feels like you.",
+    description: [
+      "For two days, Felix Plaza brings together the jewellery brands you love under one roof: Pushpanjali Jewels, Limelight, Palmonas, GIVA, BlueStone and Ethera.",
+      "Browse fine gold, diamonds and lab grown pieces side by side, compare at your own pace, and find the piece that feels like you.",
+    ],
+    facts: [
+      { label: "When", value: "24 & 25 October 2026" },
+      WHERE,
+      { label: "Featuring", value: "Pushpanjali Jewels, Limelight, Palmonas, GIVA, BlueStone and Ethera" },
+    ],
+    theme: { from: "#e6c37a", to: "#0b4a66" },
+    poster: {
+      portrait: { src: "/images/events/jewel-fest/portrait.webp", width: 1080, height: 1920 },
+      landscape: { src: "/images/events/jewel-fest/landscape.webp", width: 1920, height: 1080 },
+    },
+    opener: "jewel",
+  },
   {
     slug: "nav-utsav",
     title: "Nav-Utsav",
@@ -350,7 +375,7 @@ export const EVENTS: FelixEvent[] = [
  */
 
 /** The event the page opens on. */
-export const FEATURED_EVENT_SLUG = "nav-utsav";
+export const FEATURED_EVENT_SLUG = "jewel-fest";
 
 export function getEvent(slug: string) {
   return EVENTS.find((e) => e.slug === slug);

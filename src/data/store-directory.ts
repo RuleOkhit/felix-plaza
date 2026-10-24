@@ -75,7 +75,7 @@ export const DINE_FILTERS: CategoryFilter[] = [
   { key: "cafe", label: "Cafe", icon: "<path d=\"M5 3h11v9a4 4 0 0 1-8 0V3M2 21h16\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M16 5h2a2 2 0 0 1 0 4h-2\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"/>" },
 ];
 
-/* 84 stores — food, cafés, restaurants and entertainment excluded. */
+/* 86 stores — food, cafés, restaurants and entertainment excluded. */
 export const SHOP_STORES: DirectoryStore[] = [
   { name: "ADIDAS", slug: "adidas", cat: "sportswear", floors: ["1f"], logo: "/images/logos/adidas.webp" },
   { name: "ALDO", slug: "aldo", cat: "footwear", floors: ["gf"], logo: "/images/logos/aldo.webp" },
@@ -132,6 +132,7 @@ export const SHOP_STORES: DirectoryStore[] = [
   { name: "PEPE JEANS", slug: "pepe-jeans", cat: "apparel", floors: ["1f"], logo: "/images/logos/pepe-jeans.webp" },
   { name: "PUMA", slug: "puma", cat: "sportswear", floors: ["1f"], logo: "/images/logos/puma.webp" },
   { name: "PURPLE UNITED KIDS", slug: "purple-united-kids", cat: "kids", floors: ["2f"], logo: "/images/logos/purple-united-kids.webp" },
+  { name: "PUSHPANJALI JEWELS", slug: "pushpanjali-jewels", cat: "jewellery", floors: ["gf"], logo: "/images/logos/pushpanjali-jewels.webp", bg: "#4c4c3e" },
   { name: "R&B", slug: "r-and-b", cat: "apparel", floors: ["1f"], logo: "/images/logos/r-and-b.webp" },
   { name: "RARE RABBIT", slug: "rare-rabbit", cat: "apparel", floors: ["gf"], logo: "/images/logos/rare-rabbit.webp" },
   { name: "RAREISM", slug: "rareism", cat: "apparel", floors: ["gf"], logo: "/images/logos/rareism.webp" },
@@ -144,6 +145,7 @@ export const SHOP_STORES: DirectoryStore[] = [
   { name: "SKECHERS", slug: "skechers", cat: "sportswear", floors: ["1f"], logo: "/images/logos/skechers.webp" },
   { name: "SKINBAE", slug: "skinbae", cat: "beauty", floors: ["gf"], logo: "/images/logos/skinbae.webp" },
   { name: "SNITCH", slug: "snitch", cat: "apparel", floors: ["1f"], logo: "/images/logos/snitch.webp" },
+  { name: "SRI RAM & SON", slug: "sri-ram-and-son", cat: "ethnic", floors: ["1f"], logo: "/images/logos/sri-ram-and-son.webp" },
   { name: "STYLE UNION", slug: "style-union", cat: "apparel", floors: ["con"], logo: "/images/logos/style-union.webp" },
   { name: "SWEET DREAMS", slug: "sweet-dreams", cat: "apparel", floors: ["2f"], logo: "/images/logos/sweet-dreams.webp" },
   { name: "TASVA", slug: "tasva", cat: "ethnic", floors: ["2f"], logo: "/images/logos/tasva.webp", bg: "#000000" },

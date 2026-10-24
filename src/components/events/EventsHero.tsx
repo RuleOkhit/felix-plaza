@@ -9,6 +9,7 @@ import { artRatio } from "./EventArt";
 import { getLenis } from "@/components/layout/SmoothScroll";
 import { EASE, smoothScrollTo } from "@/lib/motion";
 import { DandiyaBurst, DandiyaSticks } from "./DandiyaOpener";
+import { DIAMOND_CLOSED, DIAMOND_OPEN, JewelBurst, JewelGem } from "./JewelOpener";
 
 // A spiral in the spirit of the Uzumaki swirl, drawn once as a path.
 const SPIRAL = (() => {
@@ -30,6 +31,7 @@ const SPIRAL = (() => {
 // because the site's page transition skips initial states on first load.)
 const MIN_SWIRL_MS = 900;
 const MIN_DANDIYA_MS = 1700;
+const MIN_JEWEL_MS = 2000;
 
 // How far the desktop artwork may be zoomed past its own shape to fill more
 // of the screen: 1.12 crops at most about 5% off each side, which keeps the
@@ -50,8 +52,10 @@ const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2
 //
 // While the artwork loads, a loader plays in the middle of the frame: the
 // Naruto swirl, or for a festive event (`opener: "dandiya"`) a pair of
-// dandiya sticks striking in rhythm. Once the artwork is ready the picture
-// opens up from the centre, and the page then drifts down a little on its
+// dandiya sticks striking in rhythm, or for a jewellery event
+// (`opener: "jewel"`) a gem drawing itself in gold. Once the artwork is ready
+// the picture opens up from the centre (in the shape of a diamond for the
+// gem), and the page then drifts down a little on its
 // own so the events below come into view. Both are skipped for anyone who
 // prefers less motion, and the drift is cancelled if the visitor scrolls
 // first. The artwork itself is the way into the event: the hero now fits
@@ -66,6 +70,7 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
   const touched = useRef(false);
   const open = Boolean(reduced) || (loaded && minDone);
   const dandiya = event.opener === "dandiya";
+  const jewel = event.opener === "jewel";
 
   const deskArt = event.poster.landscape ?? event.poster.portrait!;
   const phoneArt = event.poster.portrait ?? event.poster.landscape!;
@@ -84,7 +89,9 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
     "--ratio-desk": artRatio(event, event.poster.landscape ? "landscape" : "portrait"),
     background: dandiya
       ? "radial-gradient(60% 55% at 50% 52%, #5c1322 0%, #2a070e 62%, #14040a 100%)"
-      : undefined,
+      : jewel
+        ? "radial-gradient(60% 55% at 50% 50%, #0f5a78 0%, #08324a 58%, #041824 100%)"
+        : undefined,
   } as CSSProperties;
   // On desktop the frame is the artwork's shape, zoomed by FILL, as large as
   // the space under the navigation bar allows.
@@ -96,7 +103,7 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
   useEffect(() => {
     if (imgRef.current?.complete) setLoaded(true);
     const raf = requestAnimationFrame(() => setDrawn(true));
-    const t1 = window.setTimeout(() => setMinDone(true), dandiya ? MIN_DANDIYA_MS : MIN_SWIRL_MS);
+    const t1 = window.setTimeout(() => setMinDone(true), dandiya ? MIN_DANDIYA_MS : jewel ? MIN_JEWEL_MS : MIN_SWIRL_MS);
     // Never leave the page waiting on a slow image.
     const t2 = window.setTimeout(() => setLoaded(true), 4000);
     const stop = () => (touched.current = true);
@@ -112,7 +119,7 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
       window.removeEventListener("touchstart", stop);
       window.removeEventListener("keydown", stop);
     };
-  }, [dandiya]);
+  }, [dandiya, jewel]);
 
   // The drift: a slow glide down, a good moment after the reveal settles.
   const onRevealed = () => {
@@ -149,8 +156,16 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
       {/* The artwork, opened from the centre once it is ready */}
       <motion.div
         className="absolute inset-x-0 bottom-0 top-(--nav) [container-type:size]"
-        animate={{ clipPath: open ? "circle(75% at 50% 50%)" : "circle(0% at 50% 50%)" }}
-        transition={reduced ? { duration: 0 } : { duration: 1.1, ease: EASE, delay: 0.12 }}
+        animate={{
+          clipPath: jewel
+            ? open
+              ? DIAMOND_OPEN
+              : DIAMOND_CLOSED
+            : open
+              ? "circle(75% at 50% 50%)"
+              : "circle(0% at 50% 50%)",
+        }}
+        transition={reduced ? { duration: 0 } : { duration: jewel ? 1.3 : 1.1, ease: EASE, delay: jewel ? 0.25 : 0.12 }}
         onAnimationComplete={open ? onRevealed : undefined}
       >
         {/* A soft, blurred copy of the artwork fills the space around it */}
@@ -174,7 +189,12 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
 
       {/* The loader, above the artwork as it opens */}
       {!reduced &&
-        (dandiya ? (
+        (jewel ? (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 top-(--nav) grid place-items-center">
+            <JewelBurst open={open} />
+            <JewelGem drawn={drawn} open={open} />
+          </div>
+        ) : dandiya ? (
           <div className="pointer-events-none absolute inset-x-0 bottom-0 top-(--nav) grid place-items-center">
             <DandiyaBurst open={open} />
             <DandiyaSticks started={drawn} open={open} />

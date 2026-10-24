@@ -108,6 +108,15 @@ const OFFERS: Offer[] = [
     ends: "2026-11-30",
     poster: { src: "/images/offers/the-bear-house.webp", width: 1080, height: 1920 },
   },
+  {
+    slug: "us-polo-assn-on-the-move",
+    store: "us-polo-assn",
+    title: "Travel Bags From ₹499",
+    detail: "A trolley, duffle, backpack or sling bag at a special price when you shop",
+    tagline: "USPA on the move",
+    ends: "2026-12-31",
+    poster: { src: "/images/offers/us-polo-assn.webp", width: 720, height: 1280 },
+  },
 ];
 
 // Preview only: repeats of the first offer, to see a full page while there
