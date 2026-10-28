@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { OfferView } from "@/data/offers";
 import Reveal from "@/components/ui/Reveal";
 import OfferViewer from "./OfferViewer";
@@ -12,7 +12,13 @@ import { useLiveOffers } from "./useLiveOffers";
 export default function OffersGrid({ offers: built, upcoming }: { offers: OfferView[]; upcoming?: OfferView[] }) {
   // Only what is running right now: an offer drops out when it ends, and an
   // upcoming one joins when it starts.
-  const offers = useLiveOffers(built, upcoming);
+  const live = useLiveOffers(built, upcoming);
+  // Wide posters go last, so on a phone the tall ones fill the first rows
+  // and a wide one never pushes everything after it down the page.
+  const offers = useMemo(() => {
+    const wide = (o: OfferView) => o.poster.width > o.poster.height;
+    return [...live.filter((o) => !wide(o)), ...live.filter(wide)];
+  }, [live]);
   const [index, setIndex] = useState<number | null>(null);
   const opener = useRef<HTMLButtonElement | null>(null);
 

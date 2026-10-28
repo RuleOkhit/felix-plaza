@@ -30,9 +30,9 @@ export default function EntertainmentDirectory() {
         <div className="px-4 md:px-[60px]">
           <Reveal>
             <p className="max-w-2xl text-base leading-relaxed text-ink/70 md:text-lg">
-              A cinema that fills up on opening weekend, play zones for the
-              younger ones, and an arcade that keeps going after the shops
-              have pulled their shutters down.
+              A Cinépolis cinema, play zones for younger children, and arcade
+              games, VR and bowling for all ages. There&apos;s something for
+              everyone in the family.
             </p>
           </Reveal>
 

@@ -131,25 +131,14 @@ export const STORE_PAGE_SLUGS = new Set(STORES.map((s) => s.slug));
 export const STORE_SECTION = new Map(STORES.map((s) => [s.slug, s.section]));
 
 /**
- * Neighbours worth walking to next. A category with enough members stands
- * on its own; a thin one (Eyewear has two stores) falls back to the
- * wider section, and the caller is told so it can title the strip honestly.
+ * Neighbours worth walking to next: the rest of the store's own category,
+ * then the rest of its section. The page shuffles each group (see
+ * RelatedStores), so the strip does not open on the same store every time.
  */
-export function relatedStores(store: Store, limit = 8) {
-  const sameCategory = STORES.filter(
-    (s) => s.slug !== store.slug && s.category === store.category,
-  );
-  if (sameCategory.length >= 3) {
-    return { stores: sameCategory.slice(0, limit), sameCategory: true };
-  }
+export function relatedStores(store: Store) {
+  const sameCategory = STORES.filter((s) => s.slug !== store.slug && s.category === store.category);
   const rest = STORES.filter(
-    (s) =>
-      s.slug !== store.slug &&
-      s.section === store.section &&
-      !sameCategory.includes(s),
+    (s) => s.slug !== store.slug && s.section === store.section && s.category !== store.category,
   );
-  return {
-    stores: [...sameCategory, ...rest].slice(0, limit),
-    sameCategory: false,
-  };
+  return { sameCategory, rest };
 }

@@ -145,7 +145,7 @@ export const SHOP_STORES: DirectoryStore[] = [
   { name: "SKECHERS", slug: "skechers", cat: "sportswear", floors: ["1f"], logo: "/images/logos/skechers.webp" },
   { name: "SKINBAE", slug: "skinbae", cat: "beauty", floors: ["gf"], logo: "/images/logos/skinbae.webp" },
   { name: "SNITCH", slug: "snitch", cat: "apparel", floors: ["1f"], logo: "/images/logos/snitch.webp" },
-  { name: "SRI RAM & SON", slug: "sri-ram-and-son", cat: "ethnic", floors: ["1f"], logo: "/images/logos/sri-ram-and-son.webp" },
+  { name: "SRI RAM & SON", slug: "sri-ram-and-son", cat: "apparel", floors: ["1f"], logo: "/images/logos/sri-ram-and-son.webp" },
   { name: "STYLE UNION", slug: "style-union", cat: "apparel", floors: ["con"], logo: "/images/logos/style-union.webp" },
   { name: "SWEET DREAMS", slug: "sweet-dreams", cat: "apparel", floors: ["2f"], logo: "/images/logos/sweet-dreams.webp" },
   { name: "TASVA", slug: "tasva", cat: "ethnic", floors: ["2f"], logo: "/images/logos/tasva.webp", bg: "#000000" },

@@ -97,8 +97,8 @@ export type EntertainCard = {
  */
 const ENTERTAINMENT_BLURBS: Record<string, string> = {
   cinepolis: "The latest blockbusters on the big screen.",
-  funcity: "Rides and arcade games for toddlers through to teens.",
-  "fun-block": "Soft play and climbing zones for younger children.",
+  funcity: "Rides and arcade games for toddlers to teens.",
+  "fun-block": "Soft play and climbing for younger children.",
   "game-x": "Arcade games, VR and bowling, with food on site.",
 };
 
@@ -127,19 +127,19 @@ export const DIRECTORY_BAND = {
 export const SECTION_INTROS = {
   shops: {
     title: "Store Spotlight",
-    text: "Global labels and homegrown favourites under one roof, from fashion and footwear to beauty, jewellery and home.",
+    text: "International labels and Indian favourites in one place, from fashion and footwear to beauty, jewellery and home.",
     cta: "Explore Shops",
     href: "/shop",
   },
   dine: {
     title: "Time to Dine",
-    text: "From a quick coffee to a family meal, choose from cafés, a lively food court and sit-down restaurants.",
+    text: "A quick coffee, a food court lunch or a fine dine meal with the family. Pick what suits the day.",
     cta: "Explore Dining",
     href: "/dine",
   },
   entertain: {
     title: "Entertainment",
-    text: "Catch a movie, take on the arcade or let the little ones loose in a play zone. Fun for every age.",
+    text: "Movies at Cinépolis, rides at FunCity, soft play at Fun Block, and arcade games and bowling at Game X.",
     cta: "Explore Entertainment",
     href: "/entertain",
   },

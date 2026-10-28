@@ -14,7 +14,7 @@
 import { SOCIAL_LINKS } from "./site";
 
 export const ABOUT = {
-  body: "Felix Plaza is built for however you feel today. On a good-energy day, that's a film at Cinépolis, a round of bowling at Game X, rides at FunCity or an afternoon across 150+ stores. On a low-energy day, it's a slow coffee at Blue Tokai, a quiet hour in our outdoor garden, or dinner with nowhere else to be. Fully air-conditioned and open every day from 11 AM to 10 PM, in Sector 82A, Gurugram.",
+  body: "Felix Plaza is a place to spend the day your way. Shop across 150+ stores, catch a film at Cinépolis, go bowling at Game X or enjoy the rides at FunCity. Meet friends over coffee at Blue Tokai, sit down to a fine dine meal with family or spend the evening in our outdoor garden. We're fully air-conditioned and open every day from 11 AM to 10 PM, in Sector 82A, Gurugram.",
   name: "About the name? Felix is Latin for lucky, the same word behind Felix Felicis, the \"liquid luck\" potion in Harry Potter. So Felix Plaza is, quite literally, the lucky plaza!",
 };
 

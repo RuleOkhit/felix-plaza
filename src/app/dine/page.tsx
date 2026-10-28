@@ -20,7 +20,7 @@ export default function DinePage() {
       heroImage={BANNER.dine.src}
       heroFocus={BANNER.dine.focus}
       heroTitled={BANNER.dine.titled}
-      intro="Filter coffee and slow mornings, a food court that settles every argument, and a proper sit down meal when the occasion calls for one."
+      intro="Coffee and snacks, a food court with something for everyone, and fine dine restaurants for a sit-down meal."
       stores={onSite(DINE_STORES)}
       filters={DINE_FILTERS}
       noun="outlets"

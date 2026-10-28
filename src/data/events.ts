@@ -74,15 +74,16 @@ export const EVENTS: FelixEvent[] = [
     month: "2026-10",
     when: "24 & 25 October 2026",
     dates: { start: "2026-10-24", end: "2026-10-25" },
-    summary: "The Jewel Fest is here. Top jewellery brands, one exclusive destination, and a piece that feels like you.",
+    summary: "Top jewellery brands, one exclusive destination, and a piece that felt like you.",
     description: [
-      "For two days, Felix Plaza brings together the jewellery brands you love under one roof: Pushpanjali Jewels, Limelight, Palmonas, GIVA, BlueStone and Ethera.",
-      "Browse fine gold, diamonds and lab grown pieces side by side, compare at your own pace, and find the piece that feels like you.",
+      "For two days, Felix Plaza brought together six jewellery brands under one roof: Pushpanjali Jewels, Limelight, Palmonas, GIVA, BlueStone and Ethera.",
+      "Visitors browsed fine gold, diamonds and lab grown pieces side by side, collected a seal from each brand in their Jewel Fest booklet, and stayed for conversations and live music on the stage.",
     ],
     facts: [
       { label: "When", value: "24 & 25 October 2026" },
       WHERE,
       { label: "Featuring", value: "Pushpanjali Jewels, Limelight, Palmonas, GIVA, BlueStone and Ethera" },
+      { label: "Highlights", value: "Six brand seals to collect, talks and live music" },
     ],
     theme: { from: "#e6c37a", to: "#0b4a66" },
     poster: {
@@ -90,6 +91,15 @@ export const EVENTS: FelixEvent[] = [
       landscape: { src: "/images/events/jewel-fest/landscape.webp", width: 1920, height: 1080 },
     },
     opener: "jewel",
+    gallery: [
+      { src: "/images/events/jewel-fest/photo-1.webp", width: 1600, height: 1067 },
+      { src: "/images/events/jewel-fest/photo-2.webp", width: 1067, height: 1600 },
+      { src: "/images/events/jewel-fest/photo-3.webp", width: 1600, height: 1067 },
+      { src: "/images/events/jewel-fest/photo-4.webp", width: 900, height: 1600 },
+      { src: "/images/events/jewel-fest/photo-5.webp", width: 1600, height: 1067 },
+      { src: "/images/events/jewel-fest/photo-6.webp", width: 900, height: 1600 },
+      { src: "/images/events/jewel-fest/photo-7.webp", width: 1067, height: 1600 },
+    ],
   },
   {
     slug: "nav-utsav",
