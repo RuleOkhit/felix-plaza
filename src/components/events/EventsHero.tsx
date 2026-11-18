@@ -10,7 +10,7 @@ import { getLenis } from "@/components/layout/SmoothScroll";
 import { EASE, smoothScrollTo } from "@/lib/motion";
 import { DandiyaBurst, DandiyaSticks } from "./DandiyaOpener";
 import { DIAMOND_CLOSED, DIAMOND_OPEN, JewelBurst, JewelGem } from "./JewelOpener";
-import { CoffeeCup, CoffeeRipple } from "./CoffeeOpener";
+import { CoffeeFoam, CoffeeLiquid, useCoffeeWave } from "./CoffeeOpener";
 
 // A spiral in the spirit of the Uzumaki swirl, drawn once as a path.
 const SPIRAL = (() => {
@@ -34,7 +34,7 @@ const MIN_SWIRL_MS = 900;
 const MIN_DANDIYA_MS = 1700;
 const MIN_JEWEL_MS = 2000;
 // Long enough for the cup to fill before it opens.
-const MIN_COFFEE_MS = 2900;
+const MIN_COFFEE_MS = 2800;
 
 // How far the desktop artwork may be zoomed past its own shape to fill more
 // of the screen: 1.12 crops at most about 5% off each side, which keeps the
@@ -57,7 +57,9 @@ const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2
 // Naruto swirl, or for a festive event (`opener: "dandiya"`) a pair of
 // dandiya sticks striking in rhythm, or for a jewellery event
 // (`opener: "jewel"`) a gem drawing itself in gold, or for Coffee Fest
-// (`opener: "coffee"`) a cup filling as coffee pours and steam rises. Once the artwork is ready
+// (`opener: "coffee"`) coffee pouring in and filling the screen like a cup,
+// the creative then rising from the bottom on a wave edged in crema. Otherwise,
+// once the artwork is ready
 // the picture opens up from the centre (in the shape of a diamond for the
 // gem), and the page then drifts down a little on its
 // own so the events below come into view. Both are skipped for anyone who
@@ -140,6 +142,14 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
     }, 1400);
   };
 
+  const coffeeWave = useCoffeeWave({
+    active: coffee,
+    drawn,
+    open,
+    reduced: Boolean(reduced),
+    onDone: onRevealed,
+  });
+
   const picture = (className: string, ref?: React.Ref<HTMLImageElement>) => (
     <picture>
       <source media="(min-width: 768px)" srcSet={desktop} />
@@ -160,10 +170,15 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
       style={sizing}
       className="relative h-svh min-h-[520px] overflow-hidden bg-[#150c10] [--nav:64px] [--ratio:var(--ratio-phone)] md:[--nav:72px] md:[--ratio:var(--ratio-desk)]"
     >
-      {/* The artwork, opened from the centre once it is ready */}
+      {/* For Coffee Fest, the coffee filling the screen, under the artwork */}
+      {coffee && !reduced && <CoffeeLiquid wave={coffeeWave} drawn={drawn} open={open} />}
+
+      {/* The artwork, opened from the centre once it is ready (or, for
+          Coffee Fest, rising from the bottom on the coffee's wave) */}
       <motion.div
         className="absolute inset-x-0 bottom-0 top-(--nav) [container-type:size]"
-        animate={{
+        style={coffee ? { clipPath: coffeeWave.artClip } : undefined}
+        animate={coffee ? {} : {
           clipPath: jewel
             ? open
               ? DIAMOND_OPEN
@@ -175,9 +190,9 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
         transition={
           reduced
             ? { duration: 0 }
-            : { duration: jewel || coffee ? 1.3 : 1.1, ease: EASE, delay: jewel ? 0.25 : coffee ? 0.6 : 0.12 }
+            : { duration: jewel ? 1.3 : 1.1, ease: EASE, delay: jewel ? 0.25 : 0.12 }
         }
-        onAnimationComplete={open ? onRevealed : undefined}
+        onAnimationComplete={open && !coffee ? onRevealed : undefined}
       >
         {/* A soft, blurred copy of the artwork fills the space around it */}
         {picture("pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover blur-3xl brightness-90")}
@@ -201,10 +216,7 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
       {/* The loader, above the artwork as it opens */}
       {!reduced &&
         (coffee ? (
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 top-(--nav) grid place-items-center">
-            <CoffeeRipple open={open} />
-            <CoffeeCup drawn={drawn} open={open} />
-          </div>
+          <CoffeeFoam wave={coffeeWave} />
         ) : jewel ? (
           <div className="pointer-events-none absolute inset-x-0 bottom-0 top-(--nav) grid place-items-center">
             <JewelBurst open={open} />

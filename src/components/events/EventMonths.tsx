@@ -15,7 +15,7 @@ function tint(hex: string, alpha: number) {
 // 3:4 poster makes a tall, narrow card and a 16:9 banner a wide one. Desktop
 // uses the wide version where there is one; phones use the tall one.
 function EventCard({ event, priority }: { event: FelixEvent; priority: boolean }) {
-  const wide = hasFormat(event, "landscape");
+  const wide = hasFormat(event, "landscape") && event.card !== "portrait";
   const shape = {
     "--ratio-phone": artRatio(event, "portrait"),
     "--ratio-desk": artRatio(event, wide ? "landscape" : "portrait"),

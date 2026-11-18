@@ -1,207 +1,236 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { EASE } from "@/lib/motion";
+import { useEffect, useRef } from "react";
+import {
+  animate,
+  motion,
+  useAnimationFrame,
+  useMotionValue,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 
 // The opener for Coffee Fest (an event's `opener: "coffee"`), drawn in the
-// creative's colours: dark roast brown, cream and caramel.
+// creative's colours: dark roast, caramel and cream.
 //
-// While the artwork loads, a stream of coffee pours into a cream cup seen from
-// above and fills it, steam curls up from the rim and a few beans tumble past.
-// When the artwork is ready, latte art blooms on the surface, the cup swells
-// and the picture opens out from it as a circle (EventsHero).
+// The whole screen is the cup. While the artwork loads, a stream of coffee
+// pours in from the top, beans tumble through it, and the coffee rises from
+// the bottom with a live, rolling surface. When the artwork is ready, a
+// wave of coffee surges up the screen and the creative rises right behind it,
+// its own surface edged in crema, until it fills the screen.
 //
-// As in the rest of EventsHero, nothing relies on an `initial`: the page
-// transition skips initial states on first load, so every animation is
-// switched on by state (`drawn`, `open`).
+// The surfaces are polygons recomputed every frame (a level plus a moving
+// phase), so they keep rolling the whole time. As in the rest of EventsHero,
+// nothing relies on an `initial`: the page transition skips initial states.
 
-const CREAM = "#f3e6d2";
+const CREMA = "#e7c79c";
 const CARAMEL = "#c98a4b";
-const COFFEE = "#5a3220";
-const CREMA = "#b9773f";
+
+const POINTS = 28;
+
+/** The surface of the liquid at `level` (0 = bottom, 1 = top), as points in %. */
+function surface(level: number, phase: number, amp: number) {
+  const pts: [number, number][] = [];
+  for (let i = 0; i <= POINTS; i++) {
+    const x = (i / POINTS) * 100;
+    const u = x / 100;
+    const y =
+      (1 - level) * 100 +
+      amp * Math.sin(phase + u * Math.PI * 3.2) +
+      amp * 0.45 * Math.sin(phase * 1.7 + u * Math.PI * 7.4);
+    pts.push([x, y]);
+  }
+  return pts;
+}
+
+const clipOf = (pts: [number, number][]) =>
+  `polygon(${pts.map(([x, y]) => `${x.toFixed(2)}% ${y.toFixed(2)}%`).join(", ")}, 100% 130%, 0% 130%)`;
+const lineOf = (pts: [number, number][]) => `M ${pts.map(([x, y]) => `${x.toFixed(2)} ${y.toFixed(2)}`).join(" L ")}`;
+
+export type CoffeeWave = {
+  /** Clip for the artwork, rising from the bottom on open */
+  artClip: MotionValue<string>;
+  liquidClip: MotionValue<string>;
+  liquidLevel: MotionValue<number>;
+  /** The crema line along the artwork's surface, in a 0–100 viewBox */
+  foam: MotionValue<string>;
+  foamOpacity: MotionValue<number>;
+  surfaceLine: MotionValue<string>;
+};
+
+/**
+ * Drives the rising coffee and the artwork's wave. `active` is false for every
+ * other opener, in which case nothing runs.
+ */
+export function useCoffeeWave({
+  active,
+  drawn,
+  open,
+  reduced,
+  onDone,
+}: {
+  active: boolean;
+  drawn: boolean;
+  open: boolean;
+  reduced: boolean;
+  onDone: () => void;
+}): CoffeeWave {
+  const liquidLevel = useMotionValue(-0.08);
+  const artLevel = useMotionValue(reduced ? 1.3 : -0.08);
+  const hidden = clipOf(surface(-0.08, 0, 0));
+  const artClip = useMotionValue(reduced ? "none" : hidden);
+  const liquidClip = useMotionValue(hidden);
+  const foam = useMotionValue("");
+  const surfaceLine = useMotionValue("");
+  const foamOpacity = useTransform(artLevel, [-0.05, 0.03, 0.95, 1.12], [0, 1, 1, 0]);
+  const done = useRef(false);
+  const doneCb = useRef(onDone);
+  useEffect(() => {
+    doneCb.current = onDone;
+  });
+
+  // Fill the cup while the artwork loads.
+  useEffect(() => {
+    if (!active || !drawn || reduced) return;
+    const c = animate(liquidLevel, 0.34, { duration: 2.3, ease: [0.3, 0, 0.25, 1], delay: 0.55 });
+    return () => c.stop();
+  }, [active, drawn, reduced, liquidLevel]);
+
+  // Then the surge, with the creative rising right behind it.
+  useEffect(() => {
+    if (!active || !open) return;
+    if (reduced) {
+      artClip.set("none");
+      doneCb.current();
+      return;
+    }
+    const a = animate(liquidLevel, 1.2, { duration: 1.25, ease: [0.55, 0, 0.25, 1] });
+    const b = animate(artLevel, 1.2, {
+      duration: 1.65,
+      ease: [0.5, 0, 0.2, 1],
+      delay: 0.22,
+      onComplete: () => {
+        done.current = true;
+        artClip.set("none");
+        doneCb.current();
+      },
+    });
+    return () => {
+      a.stop();
+      b.stop();
+    };
+  }, [active, open, reduced, liquidLevel, artLevel, artClip]);
+
+  useAnimationFrame((t) => {
+    if (!active || reduced || done.current) return;
+    const p = t / 1000;
+    const liquid = surface(liquidLevel.get(), p * 1.9 + 1.4, 1.5);
+    liquidClip.set(clipOf(liquid));
+    surfaceLine.set(lineOf(liquid));
+    const art = surface(artLevel.get(), p * 2.3, 1.9);
+    artClip.set(clipOf(art));
+    foam.set(lineOf(art));
+  });
+
+  return { artClip, liquidClip, liquidLevel, foam, foamOpacity, surfaceLine };
+}
 
 // A coffee bean: an oval with its seam.
 function Bean({ size }: { size: number }) {
   return (
     <svg viewBox="-10 -14 20 28" width={size} height={size * 1.4} aria-hidden>
       <ellipse rx="9" ry="13" fill="#6b3a22" />
-      <path d="M0 -12 C 4 -5 -4 5 0 12" stroke="#3a1e12" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+      <ellipse rx="9" ry="13" fill="url(#bean-shine)" />
+      <path d="M0 -12 C 4 -5 -4 5 0 12" stroke="#2c150d" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+      <defs>
+        <radialGradient id="bean-shine" cx="0.35" cy="0.3" r="0.6">
+          <stop offset="0" stopColor="#fff" stopOpacity="0.28" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+      </defs>
     </svg>
   );
 }
 
-// Beans drifting past while it brews, fixed so nothing random runs in render.
+// Beans tumbling down beside the stream, fixed so nothing random runs in render.
 const BEANS = [
-  { x: -150, y: -120, r: 25, s: 22, d: 0 },
-  { x: 160, y: -60, r: -40, s: 18, d: 0.4 },
-  { x: -170, y: 90, r: 60, s: 16, d: 0.8 },
-  { x: 140, y: 130, r: -15, s: 24, d: 0.2 },
+  { x: 45.5, s: 26, r: 220, d: 0.7, dur: 1.6 },
+  { x: 53.5, s: 20, r: -260, d: 1.25, dur: 1.4 },
+  { x: 48.5, s: 30, r: 180, d: 1.9, dur: 1.7 },
+  { x: 56.5, s: 18, r: -200, d: 2.4, dur: 1.5 },
+  { x: 42.5, s: 22, r: 240, d: 2.9, dur: 1.6 },
 ];
 
-/** The cup filling while the artwork loads, and the latte art once it opens. */
-export function CoffeeCup({ drawn, open }: { drawn: boolean; open: boolean }) {
+/** The coffee below the artwork: the stream, the beans and the rising cup. */
+export function CoffeeLiquid({ wave, drawn, open }: { wave: CoffeeWave; drawn: boolean; open: boolean }) {
+  const streamHeight = useTransform(wave.liquidLevel, (l) => `${Math.max(0, (1 - Math.max(l, 0)) * 100 + 2)}%`);
   return (
-    <div className="relative grid h-56 w-56 place-items-center md:h-80 md:w-80">
-      {/* Warm light behind the cup */}
-      <span className="absolute inset-[-35%] rounded-full bg-[radial-gradient(circle,rgba(201,138,75,0.28),transparent_62%)]" />
+    <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 top-(--nav) overflow-hidden">
+      {/* The coffee, rising from the bottom */}
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          clipPath: wave.liquidClip,
+          background:
+            "radial-gradient(70% 45% at 50% 85%, rgba(201,138,75,0.35), transparent 70%), linear-gradient(180deg, #7a4428 0%, #5a3220 35%, #2c150d 100%)",
+        }}
+      />
+      {/* A caramel glint along its surface */}
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
+        <motion.path
+          d={wave.surfaceLine}
+          fill="none"
+          stroke={CARAMEL}
+          strokeOpacity={0.75}
+          strokeWidth={3}
+          vectorEffect="non-scaling-stroke"
+        />
+      </svg>
 
-      {/* Beans drifting around it */}
+      {/* The pour */}
+      <motion.div
+        className="absolute left-1/2 top-0 w-[9px] -translate-x-1/2 rounded-b-full bg-[linear-gradient(90deg,#4a2618,#8a5130_45%,#5a3220)] md:w-[12px]"
+        style={{ height: streamHeight }}
+        animate={{ opacity: drawn && !open ? 1 : 0, scaleY: drawn ? 1 : 0 }}
+        transition={{ opacity: { duration: open ? 0.25 : 0.4 }, scaleY: { duration: 0.6, ease: "easeIn", delay: 0.2 } }}
+      />
+
+      {/* Beans tumbling into the cup */}
       {BEANS.map((b, i) => (
         <motion.span
           key={i}
-          className="absolute left-1/2 top-1/2"
-          style={{ x: b.x, y: b.y, rotate: b.r, opacity: 0 }}
+          className="absolute top-0"
+          style={{ left: `${b.x}%`, opacity: 0 }}
           animate={
-            open
-              ? { opacity: 0, scale: 0.6 }
-              : drawn
-                ? { opacity: [0, 0.9, 0.9], y: [b.y - 14, b.y + 14, b.y - 14], rotate: [b.r, b.r + 25, b.r] }
-                : { opacity: 0 }
+            drawn && !open
+              ? { y: ["-6vh", "62vh"], rotate: [0, b.r], opacity: [0, 1, 1, 0] }
+              : { opacity: 0 }
           }
           transition={
-            open
-              ? { duration: 0.3 }
-              : { duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: b.d }
+            drawn && !open
+              ? { duration: b.dur, delay: b.d, repeat: Infinity, repeatDelay: 1.2, ease: "easeIn", opacity: { times: [0, 0.1, 0.85, 1], duration: b.dur, delay: b.d, repeat: Infinity, repeatDelay: 1.2 } }
+              : { duration: 0.2 }
           }
         >
           <Bean size={b.s} />
         </motion.span>
       ))}
-
-      <motion.svg
-        viewBox="0 0 200 200"
-        className="relative h-full w-full overflow-visible"
-        animate={open ? { scale: 1.15, opacity: 0 } : { scale: 1, opacity: 1 }}
-        transition={open ? { duration: 0.7, ease: EASE, delay: 0.55 } : { duration: 0.3 }}
-      >
-        <defs>
-          <clipPath id="coffee-surface">
-            <circle cx="100" cy="112" r="56" />
-          </clipPath>
-          <radialGradient id="coffee-fill" cx="0.45" cy="0.4" r="0.7">
-            <stop offset="0" stopColor={CREMA} />
-            <stop offset="0.6" stopColor="#8a5130" />
-            <stop offset="1" stopColor={COFFEE} />
-          </radialGradient>
-        </defs>
-
-        {/* Saucer and cup, seen from above */}
-        <motion.circle
-          cx="100"
-          cy="112"
-          r="84"
-          fill="none"
-          stroke={CREAM}
-          strokeOpacity={0.55}
-          strokeWidth={3}
-          animate={{ pathLength: drawn ? 1 : 0, opacity: drawn ? 1 : 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-        />
-        <motion.circle
-          cx="100"
-          cy="112"
-          r="66"
-          fill={CREAM}
-          animate={{ opacity: drawn ? 1 : 0, scale: drawn ? 1 : 0.8 }}
-          style={{ transformBox: "fill-box", transformOrigin: "center" }}
-          transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
-        />
-        {/* Handle */}
-        <motion.path
-          d="M164 100 C 188 98 188 128 164 126"
-          fill="none"
-          stroke={CREAM}
-          strokeWidth={9}
-          strokeLinecap="round"
-          animate={{ pathLength: drawn ? 1 : 0, opacity: drawn ? 1 : 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-        />
-
-        {/* The coffee rising in the cup */}
-        <g clipPath="url(#coffee-surface)">
-          <motion.circle
-            cx="100"
-            cy="112"
-            r="56"
-            fill="url(#coffee-fill)"
-            style={{ transformBox: "fill-box", transformOrigin: "center" }}
-            animate={{ scale: drawn ? 1 : 0 }}
-            transition={{ duration: 1.4, ease: "easeOut", delay: 0.75 }}
-          />
-          {/* Latte art: a rosetta of cream hearts, drawn once it opens */}
-          {[0, 1, 2, 3].map((i) => (
-            <motion.path
-              key={i}
-              d={`M${100 - 26 + i * 4} ${84 + i * 14} C ${100 - 10} ${72 + i * 14} ${100 + 10} ${72 + i * 14} ${100 + 26 - i * 4} ${84 + i * 14}`}
-              fill="none"
-              stroke={CREAM}
-              strokeWidth={5 - i * 0.6}
-              strokeLinecap="round"
-              animate={{ pathLength: open ? 1 : 0, opacity: open ? 1 : 0 }}
-              transition={{ duration: 0.35, delay: open ? i * 0.08 : 0 }}
-            />
-          ))}
-          <motion.path
-            d="M100 74 L100 146"
-            stroke={CREAM}
-            strokeWidth={3}
-            strokeLinecap="round"
-            animate={{ pathLength: open ? 1 : 0, opacity: open ? 1 : 0 }}
-            transition={{ duration: 0.4, delay: open ? 0.3 : 0 }}
-          />
-        </g>
-
-        {/* The pour, a thin stream from above that stops once the cup is full */}
-        <motion.rect
-          x="96.5"
-          y="-80"
-          width="7"
-          rx="3.5"
-          fill={COFFEE}
-          animate={drawn && !open ? { height: [0, 192, 192, 0], y: [-80, -80, -80, 112] } : { height: 0 }}
-          transition={drawn && !open ? { duration: 2.2, times: [0, 0.2, 0.75, 1], delay: 0.6 } : { duration: 0.2 }}
-        />
-
-        {/* Steam curling up from the rim */}
-        {[-22, 0, 22].map((dx, i) => (
-          <motion.path
-            key={dx}
-            d={`M${100 + dx} 40 C ${92 + dx} 28 ${108 + dx} 16 ${100 + dx} 2 C ${92 + dx} -10 ${108 + dx} -22 ${100 + dx} -34`}
-            fill="none"
-            stroke={CREAM}
-            strokeOpacity={0.6}
-            strokeWidth={3.5}
-            strokeLinecap="round"
-            animate={
-              drawn && !open
-                ? { pathLength: [0, 1, 1], opacity: [0, 0.8, 0], y: [8, -4, -16] }
-                : { opacity: 0 }
-            }
-            transition={
-              drawn && !open
-                ? { duration: 2.2, repeat: Infinity, delay: 1.6 + i * 0.35, ease: "easeOut" }
-                : { duration: 0.3 }
-            }
-          />
-        ))}
-      </motion.svg>
     </div>
   );
 }
 
-// A ripple of crema rings spreading from the cup as it opens.
-export function CoffeeRipple({ open }: { open: boolean }) {
+/** The crema edge riding on the creative's rising surface. */
+export function CoffeeFoam({ wave }: { wave: CoffeeWave }) {
   return (
-    <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2">
-      {[CARAMEL, CREAM, CARAMEL].map((c, i) => (
-        <motion.span
-          key={i}
-          className="absolute -left-16 -top-16 h-32 w-32 rounded-full border-[3px]"
-          style={{ borderColor: c, opacity: 0 }}
-          animate={open ? { scale: [0.6, 7], opacity: [0.85, 0] } : { opacity: 0 }}
-          transition={{ duration: 1.3, delay: 0.45 + i * 0.16, ease: [0.16, 1, 0.3, 1] }}
-        />
-      ))}
-    </div>
+    <motion.svg
+      aria-hidden
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      className="pointer-events-none absolute inset-x-0 bottom-0 top-(--nav) h-[calc(100%-var(--nav))] w-full"
+      style={{ opacity: wave.foamOpacity }}
+    >
+      <motion.path d={wave.foam} fill="none" stroke={CREMA} strokeWidth={14} strokeOpacity={0.35} vectorEffect="non-scaling-stroke" />
+      <motion.path d={wave.foam} fill="none" stroke={CREMA} strokeWidth={5} vectorEffect="non-scaling-stroke" />
+    </motion.svg>
   );
 }

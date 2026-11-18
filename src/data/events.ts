@@ -62,6 +62,8 @@ export type FelixEvent = {
    * a gem drawing itself in gold for a jewellery one.
    */
   opener?: "swirl" | "dandiya" | "jewel" | "coffee";
+  /** Show the tall poster on the events listing even on desktop (for very wide creatives) */
+  card?: "portrait";
 };
 
 const WHERE: EventFact = { label: "Where", value: "Felix Plaza, Sector 82A, Gurugram" };
@@ -90,6 +92,7 @@ export const EVENTS: FelixEvent[] = [
       landscape: { src: "/images/events/coffee-fest/landscape.webp", width: 2160, height: 960 },
     },
     opener: "coffee",
+    card: "portrait",
   },
   {
     slug: "meet-the-masters",
