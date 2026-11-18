@@ -1,236 +1,378 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import {
-  animate,
-  motion,
-  useAnimationFrame,
-  useMotionValue,
-  useTransform,
-  type MotionValue,
-} from "framer-motion";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
-// The opener for Coffee Fest (an event's `opener: "coffee"`), drawn in the
-// creative's colours: dark roast, caramel and cream.
+// The opener for Coffee Fest (an event's `opener: "coffee"`), built from
+// pieces cut out of the event's own creative (public/images/events/
+// coffee-fest/opener): the latte, the iced coffee, the Coffee Fest lettering
+// and real roasted beans, so it looks like the campaign rather than a drawing.
 //
-// The whole screen is the cup. While the artwork loads, a stream of coffee
-// pours in from the top, beans tumble through it, and the coffee rises from
-// the bottom with a live, rolling surface. When the artwork is ready, a
-// wave of coffee surges up the screen and the creative rises right behind it,
-// its own surface edged in crema, until it fills the screen.
+// While the artwork loads, the scene plays like a short title sequence: in a
+// warm, dusty light the latte rises out of the dark and settles, steam curls
+// off it, beans swing in on arcs and hang around it, then the lettering
+// lands and the iced coffee slides in beside it. When the artwork is ready,
+// the camera dives into the cup: the latte rushes towards the viewer and past,
+// the beans fly out past the edges, and the creative comes into focus behind
+// them (EventsHero handles that last part).
 //
-// The surfaces are polygons recomputed every frame (a level plus a moving
-// phase), so they keep rolling the whole time. As in the rest of EventsHero,
-// nothing relies on an `initial`: the page transition skips initial states.
+// As in the rest of EventsHero, nothing relies on an `initial`: the page
+// transition skips initial states on first load, so every animation is
+// switched on by state (`drawn`, `open`).
 
-const CREMA = "#e7c79c";
-const CARAMEL = "#c98a4b";
+const DIR = "/images/events/coffee-fest/opener";
+const DIVE = [0.5, 0, 0.75, 0.2] as const; // gathers speed towards the viewer
+const SETTLE = [0.16, 1, 0.3, 1] as const; // fast start, soft landing
+// How far out the beans hang, as a multiple of their own size.
+const SPREAD = 5.6;
 
-const POINTS = 28;
-
-/** The surface of the liquid at `level` (0 = bottom, 1 = top), as points in %. */
-function surface(level: number, phase: number, amp: number) {
-  const pts: [number, number][] = [];
-  for (let i = 0; i <= POINTS; i++) {
-    const x = (i / POINTS) * 100;
-    const u = x / 100;
-    const y =
-      (1 - level) * 100 +
-      amp * Math.sin(phase + u * Math.PI * 3.2) +
-      amp * 0.45 * Math.sin(phase * 1.7 + u * Math.PI * 7.4);
-    pts.push([x, y]);
-  }
-  return pts;
-}
-
-const clipOf = (pts: [number, number][]) =>
-  `polygon(${pts.map(([x, y]) => `${x.toFixed(2)}% ${y.toFixed(2)}%`).join(", ")}, 100% 130%, 0% 130%)`;
-const lineOf = (pts: [number, number][]) => `M ${pts.map(([x, y]) => `${x.toFixed(2)} ${y.toFixed(2)}`).join(" L ")}`;
-
-export type CoffeeWave = {
-  /** Clip for the artwork, rising from the bottom on open */
-  artClip: MotionValue<string>;
-  liquidClip: MotionValue<string>;
-  liquidLevel: MotionValue<number>;
-  /** The crema line along the artwork's surface, in a 0–100 viewBox */
-  foam: MotionValue<string>;
-  foamOpacity: MotionValue<number>;
-  surfaceLine: MotionValue<string>;
-};
-
-/**
- * Drives the rising coffee and the artwork's wave. `active` is false for every
- * other opener, in which case nothing runs.
- */
-export function useCoffeeWave({
-  active,
-  drawn,
-  open,
-  reduced,
-  onDone,
-}: {
-  active: boolean;
-  drawn: boolean;
-  open: boolean;
-  reduced: boolean;
-  onDone: () => void;
-}): CoffeeWave {
-  const liquidLevel = useMotionValue(-0.08);
-  const artLevel = useMotionValue(reduced ? 1.3 : -0.08);
-  const hidden = clipOf(surface(-0.08, 0, 0));
-  const artClip = useMotionValue(reduced ? "none" : hidden);
-  const liquidClip = useMotionValue(hidden);
-  const foam = useMotionValue("");
-  const surfaceLine = useMotionValue("");
-  const foamOpacity = useTransform(artLevel, [-0.05, 0.03, 0.95, 1.12], [0, 1, 1, 0]);
-  const done = useRef(false);
-  const doneCb = useRef(onDone);
-  useEffect(() => {
-    doneCb.current = onDone;
-  });
-
-  // Fill the cup while the artwork loads.
-  useEffect(() => {
-    if (!active || !drawn || reduced) return;
-    const c = animate(liquidLevel, 0.34, { duration: 2.3, ease: [0.3, 0, 0.25, 1], delay: 0.55 });
-    return () => c.stop();
-  }, [active, drawn, reduced, liquidLevel]);
-
-  // Then the surge, with the creative rising right behind it.
-  useEffect(() => {
-    if (!active || !open) return;
-    if (reduced) {
-      artClip.set("none");
-      doneCb.current();
-      return;
-    }
-    const a = animate(liquidLevel, 1.2, { duration: 1.25, ease: [0.55, 0, 0.25, 1] });
-    const b = animate(artLevel, 1.2, {
-      duration: 1.65,
-      ease: [0.5, 0, 0.2, 1],
-      delay: 0.22,
-      onComplete: () => {
-        done.current = true;
-        artClip.set("none");
-        doneCb.current();
-      },
-    });
-    return () => {
-      a.stop();
-      b.stop();
-    };
-  }, [active, open, reduced, liquidLevel, artLevel, artClip]);
-
-  useAnimationFrame((t) => {
-    if (!active || reduced || done.current) return;
-    const p = t / 1000;
-    const liquid = surface(liquidLevel.get(), p * 1.9 + 1.4, 1.5);
-    liquidClip.set(clipOf(liquid));
-    surfaceLine.set(lineOf(liquid));
-    const art = surface(artLevel.get(), p * 2.3, 1.9);
-    artClip.set(clipOf(art));
-    foam.set(lineOf(art));
-  });
-
-  return { artClip, liquidClip, liquidLevel, foam, foamOpacity, surfaceLine };
-}
-
-// A coffee bean: an oval with its seam.
-function Bean({ size }: { size: number }) {
-  return (
-    <svg viewBox="-10 -14 20 28" width={size} height={size * 1.4} aria-hidden>
-      <ellipse rx="9" ry="13" fill="#6b3a22" />
-      <ellipse rx="9" ry="13" fill="url(#bean-shine)" />
-      <path d="M0 -12 C 4 -5 -4 5 0 12" stroke="#2c150d" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-      <defs>
-        <radialGradient id="bean-shine" cx="0.35" cy="0.3" r="0.6">
-          <stop offset="0" stopColor="#fff" stopOpacity="0.28" />
-          <stop offset="1" stopColor="#fff" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-    </svg>
-  );
-}
-
-// Beans tumbling down beside the stream, fixed so nothing random runs in render.
+// Beans: where each comes from, where it hangs while the scene plays (as a
+// share of the cup's size), how big it is and how it turns.
 const BEANS = [
-  { x: 45.5, s: 26, r: 220, d: 0.7, dur: 1.6 },
-  { x: 53.5, s: 20, r: -260, d: 1.25, dur: 1.4 },
-  { x: 48.5, s: 30, r: 180, d: 1.9, dur: 1.7 },
-  { x: 56.5, s: 18, r: -200, d: 2.4, dur: 1.5 },
-  { x: 42.5, s: 22, r: 240, d: 2.9, dur: 1.6 },
+  {
+    src: "bean-a",
+    from: [-140, -90],
+    at: [-62, -38],
+    size: 22,
+    r: -35,
+    d: 0.55,
+  },
+  { src: "bean-c", from: [150, -110], at: [66, -46], size: 20, r: 25, d: 0.7 },
+  { src: "bean-b", from: [-150, 80], at: [-70, 40], size: 15, r: 40, d: 0.85 },
+  { src: "bean-a", from: [140, 120], at: [60, 52], size: 17, r: -20, d: 0.95 },
+  { src: "bean-c", from: [-40, 160], at: [-22, 74], size: 12, r: 70, d: 1.05 },
+  { src: "bean-b", from: [60, -170], at: [28, -78], size: 11, r: -60, d: 1.15 },
 ];
 
-/** The coffee below the artwork: the stream, the beans and the rising cup. */
-export function CoffeeLiquid({ wave, drawn, open }: { wave: CoffeeWave; drawn: boolean; open: boolean }) {
-  const streamHeight = useTransform(wave.liquidLevel, (l) => `${Math.max(0, (1 - Math.max(l, 0)) * 100 + 2)}%`);
+// Steam wisps, rising and curling off the cup.
+const STEAM = [
+  { x: -14, w: 34, d: 0, dur: 3.2, sway: 10 },
+  { x: 8, w: 40, d: 0.9, dur: 3.6, sway: -12 },
+  { x: -2, w: 30, d: 1.7, dur: 3.0, sway: 8 },
+  { x: 16, w: 28, d: 2.4, dur: 3.4, sway: -9 },
+];
+
+// Specks of dust in the light, drifting up.
+const DUST = Array.from({ length: 22 }, (_, i) => ({
+  x: (i * 37) % 100,
+  y: 30 + ((i * 53) % 70),
+  s: 1.5 + (i % 4) * 0.8,
+  d: (i % 7) * 0.45,
+  dur: 6 + (i % 5),
+}));
+
+/** One bean: swings in on an arc, hangs and bobs, then flies past the camera. */
+function FlyingBean({
+  b,
+  i,
+  drawn,
+  open,
+}: {
+  b: (typeof BEANS)[number];
+  i: number;
+  drawn: boolean;
+  open: boolean;
+}) {
+  const on = drawn && !open;
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 top-(--nav) overflow-hidden">
-      {/* The coffee, rising from the bottom */}
+    <motion.div
+      className="absolute left-1/2 top-1/2"
+      style={{
+        width: `${b.size}%`,
+        marginLeft: `-${b.size / 2}%`,
+        marginTop: `-${b.size / 2}%`,
+        opacity: 0,
+      }}
+      animate={
+        open
+          ? {
+              x: `${b.at[0] * 6}%`,
+              y: `${b.at[1] * 6}%`,
+              scale: 3.2,
+              rotate: b.r * 4,
+              opacity: 0,
+              filter: "blur(10px)",
+            }
+          : drawn
+            ? {
+                x: [
+                  `${b.from[0] * 4}%`,
+                  `${b.at[0] * SPREAD}%`,
+                  `${b.at[0] * SPREAD}%`,
+                ],
+                y: [
+                  `${b.from[1] * 4}%`,
+                  `${b.at[1] * SPREAD}%`,
+                  `${b.at[1] * SPREAD - 8}%`,
+                ],
+                rotate: [b.r - 160, b.r, b.r + 12],
+                opacity: [0, 1, 1],
+                filter: ["blur(8px)", "blur(0px)", "blur(0px)"],
+              }
+            : { opacity: 0 }
+      }
+      transition={
+        open
+          ? { duration: 0.9, ease: DIVE }
+          : {
+              duration: 1.1,
+              delay: b.d,
+              ease: SETTLE,
+              times: [0, 0.7, 1],
+            }
+      }
+    >
       <motion.div
-        className="absolute inset-0"
-        style={{
-          clipPath: wave.liquidClip,
-          background:
-            "radial-gradient(70% 45% at 50% 85%, rgba(201,138,75,0.35), transparent 70%), linear-gradient(180deg, #7a4428 0%, #5a3220 35%, #2c150d 100%)",
+        animate={on ? { y: ["0%", "-14%", "0%"], rotate: [0, 8, 0] } : {}}
+        transition={{
+          duration: 3 + i * 0.4,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1.6 + i * 0.2,
         }}
-      />
-      {/* A caramel glint along its surface */}
-      <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
-        <motion.path
-          d={wave.surfaceLine}
-          fill="none"
-          stroke={CARAMEL}
-          strokeOpacity={0.75}
-          strokeWidth={3}
-          vectorEffect="non-scaling-stroke"
+      >
+        <Image
+          src={`${DIR}/${b.src}.webp`}
+          alt=""
+          width={220}
+          height={165}
+          className="h-auto w-full drop-shadow-[0_10px_14px_rgba(0,0,0,0.55)]"
         />
-      </svg>
-
-      {/* The pour */}
-      <motion.div
-        className="absolute left-1/2 top-0 w-[9px] -translate-x-1/2 rounded-b-full bg-[linear-gradient(90deg,#4a2618,#8a5130_45%,#5a3220)] md:w-[12px]"
-        style={{ height: streamHeight }}
-        animate={{ opacity: drawn && !open ? 1 : 0, scaleY: drawn ? 1 : 0 }}
-        transition={{ opacity: { duration: open ? 0.25 : 0.4 }, scaleY: { duration: 0.6, ease: "easeIn", delay: 0.2 } }}
-      />
-
-      {/* Beans tumbling into the cup */}
-      {BEANS.map((b, i) => (
-        <motion.span
-          key={i}
-          className="absolute top-0"
-          style={{ left: `${b.x}%`, opacity: 0 }}
-          animate={
-            drawn && !open
-              ? { y: ["-6vh", "62vh"], rotate: [0, b.r], opacity: [0, 1, 1, 0] }
-              : { opacity: 0 }
-          }
-          transition={
-            drawn && !open
-              ? { duration: b.dur, delay: b.d, repeat: Infinity, repeatDelay: 1.2, ease: "easeIn", opacity: { times: [0, 0.1, 0.85, 1], duration: b.dur, delay: b.d, repeat: Infinity, repeatDelay: 1.2 } }
-              : { duration: 0.2 }
-          }
-        >
-          <Bean size={b.s} />
-        </motion.span>
-      ))}
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
-/** The crema edge riding on the creative's rising surface. */
-export function CoffeeFoam({ wave }: { wave: CoffeeWave }) {
+/** The whole loading scene. `drawn` starts it; `open` plays the dive. */
+export function CoffeeScene({
+  drawn,
+  open,
+}: {
+  drawn: boolean;
+  open: boolean;
+}) {
+  const on = drawn && !open;
   return (
-    <motion.svg
+    <div
       aria-hidden
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      className="pointer-events-none absolute inset-x-0 bottom-0 top-(--nav) h-[calc(100%-var(--nav))] w-full"
-      style={{ opacity: wave.foamOpacity }}
+      className="pointer-events-none absolute inset-x-0 bottom-0 top-(--nav) overflow-hidden"
     >
-      <motion.path d={wave.foam} fill="none" stroke={CREMA} strokeWidth={14} strokeOpacity={0.35} vectorEffect="non-scaling-stroke" />
-      <motion.path d={wave.foam} fill="none" stroke={CREMA} strokeWidth={5} vectorEffect="non-scaling-stroke" />
-    </motion.svg>
+      {/* A pool of warm light, as if from a café lamp above */}
+      <motion.div
+        className="absolute inset-0 bg-[radial-gradient(45%_55%_at_50%_42%,rgba(214,150,86,0.32),transparent_70%)]"
+        animate={{ opacity: open ? 0 : drawn ? 1 : 0 }}
+        transition={{ duration: open ? 0.5 : 1.4 }}
+      />
+
+      {/* Dust drifting in the light */}
+      {DUST.map((p, i) => (
+        <motion.span
+          key={i}
+          className="absolute rounded-full bg-[#f1d3a8]"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.s,
+            height: p.s,
+            opacity: 0,
+          }}
+          animate={on ? { y: [0, -140], opacity: [0, 0.7, 0] } : { opacity: 0 }}
+          transition={
+            on
+              ? {
+                  duration: p.dur,
+                  delay: p.d,
+                  repeat: Infinity,
+                  ease: "linear",
+                }
+              : { duration: 0.3 }
+          }
+        />
+      ))}
+
+      {/* The stage: everything is sized from the cup, which fits the screen */}
+      <div className="absolute inset-0 grid place-items-center">
+        <div className="relative aspect-square w-[min(62vw,46vh)] md:w-[min(34vw,48vh)]">
+          {/* Beans behind the cup */}
+          {BEANS.map((b, i) =>
+            i % 2 === 0 ? (
+              <FlyingBean key={i} b={b} i={i} drawn={drawn} open={open} />
+            ) : null,
+          )}
+
+          {/* Steam curling off the cup */}
+          {STEAM.map((s, i) => (
+            <motion.span
+              key={i}
+              className="absolute bottom-[58%] h-[46%] rounded-[50%] bg-[radial-gradient(closest-side,rgba(255,244,230,0.85),transparent)] blur-[8px] mix-blend-screen"
+              style={{
+                left: `${50 + s.x - s.w / 2}%`,
+                width: `${s.w}%`,
+                opacity: 0,
+              }}
+              animate={
+                on
+                  ? {
+                      y: ["20%", "-70%"],
+                      x: ["0%", `${s.sway}%`, `${-s.sway / 2}%`],
+                      scaleX: [0.6, 1.3, 1.8],
+                      opacity: [0, 0.95, 0],
+                    }
+                  : { opacity: 0 }
+              }
+              transition={
+                on
+                  ? {
+                      duration: s.dur,
+                      delay: 1.2 + s.d,
+                      repeat: Infinity,
+                      ease: "easeOut",
+                    }
+                  : { duration: 0.3 }
+              }
+            />
+          ))}
+
+          {/* The latte: rises out of the dark, turns slowly, then the camera dives in */}
+          <motion.div
+            className="absolute inset-0"
+            style={{ opacity: 0 }}
+            animate={
+              open
+                ? {
+                    scale: 9,
+                    rotate: 28,
+                    opacity: [1, 1, 0],
+                    filter: ["blur(0px)", "blur(2px)", "blur(18px)"],
+                  }
+                : drawn
+                  ? {
+                      y: ["40%", "0%"],
+                      scale: [0.7, 1],
+                      rotate: [-40, 0],
+                      opacity: [0, 1],
+                      filter: ["blur(12px)", "blur(0px)"],
+                    }
+                  : { opacity: 0 }
+            }
+            transition={
+              open
+                ? { duration: 1.3, ease: DIVE, times: [0, 0.8, 1] }
+                : { duration: 1.3, ease: SETTLE, delay: 0.15 }
+            }
+          >
+            {/* Its shadow on the table */}
+            <span className="absolute inset-[6%] translate-y-[7%] rounded-full bg-black/55 blur-2xl" />
+            <motion.div
+              className="relative h-full w-full"
+              animate={on ? { rotate: [0, 360] } : {}}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            >
+              <Image
+                src={`${DIR}/cup.webp`}
+                alt=""
+                width={500}
+                height={500}
+                priority
+                className="h-full w-full"
+              />
+            </motion.div>
+            {/* A glint across the crema */}
+            <motion.span
+              className="absolute inset-[16%] rounded-full bg-[linear-gradient(115deg,transparent_35%,rgba(255,255,255,0.35)_50%,transparent_65%)] mix-blend-overlay"
+              style={{ backgroundSize: "250% 100%" }}
+              animate={on ? { backgroundPosition: ["120% 0", "-120% 0"] } : {}}
+              transition={{
+                duration: 2.4,
+                repeat: Infinity,
+                repeatDelay: 1.4,
+                delay: 1.6,
+              }}
+            />
+          </motion.div>
+
+          {/* Beans in front of the cup, for depth */}
+          {BEANS.map((b, i) =>
+            i % 2 === 1 ? (
+              <FlyingBean key={i} b={b} i={i} drawn={drawn} open={open} />
+            ) : null,
+          )}
+
+          {/* The Coffee Fest lettering, landing over the cup */}
+          <motion.div
+            className="absolute left-1/2 top-[-34%] w-[92%] -translate-x-1/2"
+            style={{ opacity: 0 }}
+            animate={
+              open
+                ? { y: "-60%", opacity: 0, scale: 0.9, filter: "blur(6px)" }
+                : drawn
+                  ? {
+                      y: ["-40%", "0%"],
+                      scale: [1.6, 1],
+                      rotate: [-8, -3],
+                      opacity: [0, 1],
+                      filter: ["blur(10px)", "blur(0px)"],
+                    }
+                  : { opacity: 0 }
+            }
+            transition={
+              open
+                ? { duration: 0.5, ease: "easeIn" }
+                : {
+                    type: "spring",
+                    stiffness: 140,
+                    damping: 13,
+                    delay: 1.45,
+                    opacity: { duration: 0.3, delay: 1.45 },
+                  }
+            }
+          >
+            <Image
+              src={`${DIR}/logo.webp`}
+              alt=""
+              width={478}
+              height={263}
+              className="h-auto w-full drop-shadow-[0_18px_30px_rgba(0,0,0,0.6)]"
+            />
+          </motion.div>
+
+          {/* The iced coffee, sliding in at the side */}
+          <motion.div
+            className="absolute right-[-12%] top-[58%] w-[24%] md:right-[-46%] md:top-[30%] md:w-[30%]"
+            style={{ opacity: 0 }}
+            animate={
+              open
+                ? { x: "120%", opacity: 0, rotate: 30 }
+                : drawn
+                  ? { x: ["140%", "0%"], rotate: [24, 9], opacity: [0, 1] }
+                  : { opacity: 0 }
+            }
+            transition={
+              open
+                ? { duration: 0.6, ease: "easeIn" }
+                : { duration: 0.9, ease: SETTLE, delay: 1.75 }
+            }
+          >
+            <motion.div
+              animate={on ? { y: ["0%", "-5%", "0%"] } : {}}
+              transition={{
+                duration: 3.4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2.6,
+              }}
+            >
+              <Image
+                src={`${DIR}/iced.webp`}
+                alt=""
+                width={159}
+                height={282}
+                className="h-auto w-full drop-shadow-[0_16px_24px_rgba(0,0,0,0.6)]"
+              />
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+    </div>
   );
 }

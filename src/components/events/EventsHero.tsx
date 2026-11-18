@@ -10,7 +10,7 @@ import { getLenis } from "@/components/layout/SmoothScroll";
 import { EASE, smoothScrollTo } from "@/lib/motion";
 import { DandiyaBurst, DandiyaSticks } from "./DandiyaOpener";
 import { DIAMOND_CLOSED, DIAMOND_OPEN, JewelBurst, JewelGem } from "./JewelOpener";
-import { CoffeeFoam, CoffeeLiquid, useCoffeeWave } from "./CoffeeOpener";
+import { CoffeeScene } from "./CoffeeOpener";
 
 // A spiral in the spirit of the Uzumaki swirl, drawn once as a path.
 const SPIRAL = (() => {
@@ -33,8 +33,8 @@ const SPIRAL = (() => {
 const MIN_SWIRL_MS = 900;
 const MIN_DANDIYA_MS = 1700;
 const MIN_JEWEL_MS = 2000;
-// Long enough for the cup to fill before it opens.
-const MIN_COFFEE_MS = 2800;
+// Long enough for the whole title sequence to play before the dive.
+const MIN_COFFEE_MS = 3600;
 
 // How far the desktop artwork may be zoomed past its own shape to fill more
 // of the screen: 1.12 crops at most about 5% off each side, which keeps the
@@ -57,9 +57,9 @@ const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2
 // Naruto swirl, or for a festive event (`opener: "dandiya"`) a pair of
 // dandiya sticks striking in rhythm, or for a jewellery event
 // (`opener: "jewel"`) a gem drawing itself in gold, or for Coffee Fest
-// (`opener: "coffee"`) coffee pouring in and filling the screen like a cup,
-// the creative then rising from the bottom on a wave edged in crema. Otherwise,
-// once the artwork is ready
+// (`opener: "coffee"`) a short title sequence built from the creative's own
+// latte, beans and lettering, ending as the camera dives into the cup and the
+// creative comes into focus behind it. Otherwise, once the artwork is ready
 // the picture opens up from the centre (in the shape of a diamond for the
 // gem), and the page then drifts down a little on its
 // own so the events below come into view. Both are skipped for anyone who
@@ -142,14 +142,6 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
     }, 1400);
   };
 
-  const coffeeWave = useCoffeeWave({
-    active: coffee,
-    drawn,
-    open,
-    reduced: Boolean(reduced),
-    onDone: onRevealed,
-  });
-
   const picture = (className: string, ref?: React.Ref<HTMLImageElement>) => (
     <picture>
       <source media="(min-width: 768px)" srcSet={desktop} />
@@ -170,15 +162,12 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
       style={sizing}
       className="relative h-svh min-h-[520px] overflow-hidden bg-[#150c10] [--nav:64px] [--ratio:var(--ratio-phone)] md:[--nav:72px] md:[--ratio:var(--ratio-desk)]"
     >
-      {/* For Coffee Fest, the coffee filling the screen, under the artwork */}
-      {coffee && !reduced && <CoffeeLiquid wave={coffeeWave} drawn={drawn} open={open} />}
-
       {/* The artwork, opened from the centre once it is ready (or, for
-          Coffee Fest, rising from the bottom on the coffee's wave) */}
+          Coffee Fest, pulled into focus as the camera dives into the cup) */}
       <motion.div
         className="absolute inset-x-0 bottom-0 top-(--nav) [container-type:size]"
-        style={coffee ? { clipPath: coffeeWave.artClip } : undefined}
-        animate={coffee ? {} : {
+        style={coffee && !reduced ? { opacity: 0 } : undefined}
+        animate={coffee ? (open ? { opacity: 1, scale: 1, filter: "blur(0px)" } : { opacity: 0, scale: 1.18, filter: "blur(16px)" }) : {
           clipPath: jewel
             ? open
               ? DIAMOND_OPEN
@@ -190,9 +179,11 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
         transition={
           reduced
             ? { duration: 0 }
-            : { duration: jewel ? 1.3 : 1.1, ease: EASE, delay: jewel ? 0.25 : 0.12 }
+            : coffee
+              ? { duration: 1.2, ease: EASE, delay: 0.7 }
+              : { duration: jewel ? 1.3 : 1.1, ease: EASE, delay: jewel ? 0.25 : 0.12 }
         }
-        onAnimationComplete={open && !coffee ? onRevealed : undefined}
+        onAnimationComplete={open ? onRevealed : undefined}
       >
         {/* A soft, blurred copy of the artwork fills the space around it */}
         {picture("pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover blur-3xl brightness-90")}
@@ -216,7 +207,7 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
       {/* The loader, above the artwork as it opens */}
       {!reduced &&
         (coffee ? (
-          <CoffeeFoam wave={coffeeWave} />
+          <CoffeeScene drawn={drawn} open={open} />
         ) : jewel ? (
           <div className="pointer-events-none absolute inset-x-0 bottom-0 top-(--nav) grid place-items-center">
             <JewelBurst open={open} />
