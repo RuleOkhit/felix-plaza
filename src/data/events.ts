@@ -61,12 +61,94 @@ export type FelixEvent = {
    * (the default), dandiya sticks striking in rhythm for a festive one, or
    * a gem drawing itself in gold for a jewellery one.
    */
-  opener?: "swirl" | "dandiya" | "jewel";
+  opener?: "swirl" | "dandiya" | "jewel" | "coffee";
 };
 
 const WHERE: EventFact = { label: "Where", value: "Felix Plaza, Sector 82A, Gurugram" };
 
 export const EVENTS: FelixEvent[] = [
+  {
+    slug: "coffee-fest",
+    title: "Coffee Fest",
+    subtitle: "Coffee Lover's Paradise",
+    month: "2026-11",
+    when: "27–29 November 2026",
+    dates: { start: "2026-11-27", end: "2026-11-29" },
+    summary: "Coffee plans? Felix Plaza has three days brewing.",
+    description: [
+      "From your favourite coffee pours to live music, workshops, creative corners and challenges, Coffee Fest brings three days of good vibes to Felix Plaza.",
+      "Join a brewing demonstration or a latte art workshop, take the blind taste challenge, paint a mug or a bag, and stay for the tastings and live performances. Bring a friend for a cup, or three.",
+    ],
+    facts: [
+      { label: "When", value: "27–29 November 2026" },
+      WHERE,
+      { label: "Highlights", value: "Brewing demonstrations, latte art workshop, tasting sessions, blind taste challenge, mug and bag painting, live music, photo booth" },
+    ],
+    theme: { from: "#c98a4b", to: "#3a1e12" },
+    poster: {
+      portrait: { src: "/images/events/coffee-fest/portrait.webp", width: 1080, height: 1920 },
+      landscape: { src: "/images/events/coffee-fest/landscape.webp", width: 2160, height: 960 },
+    },
+    opener: "coffee",
+  },
+  {
+    slug: "meet-the-masters",
+    title: "Meet The Masters",
+    subtitle: "The Greatest Artists",
+    month: "2026-11",
+    when: "14 November 2026",
+    dates: { start: "2026-11-14" },
+    summary: "Little hands, big ideas and creativity without limits.",
+    description: [
+      "This Children's Day, young artists at Felix Plaza took inspiration from the great masters and turned their imagination into something of their own.",
+      "Children painted, sketched and decorated their own pieces, from a giant sculpted head to canvases, sketchbooks and boats, because every little artist deserves a big canvas.",
+    ],
+    facts: [
+      { label: "When", value: "14 November 2026, Children's Day" },
+      WHERE,
+    ],
+    theme: { from: "#ffd23f", to: "#ff3d8b" },
+    poster: {
+      portrait: { src: "/images/events/meet-the-masters/cover.webp", width: 1080, height: 1440 },
+    },
+    gallery: [
+      { src: "/images/events/meet-the-masters/photo-1.webp", width: 1200, height: 1600 },
+      { src: "/images/events/meet-the-masters/photo-2.webp", width: 1200, height: 1600 },
+      { src: "/images/events/meet-the-masters/photo-3.webp", width: 1200, height: 1600 },
+      { src: "/images/events/meet-the-masters/photo-4.webp", width: 720, height: 1280 },
+      { src: "/images/events/meet-the-masters/photo-5.webp", width: 1200, height: 1600 },
+      { src: "/images/events/meet-the-masters/photo-6.webp", width: 899, height: 1599 },
+    ],
+  },
+  {
+    slug: "spooky-town",
+    title: "Spooky Town",
+    subtitle: "Halloween at Felix Plaza",
+    month: "2026-10",
+    when: "31 October & 1 November 2026",
+    dates: { start: "2026-10-31", end: "2026-11-01" },
+    summary: "Gurugram came out for a little spooky fun.",
+    description: [
+      "From haunted sights and thrilling experiences to a Halloween cosplay competition, Spooky Town gave everyone plenty to scream, smile and click about.",
+      "Families and friends dressed up, met the masked characters around the mall, and made this Halloween one to remember.",
+    ],
+    facts: [
+      { label: "When", value: "31 October & 1 November 2026" },
+      WHERE,
+      { label: "Highlights", value: "Haunted sights, Halloween cosplay competition" },
+    ],
+    theme: { from: "#ff7a1a", to: "#2a0d0d" },
+    poster: {
+      portrait: { src: "/images/events/spooky-town/cover.webp", width: 1200, height: 1600 },
+    },
+    gallery: [
+      { src: "/images/events/spooky-town/photo-1.webp", width: 960, height: 1280 },
+      { src: "/images/events/spooky-town/photo-2.webp", width: 1200, height: 1600 },
+      { src: "/images/events/spooky-town/photo-3.webp", width: 918, height: 1600 },
+      { src: "/images/events/spooky-town/photo-4.webp", width: 960, height: 1280 },
+      { src: "/images/events/spooky-town/photo-5.webp", width: 960, height: 1280 },
+    ],
+  },
   {
     slug: "jewel-fest",
     title: "The Jewel Fest",
@@ -385,7 +467,7 @@ export const EVENTS: FelixEvent[] = [
  */
 
 /** The event the page opens on. */
-export const FEATURED_EVENT_SLUG = "jewel-fest";
+export const FEATURED_EVENT_SLUG = "coffee-fest";
 
 export function getEvent(slug: string) {
   return EVENTS.find((e) => e.slug === slug);
