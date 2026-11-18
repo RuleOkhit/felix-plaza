@@ -91,7 +91,6 @@ function FlyingBean({
               scale: 3.2,
               rotate: b.r * 4,
               opacity: 0,
-              filter: "blur(10px)",
             }
           : drawn
             ? {
@@ -235,15 +234,16 @@ export function CoffeeScene({
 
           {/* The latte: rises out of the dark, turns slowly, then the camera dives in */}
           <motion.div
-            className="absolute inset-0"
+            className="absolute inset-0 will-change-transform"
             style={{ opacity: 0 }}
             animate={
               open
                 ? {
-                    scale: 9,
-                    rotate: 28,
+                    // Kept under ~3x: the cut-out is only 500px, so a bigger
+                    // zoom turns soft. It fades out as it passes the camera.
+                    scale: 3.2,
+                    rotate: 22,
                     opacity: [1, 1, 0],
-                    filter: ["blur(0px)", "blur(2px)", "blur(18px)"],
                   }
                 : drawn
                   ? {
@@ -257,7 +257,7 @@ export function CoffeeScene({
             }
             transition={
               open
-                ? { duration: 1.3, ease: DIVE, times: [0, 0.8, 1] }
+                ? { duration: 0.95, ease: DIVE, opacity: { duration: 0.95, times: [0, 0.55, 1], ease: "easeIn" } }
                 : { duration: 1.3, ease: SETTLE, delay: 0.15 }
             }
           >
@@ -304,7 +304,7 @@ export function CoffeeScene({
             style={{ opacity: 0 }}
             animate={
               open
-                ? { y: "-60%", opacity: 0, scale: 0.9, filter: "blur(6px)" }
+                ? { y: "-60%", opacity: 0, scale: 0.9 }
                 : drawn
                   ? {
                       y: ["-40%", "0%"],

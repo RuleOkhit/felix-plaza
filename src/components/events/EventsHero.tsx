@@ -167,7 +167,7 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
       <motion.div
         className="absolute inset-x-0 bottom-0 top-(--nav) [container-type:size]"
         style={coffee && !reduced ? { opacity: 0 } : undefined}
-        animate={coffee ? (open ? { opacity: 1, scale: 1, filter: "blur(0px)" } : { opacity: 0, scale: 1.18, filter: "blur(16px)" }) : {
+        animate={coffee ? (open ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.12 }) : {
           clipPath: jewel
             ? open
               ? DIAMOND_OPEN
@@ -180,7 +180,7 @@ export default function EventsHero({ event }: { event: FelixEvent }) {
           reduced
             ? { duration: 0 }
             : coffee
-              ? { duration: 1.2, ease: EASE, delay: 0.7 }
+              ? { duration: 1.0, ease: EASE, delay: 0.45 }
               : { duration: jewel ? 1.3 : 1.1, ease: EASE, delay: jewel ? 0.25 : 0.12 }
         }
         onAnimationComplete={open ? onRevealed : undefined}
